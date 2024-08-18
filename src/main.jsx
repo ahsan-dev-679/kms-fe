@@ -10,6 +10,7 @@ import "@mantine/carousel/styles.css";
 import "@mantine/dates/styles.css";
 import "mantine-react-table/styles.css";
 import "@mantine/charts/styles.css";
+import "react-international-phone/style.css";
 
 import "./index.css";
 import { theme } from "./configs/matine.config.js";

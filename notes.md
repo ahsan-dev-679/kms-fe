@@ -5,3 +5,4 @@
 5- Logout Modal
 6- Notification
 7- Sidebar links
+8- Breadcrumbs

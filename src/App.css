@@ -48,3 +48,23 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #3da270;
 }
+.AvatarProfileMain {
+  position: relative;
+}
+.AvatarProfileMain::after {
+  position: absolute;
+  content: "";
+  width: 118px;
+  bottom: -6px;
+  left: 11%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgb(115 115 115 / 46%) 0%,
+    rgba(217, 217, 217, 0) 100%
+  );
+  height: 8px;
+  opacity: 0.7;
+}
+.phone-input-flag .react-international-phone-country-selector-button {
+  height: 44px !important;
+}
