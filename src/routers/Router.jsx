@@ -8,6 +8,7 @@ import Login from "@/components/auth/Login";
 import NotFound from "@/pages/NotFound";
 import Meals from "@/pages/user/Meals";
 import Checkout from "@/pages/user/Checkout";
+import Orders from "@/pages/user/Orders";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -19,6 +20,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/meals" element={<Meals />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/my-orders" element={<Orders />} />
       </Route>
 
       {/* Auth routes */}

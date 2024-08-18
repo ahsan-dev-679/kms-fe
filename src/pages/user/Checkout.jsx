@@ -1,4 +1,5 @@
 import { colors } from "@/configs/theme.config";
+import { formatPrice } from "@/utils";
 import {
   Box,
   Button,
@@ -113,19 +114,20 @@ const Checkout = () => {
 
           <Flex justify={"space-between"} className="!mt-6">
             <Text>Total</Text>
-            <Text>Rs. 6000</Text>
+            <Text>{formatPrice(6000)}</Text>
           </Flex>
           <Flex justify={"space-between"}>
             <Text>Total</Text>
-            <Text>Rs. 6000</Text>
+            <Text>{formatPrice(6000)}</Text>
           </Flex>
           <Flex justify={"space-between"}>
             <Text>Total</Text>
-            <Text>Rs. 6000</Text>
+            <Text>{formatPrice(6000)}</Text>
           </Flex>
+          <Divider className="my-2" />
           <Flex justify={"space-between"}>
             <Text fw={700}>Grand Total</Text>
-            <Text fw={700}>Rs. 6000</Text>
+            <Text>{formatPrice(6000)}</Text>
           </Flex>
 
           <Button

@@ -27,7 +27,7 @@ export const useCartStore = create(
         } else {
           set({ cart: [{ ...product, qty: product.qty || 1 }, ...get().cart] });
         }
-        successMessage("Item added to cart");
+        successMessage("Item updated to cart");
       },
 
       // Decrement product quantity

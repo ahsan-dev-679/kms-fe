@@ -121,10 +121,14 @@ const MealDetail = ({ opened, close, detail }) => {
                 </ActionIcon>
                 <NumberInput
                   classNames={{
-                    input: "border-none outline-none",
+                    input: "border-none outline-none bg-transparent",
+                  }}
+                  styles={{
+                    backgroundColor: "transparent",
                   }}
                   defaultValue={count}
                   value={count}
+                  onChange={(value) => setCount(value)}
                   style={{ width: 45, border: "none" }}
                   allowDecimal={false}
                   allowNegative={false}

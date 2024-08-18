@@ -4,7 +4,7 @@ import axios from "axios";
 export const baseURL = "http://127.0.0.1:8000/api";
 
 // axios instance for json data
-const custAxios = axios.create({
+export const custAxios = axios.create({
   baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
@@ -38,5 +38,3 @@ export const formAxios = axios.create({
     Accept: "application/json",
   },
 });
-
-export default custAxios;

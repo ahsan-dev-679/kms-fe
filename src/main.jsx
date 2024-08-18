@@ -9,12 +9,14 @@ import "@mantine/carousel/styles.css";
 // import "mantine-datatable/styles.layer.css";
 // import "@mantine/dropzone/styles.css";
 import "@mantine/dates/styles.css";
+import "mantine-react-table/styles.css";
 import "./index.css";
 import { theme } from "./configs/matine.config.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <MantineProvider theme={theme}>
+    {/* <MantineProvider theme={theme}> */}
+    <MantineProvider>
       <QueryProvider>
         <App />
         <Toaster richColors />

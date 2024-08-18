@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Button, Box, Flex, Text, Divider } from "@mantine/core";
+import { Drawer, Button, Box, Flex, Text, Divider, Image } from "@mantine/core";
 import { menuList } from "@/data/data";
 import CartItem from "./CartItem";
 import { colors } from "@/configs/theme.config";
@@ -9,6 +9,8 @@ import {
 } from "@tabler/icons-react";
 import { useCartStore } from "@/stores/cart.store";
 import { useNavigate } from "react-router-dom";
+import EmptyCart from "@/assets/common/empty-cart (1).png";
+import { formatPrice } from "@/utils";
 
 const CartDrawer = ({ opened, close }) => {
   const navigate = useNavigate();
@@ -32,7 +34,12 @@ const CartDrawer = ({ opened, close }) => {
           <>
             <Flex justify={"flex-end"}>
               <Button
-                onClick={() => clearCart()}
+                onClick={() => {
+                  clearCart();
+                  setTimeout(() => {
+                    close();
+                  }, 500);
+                }}
                 radius={"xl"}
                 size="xs"
                 color="red"
@@ -46,11 +53,11 @@ const CartDrawer = ({ opened, close }) => {
             <Box>
               <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text>Total</Text>
-                <Text>Rs. {total()}</Text>
+                <Text> {formatPrice(total())}</Text>
               </Flex>
               <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text>Tax 13%</Text>
-                <Text>Rs. {tax()}</Text>
+                <Text> {formatPrice(tax())}</Text>
               </Flex>
               <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text>Delivery</Text>
@@ -59,11 +66,14 @@ const CartDrawer = ({ opened, close }) => {
               <Divider />
               <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text fw={600}>Grand Total</Text>
-                <Text fw={600}>Rs. {grandTotal()}</Text>
+                <Text fw={600}> {formatPrice(grandTotal())}</Text>
               </Flex>
             </Box>
             <Button
-              onClick={() => navigate("/checkout")}
+              onClick={() => {
+                navigate("/checkout");
+                close();
+              }}
               fullWidth
               color={colors.primary[100]}
               radius="md"
@@ -77,9 +87,12 @@ const CartDrawer = ({ opened, close }) => {
             </Button>
           </>
         ) : (
-          <Text size="xl" fw={700} className="" align={"center"}>
-            Cart is Empty
-          </Text>
+          <>
+            <Text size="xl" fw={700} className="" align={"center"}>
+              Cart is Empty
+            </Text>
+            <Image src={EmptyCart} />
+          </>
         )}
       </Box>
     </Drawer>

@@ -42,9 +42,11 @@ const CartItem = ({ item }) => {
         </ActionIcon>
         <NumberInput
           classNames={{
-            input: "border-none outline-none",
+            input: "border-none outline-none bg-transparent",
           }}
-          // onChange={(value)=>}
+          styles={{
+            backgroundColor: "transparent",
+          }}
           defaultValue={1}
           value={item.qty}
           style={{ width: 45, border: "none" }}
@@ -54,7 +56,7 @@ const CartItem = ({ item }) => {
           size={"md"}
         />
         <ActionIcon
-          onClick={() => addToCart(item)}
+          onClick={() => addToCart({ ...item, qty: 1 })}
           variant="filled"
           color="#fff"
           radius={"xl"}

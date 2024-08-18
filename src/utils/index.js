@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const topStandingsColors = (index) => {
   let border, bg;
 
@@ -24,4 +26,26 @@ export const topStandingsColors = (index) => {
   }
 
   return { border, bg };
+};
+export const getStatusColor = (status) => {
+  const statusColors = {
+    completed: "#a5d6a7", // Pale Green
+    pending: "#ffb74d", // Pale Orange
+    shipped: "#64b5f6", // Pale Blue
+    cancelled: "#ef9a9a", // Pale Red
+    returned: "#bdbdbd", // Light Gray
+  };
+
+  return statusColors[status.toLowerCase()] || "#000000";
+};
+export const formatDate = (date) => {
+  return moment(date).format("YYYY-MM-DD");
+};
+export const formatPrice = (price) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  return formatter.format(price);
 };

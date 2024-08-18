@@ -4,5 +4,5 @@
 
 .mantine-Input-wrapper {
   --input-bd-focus: #479d51 !important;
-  background-color: #f6f6f6 !important;
+  /* background-color: #f6f6f6 !important; */
 }
