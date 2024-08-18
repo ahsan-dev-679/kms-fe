@@ -1,4 +1,10 @@
 import moment from "moment";
+import {
+  IconArrowsDown,
+  IconArrowsUp,
+  IconArrowUp,
+  IconArrowDown,
+} from "@tabler/icons-react";
 
 export const topStandingsColors = (index) => {
   let border, bg;
@@ -41,6 +47,9 @@ export const getStatusColor = (status) => {
 export const formatDate = (date) => {
   return moment(date).format("YYYY-MM-DD");
 };
+export function formatDateTime(inputDate) {
+  return moment(inputDate).format("Do MMM, YYYY [at] h:mm A");
+}
 export const formatPrice = (price) => {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -48,4 +57,11 @@ export const formatPrice = (price) => {
   });
 
   return formatter.format(price);
+};
+
+export const getStockIcon = (stock) => {
+  if (stock < 10) {
+    return { Icon: IconArrowDown, color: "red" };
+  }
+  return { Icon: IconArrowUp, color: "green" };
 };

@@ -76,15 +76,13 @@ const MealDetail = ({ opened, close, detail }) => {
         >
           <Title order={2}>{detail.title}</Title>
           <Text py={2} c={"dark"} fw={600} size="lg">
-            Rs. {detail.price}
+            ${detail.price}
           </Text>
           <Text py={4} c={"dimmed"}>
             {detail.desc}
           </Text>
 
           <Box
-            // justify={"flex-end"}
-            // align={"end"}
             style={{
               display: "flex",
               flex: 1,
@@ -158,7 +156,7 @@ const MealDetail = ({ opened, close, detail }) => {
                 size="md"
                 className="my-2"
               >
-                Add to Cart - {`Rs. ${detail.price}`}
+                Add to Cart - {`$${detail.price}`}
               </Button>
             </Flex>
           </Box>

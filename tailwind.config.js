@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       colors: {
         "btn-blue": "#161459",
-        "primary-txt": "#161459",
+        "primary-50": "#ECF9EE",
+        "primary-100": "#4FAE5A",
       },
     },
   },

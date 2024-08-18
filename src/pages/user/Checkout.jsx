@@ -14,9 +14,10 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const tablet = useMediaQuery("(max-width: 1024px)");
   const midScreen = useMediaQuery("(max-width: 768px)");
 
@@ -34,7 +35,7 @@ const Checkout = () => {
     );
   };
   return (
-    <Grid justify={"center"} gutter={"xl"}>
+    <Grid justify={"center"} gutter={"xl"} className="my-6">
       <Grid.Col span={midScreen ? 11 : tablet ? 8 : 5}>
         <Box className="bg-[#F7F7F7] p-6 rounded-lg shadow-sm">
           <Text>
@@ -136,6 +137,7 @@ const Checkout = () => {
             radius="md"
             size="md"
             className="my-6"
+            onClick={() => navigate("/my-orders")}
           >
             Place Order
           </Button>

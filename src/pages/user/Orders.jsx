@@ -2,9 +2,10 @@ import React, { useMemo } from "react";
 import GeneralTable from "./../../components/table/GeneralTable";
 import { Box, Flex, Text } from "@mantine/core";
 import { formatDate, formatPrice, getStatusColor } from "@/utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Orders = () => {
+  const navigate = useNavigate();
   const data = [
     {
       items: 5,
@@ -80,6 +81,17 @@ const Orders = () => {
   const columns = useMemo(
     () => [
       {
+        accessorKey: "_id", //access nested data with dot notation
+        header: "Order Id",
+      },
+      {
+        accessorKey: "date",
+        header: "Date",
+        Cell: ({ cell }) => {
+          return <Text>{formatDate(cell.getValue())}</Text>;
+        },
+      },
+      {
         accessorKey: "items", //normal accessorKey
         header: "Total Items",
       },
@@ -113,18 +125,14 @@ const Orders = () => {
         accessorKey: "action",
         header: "Action",
         Cell: ({ cell }) => {
-          return <Link className="text-[#228be6] text-md">View Detail</Link>;
-        },
-      },
-      {
-        accessorKey: "_id", //access nested data with dot notation
-        header: "Order Id",
-      },
-      {
-        accessorKey: "date",
-        header: "Date",
-        Cell: ({ cell }) => {
-          return <Text>{formatDate(cell.getValue())}</Text>;
+          return (
+            <Link
+              to={`/order-detail/${cell.row.original._id}`}
+              className="text-[#228be6] text-md"
+            >
+              View Detail
+            </Link>
+          );
         },
       },
     ],

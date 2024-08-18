@@ -9,6 +9,10 @@ import NotFound from "@/pages/NotFound";
 import Meals from "@/pages/user/Meals";
 import Checkout from "@/pages/user/Checkout";
 import Orders from "@/pages/user/Orders";
+import OrderDetail from "@/pages/user/OrderDetail";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import DashboardLayout from "@/layouts/DashboardLayout";
+import MealList from "@/pages/dashboard/MealList";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -21,6 +25,16 @@ const Router = () => {
         <Route path="/meals" element={<Meals />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/my-orders" element={<Orders />} />
+        <Route path="/order-detail/:id" element={<OrderDetail />} />
+      </Route>
+
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route
+          path="/dashboard"
+          // element={<AdminRoute Component={Dashboard} />}
+          element={<AdminDashboard />}
+        />
+        <Route path="/dashboard/meal/list" element={<MealList />} />
       </Route>
 
       {/* Auth routes */}

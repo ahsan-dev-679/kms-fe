@@ -19,7 +19,7 @@ const MobileNav = ({ opened, close }) => {
             <a href="#">Home</a>
           </li>
           <li className="hover:w-fit transition-all duration-100 ease-linear">
-            <a href="#">Our services</a>
+            <a href="#">Our Meals</a>
           </li>
           <li className="hover:w-fit transition-all duration-100 ease-linear">
             <a href="#">About</a>

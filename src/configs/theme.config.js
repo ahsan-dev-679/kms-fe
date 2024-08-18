@@ -286,7 +286,7 @@ export const colors = {
     950: "#4c0519",
   },
   primary: {
-    50: "#333333",
+    50: "#ECF9EE",
     100: "#4FAE5A",
   },
 };

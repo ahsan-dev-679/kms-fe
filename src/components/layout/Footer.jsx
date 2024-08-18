@@ -192,19 +192,21 @@ const Footer = () => {
             <h3 className="font-manrope font-semibold text-2xl text-gray-900 leading-9 mb-8 text-center lg:text-left">
               Join the newsletter and read the new posts first
             </h3>
-            <div className="lg:bg-gray-100 lg:rounded-full lg:h-16 lg:p-1.5 lg:flex-row gap-6 lg:gap-0 flex-col flex items-center justify-between">
-              <input
-                type="text"
-                name="email"
-                className="py-3 px-6 bg-gray-100 rounded-full text-gray-900 placeholder:text-gray-500 focus:outline-none flex-1 w-full max-w-xl mx-auto lg:w-auto lg:py-5 lg:px-7 lg:bg-[#fafafa] border-2"
-                placeholder="Your email here..."
-              />
-              <button
-                type="submit"
-                className="py-3.5 px-7 bg-[#4FAE5A] shadow-md rounded-full text-white font-semibold hover:bg-[#3fa74b]"
-              >
-                Subscribe
-              </button>
+            <div className="lg:bg-gray-100 lg:rounded-full lg:h-12 lg:p-1.5 lg:flex-row gap-6 lg:gap-0 flex-col flex items-center justify-between">
+              <div className="relative flex-1 w-full max-w-xl mx-auto lg:w-auto">
+                <input
+                  type="text"
+                  name="email"
+                  className="py-2 px-6 bg-gray-100 rounded-full text-gray-900 placeholder:text-gray-500 focus:outline-none w-full pr-16 lg:py-3.5 lg:px-7 lg:bg-[#fafafa] border-2"
+                  placeholder="Your email here..."
+                />
+                <button
+                  type="submit"
+                  className="absolute inset-y-0 right-0 py-2 px-7 bg-[#4FAE5A] shadow-md rounded-full text-white font-semibold hover:bg-[#3fa74b] focus:outline-none"
+                >
+                  Subscribe
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -6,10 +6,11 @@ import { Toaster } from "sonner";
 import QueryProvider from "./providers/QueryProvider.jsx";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
-// import "mantine-datatable/styles.layer.css";
 // import "@mantine/dropzone/styles.css";
 import "@mantine/dates/styles.css";
 import "mantine-react-table/styles.css";
+import "@mantine/charts/styles.css";
+
 import "./index.css";
 import { theme } from "./configs/matine.config.js";
 

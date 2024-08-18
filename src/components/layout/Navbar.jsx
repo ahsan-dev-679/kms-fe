@@ -23,7 +23,7 @@ import {
 import MobileNav from "../common/MobileNav";
 import { useCartStore } from "@/stores/cart.store";
 import CartDrawer from "../cart/CartDrawer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -33,10 +33,11 @@ const Navbar = () => {
     useDisclosure(false);
   const [opened, { open, close }] = useDisclosure(false);
   const { cart } = useCartStore();
-
+  const [formType, setformType] = useState("login");
+  const isAuthenticated = false;
   return (
     <>
-      <div className="top-0 sticky py-1 lg:py-2 w-full bg-[#fff] lg:relative z-50 dark:bg-gray-900  border-b-2">
+      <div className="top-0 sticky py-1 lg:py-2 w-full bg-[#fff] lg:relative z-50 dark:bg-gray-900  border-b-2 mb-6">
         <nav className="z-10 sticky top-0 left-0 right-0 max-w-full px-5 py-2.5 lg:border-none lg:py-4   border-yellow-500">
           <div className="flex items-center justify-between   !w-full flex-1">
             <button>
@@ -52,7 +53,7 @@ const Navbar = () => {
                   <a href="#">Home</a>
                 </li>
                 <li className="hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                  <a href="#">Our services</a>
+                  <Link to="/meals">Our Meals</Link>
                 </li>
                 <li className="hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
                   <a href="#">About</a>
@@ -64,7 +65,7 @@ const Navbar = () => {
             </div>
             <div className="">
               <div className="hidden lg:flex lg:items-center gap-x-2">
-                {true ? (
+                {isAuthenticated ? (
                   <Flex align={"center"} gap={20}>
                     <Indicator color="#40C057" inline label="2" size={16}>
                       <IconBell
@@ -153,11 +154,20 @@ const Navbar = () => {
                   </Flex>
                 ) : (
                   <>
-                    <button className="flex items-center bg-[#ececec] text-black dark:text-white justify-center px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200 rounded-md">
+                    <button
+                      onClick={() => {
+                        setformType("register");
+                        openAuthModal();
+                      }}
+                      className="flex items-center bg-[#ececec] text-black dark:text-white justify-center px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200 rounded-md"
+                    >
                       Sign up
                     </button>
                     <button
-                      onClick={openAuthModal}
+                      onClick={() => {
+                        setformType("login");
+                        openAuthModal();
+                      }}
                       className="flex items-center justify-center rounded-md bg-[#4FAE5A] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200"
                     >
                       Login
@@ -184,7 +194,7 @@ const Navbar = () => {
       <AuthModal
         opened={openedAuthModal}
         close={closeAuthModal}
-        formType={"register"}
+        formType={formType}
       />
     </>
   );
