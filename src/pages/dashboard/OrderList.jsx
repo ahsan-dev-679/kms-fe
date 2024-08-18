@@ -1,42 +1,13 @@
 import * as uuid from "uuid";
 import React, { useMemo, useState } from "react";
 import GeneralTable from "./../../components/table/GeneralTable";
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Tooltip,
-  Menu,
-  Button,
-  Select,
-} from "@mantine/core";
-import {
-  capitalizeFirstLetter,
-  formatDate,
-  formatPrice,
-  getStockIcon,
-} from "@/utils";
+import { Box, Text, Button, Select } from "@mantine/core";
+import { formatDate, formatPrice } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { useDisclosure } from "@mantine/hooks";
-import MealDetail from "@/components/modal/MealDetail";
-import { DeletePopup } from "@/components/alert/DeletePopup";
 import { IconEye } from "@tabler/icons-react";
 
 const OrderList = () => {
   const navigate = useNavigate();
-  const [id, setId] = useState(null);
-  const [detail, setDetail] = useState({});
-  const [openedModal, { open: openModal, close: closeModal }] =
-    useDisclosure(false);
-  const [openedAlert, { open: openAlert, close: closeAlert }] =
-    useDisclosure(false);
-
-  const deleteHandler = () => {
-    console.log("id.....", id);
-  };
-
   const data = [
     {
       name: "Jhonny Sins",
@@ -186,15 +157,6 @@ const OrderList = () => {
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable columns={columns} data={data} heading={"Order List"} />
       </Box>
-
-      <MealDetail detail={detail} opened={openedModal} close={closeModal} />
-      <DeletePopup
-        text={"Are you sure you want to delete?"}
-        loading={false}
-        clickHandler={deleteHandler}
-        opened={openedAlert}
-        close={closeAlert}
-      />
     </>
   );
 };

@@ -14,6 +14,7 @@ import AdminDashboard from "@/pages/admin/AdminDashboard";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import MealList from "@/pages/dashboard/MealList";
 import OrderList from "@/pages/dashboard/OrderList";
+import ChefList from "@/pages/admin/ChefList";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -38,6 +39,7 @@ const Router = () => {
         <Route path="/dashboard/meal/list" element={<MealList />} />
         <Route path="/dashboard/order/list" element={<OrderList />} />
         <Route path="/dashboard/order/detail/:id" element={<OrderDetail />} />
+        <Route path="/dashboard/chef/list" element={<ChefList />} />
       </Route>
 
       {/* Auth routes */}
