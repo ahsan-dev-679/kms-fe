@@ -227,7 +227,7 @@ const MealList = () => {
 
   return (
     <>
-      <Box className=" my-3 shadow-md !rounded-xl ">
+      <Box className="my-3 shadow-md !rounded-xl ">
         <GeneralTable columns={columns} data={data} heading={"Meal List"} />
       </Box>
 

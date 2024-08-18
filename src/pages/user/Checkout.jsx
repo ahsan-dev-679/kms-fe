@@ -27,7 +27,7 @@ const Checkout = () => {
         <Flex className="py-4" direction={"column"} wrap={"wrap"}>
           <Text> 1 x SUMMER DEAL 1</Text>
           <Text size="sm" ta="left" c={"dimmed"}>
-            Rs. 899
+            8€
           </Text>
         </Flex>
         <Divider color="silver" />

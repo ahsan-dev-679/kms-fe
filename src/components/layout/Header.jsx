@@ -11,12 +11,10 @@ const Header = () => {
   const isMobile = useMediaQuery("(max-width:767px)");
   return (
     <Flex
-      className="bg-white py-3 md:py-6 mt-[10px] mx-[10px] md:mt-10 md:mx-10  px-4 md:px-8 border border-[#EDEDED] border-solid"
+      // px={{ base: "10px", md: "30px", lg: "40px", sm: "20px" }}
+      className="bg-white py-3 md:py-6 mt-[10px] mx-[10px] md:mt-10 md:mx-6 px-4 md:px-8 border border-[#EDEDED] border-solid rounded-lg shadow-md"
       justify={"space-between"}
       align={"center"}
-      style={{
-        boxShadow: "0px 29px 20px -25px #0000000D",
-      }}
     >
       <Text className="!text-[#141B43]  !font-semibold">
         Welcome To Dashboard

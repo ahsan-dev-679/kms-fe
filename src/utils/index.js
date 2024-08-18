@@ -53,10 +53,12 @@ export function formatDateTime(inputDate) {
 export const formatPrice = (price) => {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency: "EUR",
   });
 
-  return formatter.format(price);
+  const formattedPrice = formatter.format(price);
+
+  return formattedPrice.replace("€", "").trim() + " €";
 };
 
 export const getStockIcon = (stock) => {

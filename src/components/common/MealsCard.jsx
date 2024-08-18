@@ -51,7 +51,7 @@ const MealsCard = ({ meal }) => {
 
         <Flex align={"center"} justify={"space-between"} mt={2}>
           <Text size="md" c="black" fw={700}>
-            Rs. {meal.price}
+         {meal.price}
           </Text>
           <Button
             onClick={(e) => {

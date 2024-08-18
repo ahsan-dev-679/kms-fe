@@ -76,7 +76,7 @@ const MealDetail = ({ opened, close, detail }) => {
         >
           <Title order={2}>{detail.title}</Title>
           <Text py={2} c={"dark"} fw={600} size="lg">
-            ${detail.price}
+            {detail.price}€
           </Text>
           <Text py={4} c={"dimmed"}>
             {detail.desc}
@@ -156,7 +156,7 @@ const MealDetail = ({ opened, close, detail }) => {
                 size="md"
                 className="my-2"
               >
-                Add to Cart - {`$${detail.price}`}
+                Add to Cart - {`${detail.price}€`}
               </Button>
             </Flex>
           </Box>

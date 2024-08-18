@@ -7,7 +7,7 @@ import Header from "@/components/layout/Header";
 import { DatesProvider } from "@mantine/dates";
 
 const DashboardLayout = () => {
-  const isMobile = useMediaQuery("(max-width:767px)");
+  const isMobile = useMediaQuery("(max-width:1023px)");
   const [asideOpen, setAsideOpen] = useState(false);
   useEffect(() => {
     setAsideOpen(!isMobile);
@@ -36,12 +36,10 @@ const DashboardLayout = () => {
       >
         <Header setAsideOpen={setAsideOpen} asideOpen={asideOpen} />
         <Box
-          p={{ base: "10px", md: "30px", lg: "40px", sm: "20px" }}
+          p={{ base: "10px", md: "30px", lg: "20px", sm: "20px" }}
           pt={"10px"}
         >
-          <DatesProvider settings={{ locale: "es-us" }}>
-            <Outlet />
-          </DatesProvider>
+          <Outlet />
         </Box>
       </Box>
     </Box>

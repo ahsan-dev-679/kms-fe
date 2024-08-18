@@ -68,7 +68,7 @@ const OrderDetail = () => {
           </Text>
         </Flex>
         <Text fw={700} size="xl" c={colors.primary[100]}>
-          $42323.32
+          12€
         </Text>
       </Flex>
 

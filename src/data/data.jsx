@@ -1,5 +1,9 @@
 import * as uuid from "uuid";
-import { IconGauge, IconFingerprint } from "@tabler/icons-react";
+import {
+  IconChecklist,
+  IconChefHat,
+  IconToolsKitchen,
+} from "@tabler/icons-react";
 import { LuHome } from "react-icons/lu";
 
 export const menuList = [
@@ -100,101 +104,32 @@ export const dashboardAsideMenus = [
     path: "/dashboard/",
     role: ["admin", "manager"],
     icon: <LuHome />,
-    submenu: [
-      {
-        label: "Admin Dashboard",
-        path: "/dashboard/",
-        role: ["admin"],
-      },
-      {
-        label: "Manager Dashboard",
-        path: "/dashboard/mdashboard",
-        role: ["admin"],
-      },
-    ],
   },
   {
-    label: "Cook Management",
-    path: "/member",
+    label: "Meal Management",
+    path: "/dashboard/meal/list",
     role: ["admin"],
-    icon: <LuHome />,
-
-    submenu: [
-      {
-        label: "Add New Member",
-        path: "/dashboard/member/create",
-        role: ["admin"],
-      },
-      {
-        label: "Member Management",
-        path: "/dashboard/member/list",
-        role: ["admin"],
-      },
-    ],
+    icon: <IconToolsKitchen />,
+  },
+  {
+    label: "Chef Management",
+    path: "/dashboard/chef/list",
+    role: ["admin"],
+    icon: <IconChefHat />,
   },
 
   {
     label: "Order Management",
-    path: "/manager",
+    path: "/dashboard/order/list",
     role: ["admin"],
-    icon: <LuHome />,
-
-    submenu: [
-      {
-        label: "Add New Case Manager",
-        path: "/dashboard/manager/create",
-        role: ["admin"],
-      },
-      {
-        label: "Manage Case Managers",
-        path: "/dashboard/manager/list",
-        role: ["admin"],
-      },
-    ],
+    icon: <IconChecklist />,
   },
-  {
-    label: "Product Management",
-    path: "/case",
-    role: ["admin"],
-    icon: <LuHome />,
-
-    submenu: [
-      {
-        label: "Add New Case",
-        path: "/dashboard/case/create",
-        role: ["admin"],
-      },
-      {
-        label: "Open Cases",
-        path: "/dashboard/case/list/open-case",
-        role: ["admin"],
-      },
-      {
-        label: "Closed Cases",
-        path: "/dashboard/case/list/closed-case",
-        role: ["admin"],
-      },
-    ],
-  },
-  {
-    label: "Reporting",
-    path: "/reports",
-    role: ["admin"],
-    icon: <LuHome />,
-
-    submenu: [
-      {
-        label: "Expenditure",
-        path: "/dashboard/reports/expenditure",
-        role: ["admin"],
-      },
-      {
-        label: "Account Payable",
-        path: "/dashboard/reports/account-payable",
-        role: ["admin"],
-      },
-    ],
-  },
+  // {
+  //   label: "Analytics",
+  //   path: "/reports",
+  //   role: ["admin"],
+  //   icon: <LuHome />,
+  // },
 ];
 export const chefList = [
   {
