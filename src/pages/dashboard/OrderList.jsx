@@ -1,0 +1,202 @@
+import * as uuid from "uuid";
+import React, { useMemo, useState } from "react";
+import GeneralTable from "./../../components/table/GeneralTable";
+import {
+  Box,
+  Flex,
+  Text,
+  Image,
+  Tooltip,
+  Menu,
+  Button,
+  Select,
+} from "@mantine/core";
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  formatPrice,
+  getStockIcon,
+} from "@/utils";
+import { Link, useNavigate } from "react-router-dom";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { useDisclosure } from "@mantine/hooks";
+import MealDetail from "@/components/modal/MealDetail";
+import { DeletePopup } from "@/components/alert/DeletePopup";
+import { IconEye } from "@tabler/icons-react";
+
+const OrderList = () => {
+  const navigate = useNavigate();
+  const [id, setId] = useState(null);
+  const [detail, setDetail] = useState({});
+  const [openedModal, { open: openModal, close: closeModal }] =
+    useDisclosure(false);
+  const [openedAlert, { open: openAlert, close: closeAlert }] =
+    useDisclosure(false);
+
+  const deleteHandler = () => {
+    console.log("id.....", id);
+  };
+
+  const data = [
+    {
+      name: "Jhonny Sins",
+      total: 100.0,
+      status: "completed",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD001",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 60.0,
+      status: "pending",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD002",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 160.0,
+      status: "shipped",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD003",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 240.0,
+      status: "completed",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD004",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 40.0,
+      status: "cancelled",
+      _id: "ORD005",
+      date: "2024-08-17T11:49:16.378+00:00",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 140.0,
+      status: "completed",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD006",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 80.0,
+      status: "pending",
+      _id: "ORD007",
+      date: "2024-08-17T11:49:16.378+00:00",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 120.0,
+      status: "shipped",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD008",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 200.0,
+      status: "completed",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD009",
+    },
+    {
+      name: "Jhonny Sins",
+      total: 180.0,
+      status: "returned",
+      date: "2024-08-17T11:49:16.378+00:00",
+      _id: "ORD010",
+    },
+  ];
+
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: "_id", //access nested data with dot notation
+        header: "Order ID",
+        Cell: ({ cell }) => {
+          return <Text>{cell.getValue()}</Text>;
+        },
+      },
+      {
+        accessorKey: "name",
+        header: "Customer Name",
+        Cell: ({ cell }) => {
+          return <Text>{cell.getValue()}</Text>;
+        },
+      },
+      {
+        accessorKey: "date",
+        header: "Date",
+        Cell: ({ cell }) => {
+          return <Text>{formatDate(cell.getValue())}</Text>;
+        },
+      },
+      {
+        accessorKey: "total",
+        header: "total",
+        Cell: ({ cell }) => {
+          return <Text>{formatPrice(cell.getValue())}</Text>;
+        },
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        Cell: ({ cell }) => {
+          return (
+            <Select
+              placeholder="Status"
+              defaultValue={cell.getValue()}
+              data={[
+                { label: "Pending", value: "pending" },
+                { label: "Completed", value: "completed" },
+                { label: "Shipped", value: "shipped" },
+                { label: "Cancelled", value: "cancelled" },
+              ]}
+            />
+          );
+        },
+      },
+
+      {
+        accessorKey: "action",
+        header: "Action",
+        Cell: ({ cell }) => {
+          return (
+            <Button
+              onClick={() =>
+                navigate(`/dashboard/order/detail/${cell.row.original._id}`)
+              }
+              p={"0"}
+              variant="transparent"
+              color="black"
+            >
+              <IconEye stroke={2} />
+            </Button>
+          );
+        },
+      },
+    ],
+    []
+  );
+
+  return (
+    <>
+      <Box className=" my-3 shadow-md !rounded-xl ">
+        <GeneralTable columns={columns} data={data} heading={"Order List"} />
+      </Box>
+
+      <MealDetail detail={detail} opened={openedModal} close={closeModal} />
+      <DeletePopup
+        text={"Are you sure you want to delete?"}
+        loading={false}
+        clickHandler={deleteHandler}
+        opened={openedAlert}
+        close={closeAlert}
+      />
+    </>
+  );
+};
+
+export default OrderList;

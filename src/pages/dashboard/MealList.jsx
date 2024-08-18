@@ -2,7 +2,7 @@ import * as uuid from "uuid";
 import React, { useMemo, useState } from "react";
 import GeneralTable from "./../../components/table/GeneralTable";
 import { Box, Flex, Text, Image, Tooltip, Menu, Button } from "@mantine/core";
-import { formatDate, formatPrice, getStatusColor, getStockIcon } from "@/utils";
+import { formatPrice, getStockIcon } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDisclosure } from "@mantine/hooks";
@@ -17,9 +17,8 @@ const MealList = () => {
   const [openedAlert, { open: openAlert, close: closeAlert }] =
     useDisclosure(false);
 
-  const deleteHandler = (id) => {
+  const deleteHandler = () => {
     console.log("id.....", id);
-    alert(id);
   };
 
   const data = [
@@ -225,6 +224,7 @@ const MealList = () => {
     ],
     []
   );
+
   return (
     <>
       <Box className=" my-3 shadow-md !rounded-xl ">

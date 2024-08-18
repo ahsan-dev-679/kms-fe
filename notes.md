@@ -1,5 +1,5 @@
-1- Meal Manangemt (List, View, )
-2- Order Management (List, View)
+1- Meal Manangemt (List, View, ) ✅
+2- Order Management (List, View) ✅
 3- Chef Management (list)
 4- Setting Page
 5- Logout Modal

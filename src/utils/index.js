@@ -65,3 +65,7 @@ export const getStockIcon = (stock) => {
   }
   return { Icon: IconArrowUp, color: "green" };
 };
+export const capitalizeFirstLetter = (string) => {
+  if (!string) return "";
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
