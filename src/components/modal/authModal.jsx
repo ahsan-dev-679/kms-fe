@@ -1,0 +1,70 @@
+import React, { useState } from "react";
+import {
+  Modal,
+  Button,
+  Grid,
+  Title,
+  Text,
+  Image,
+  Flex,
+  ActionIcon,
+  NumberInput,
+  Box,
+} from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { Carousel } from "@mantine/carousel";
+import { IconCircleArrowRightFilled } from "@tabler/icons-react";
+import { colors } from "@/configs/theme.config";
+import { ImPlus, ImMinus } from "react-icons/im";
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import { useCartStore } from "@/stores/cart.store";
+import MainImg from "@/assets/common/food-ordering.png";
+import Login from "../auth/Login";
+import Register from "../auth/Register";
+// import Logo from "/logos/logos192.png";
+import Logo from "../../../public/logos/logo512.png";
+
+const AuthModal = ({ opened, close, formType }) => {
+  const mobile = useMediaQuery("(max-width: 1024px)");
+  return (
+    <Modal
+      size={mobile ? "md" : "calc(100vw - 20rem)"}
+      //   size={"100%"}
+      radius={"lg"}
+      opened={opened}
+      onClose={close}
+      title=""
+    >
+      <Grid gutter="lg">
+        <Grid.Col
+          style={{
+            flex: 1,
+          }}
+          span={mobile ? 12 : 6}
+          className="border-r-2 "
+        >
+          <Image
+            style={{
+              width: 200,
+              height: 150,
+              objectFit: "contain",
+            }}
+            src={
+              "https://img.freepik.com/free-vector/hand-drawn-antojitos-logo-design_23-2149574494.jpg?t=st=1723462922~exp=1723466522~hmac=3334c004100e276b0699fd9ef60f33b14a04bdc9ee0d410be456c17ed585f050&w=740"
+            }
+          />
+
+          {formType === "login" && <Login />}
+          {formType === "register" && <Register />}
+        </Grid.Col>
+        {!mobile && (
+          <Grid.Col span={mobile ? 12 : 6} className="bg-[#fafafa]">
+            <Image style={{ objectFit: "contain" }} radius="md" src={MainImg} />
+          </Grid.Col>
+        )}
+      </Grid>
+    </Modal>
+  );
+};
+
+export default AuthModal;
