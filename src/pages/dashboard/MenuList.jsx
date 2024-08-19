@@ -9,8 +9,10 @@ import { useDisclosure } from "@mantine/hooks";
 import MealDetail from "@/components/modal/MealDetail";
 import { DeletePopup } from "@/components/alert/DeletePopup";
 import Transition from "@/components/layout/Transition";
+import { colors } from "@/configs/theme.config";
 
 const MenuList = () => {
+  const navigate = useNavigate();
   const [id, setId] = useState(null);
   const [detail, setDetail] = useState({});
   const [openedModal, { open: openModal, close: closeModal }] =
@@ -228,8 +230,18 @@ const MenuList = () => {
 
   return (
     <Transition>
-      <Box className="my-3 shadow-md !rounded-xl ">
-        <GeneralTable columns={columns} data={data} heading={"Meal List"} />
+      <Box className="my-3 shadow-md !rounded-xl">
+        <Flex justify={"end"} my={4}>
+          <Button
+            onClick={() => navigate("/dashboard/menu/management")}
+            color={colors.primary[100]}
+            radius="sm"
+            size="sm"
+          >
+            Add New Meal
+          </Button>
+        </Flex>
+        <GeneralTable columns={columns} data={data} heading={"Menu List"} />
       </Box>
 
       <MealDetail detail={detail} opened={openedModal} close={closeModal} />

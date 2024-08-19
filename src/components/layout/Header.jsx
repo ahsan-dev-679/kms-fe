@@ -24,11 +24,13 @@ const Header = () => {
       {isMobile ? (
         <Flex align={"center"} gap={"lg"}>
           <NotificationMenu />
+
           <MobileProfileBox profile={user} />
         </Flex>
       ) : (
         <Flex align={"center"} gap={"lg"}>
           <NotificationMenu />
+
           <DesktopProfileBox profile={user} />
         </Flex>
       )}
