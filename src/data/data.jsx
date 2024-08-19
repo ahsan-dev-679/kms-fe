@@ -108,8 +108,8 @@ export const dashboardAsideMenus = [
     icon: <IconLayoutGrid />,
   },
   {
-    label: "Meal Management",
-    path: "/dashboard/meal/list",
+    label: "Menu Management",
+    path: "/dashboard/menu/list",
     role: ["admin"],
     icon: <IconToolsKitchen />,
   },

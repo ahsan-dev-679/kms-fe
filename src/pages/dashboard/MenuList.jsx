@@ -1,6 +1,6 @@
 import * as uuid from "uuid";
 import React, { useMemo, useState } from "react";
-import GeneralTable from "./../../components/table/GeneralTable";
+import GeneralTable from "../../components/table/GeneralTable";
 import { Box, Flex, Text, Image, Tooltip, Menu, Button } from "@mantine/core";
 import { formatPrice, getStockIcon } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,8 +8,9 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDisclosure } from "@mantine/hooks";
 import MealDetail from "@/components/modal/MealDetail";
 import { DeletePopup } from "@/components/alert/DeletePopup";
+import Transition from "@/components/layout/Transition";
 
-const MealList = () => {
+const MenuList = () => {
   const [id, setId] = useState(null);
   const [detail, setDetail] = useState({});
   const [openedModal, { open: openModal, close: closeModal }] =
@@ -226,7 +227,7 @@ const MealList = () => {
   );
 
   return (
-    <>
+    <Transition>
       <Box className="my-3 shadow-md !rounded-xl ">
         <GeneralTable columns={columns} data={data} heading={"Meal List"} />
       </Box>
@@ -239,8 +240,8 @@ const MealList = () => {
         opened={openedAlert}
         close={closeAlert}
       />
-    </>
+    </Transition>
   );
 };
 
-export default MealList;
+export default MenuList;

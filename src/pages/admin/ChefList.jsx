@@ -6,6 +6,7 @@ import { capitalizeFirstLetter, formatDate, formatPrice } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { IconEye } from "@tabler/icons-react";
 import { chefList } from "@/data/data";
+import Transition from "@/components/layout/Transition";
 
 const ChefList = () => {
   const navigate = useNavigate();
@@ -76,11 +77,11 @@ const ChefList = () => {
     []
   );
   return (
-    <>
+    <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable columns={columns} data={chefList} heading={"Chef List"} />
       </Box>
-    </>
+    </Transition>
   );
 };
 

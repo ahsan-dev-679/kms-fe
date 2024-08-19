@@ -5,6 +5,7 @@ import { Box, Text, Button, Select } from "@mantine/core";
 import { formatDate, formatPrice } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { IconEye } from "@tabler/icons-react";
+import Transition from "@/components/layout/Transition";
 
 const OrderList = () => {
   const navigate = useNavigate();
@@ -153,11 +154,11 @@ const OrderList = () => {
   );
 
   return (
-    <>
+    <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable columns={columns} data={data} heading={"Order List"} />
       </Box>
-    </>
+    </Transition>
   );
 };
 
