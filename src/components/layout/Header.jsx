@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, Box, Flex, Popover, Text, Image } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import NotificationMenu from "../dashboard/NotificationMenu";
 
 const Header = () => {
   const user = {
@@ -21,9 +22,15 @@ const Header = () => {
       </Text>
 
       {isMobile ? (
-        <MobileProfileBox profile={user} />
+        <Flex align={"center"} gap={"lg"}>
+          <NotificationMenu />
+          <MobileProfileBox profile={user} />
+        </Flex>
       ) : (
-        <DesktopProfileBox profile={user} />
+        <Flex align={"center"} gap={"lg"}>
+          <NotificationMenu />
+          <DesktopProfileBox profile={user} />
+        </Flex>
       )}
     </Flex>
   );

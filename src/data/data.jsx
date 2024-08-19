@@ -4,6 +4,7 @@ import {
   IconChefHat,
   IconToolsKitchen,
   IconSettings,
+  IconLayoutGrid,
 } from "@tabler/icons-react";
 import { LuHome } from "react-icons/lu";
 
@@ -104,7 +105,7 @@ export const dashboardAsideMenus = [
     label: "Dashboard",
     path: "/dashboard",
     role: ["admin", "manager"],
-    icon: <LuHome />,
+    icon: <IconLayoutGrid />,
   },
   {
     label: "Meal Management",
@@ -126,7 +127,7 @@ export const dashboardAsideMenus = [
     icon: <IconChecklist />,
   },
   {
-    label: "Analytics",
+    label: "Settings",
     path: "/dashboard/settings",
     role: ["admin", "chef"],
     icon: <IconSettings />,
@@ -212,5 +213,98 @@ export const chefList = [
     joinedAt: "2022-10-12",
     kitchenNo: "K110",
     profile: "https://i.pravatar.cc/150?u=a04258a2462d826712d",
+  },
+];
+
+export const notifications = [
+  {
+    type: "stock",
+    message: "Pasta meal has low stock",
+    isRead: false,
+    createdAt: "2024-08-07T07:33:00.132+00:00",
+  },
+  {
+    type: "order",
+    message: "Order #1234 has been shipped",
+    isRead: true,
+    createdAt: "2024-08-06T09:21:45.000+00:00",
+  },
+  {
+    type: "account",
+    message: "Chef Emily has registered. Awaiting account approval",
+    isRead: false,
+    createdAt: "2024-08-05T15:10:30.000+00:00",
+  },
+  {
+    type: "coupon",
+    message: "New coupon 'SUMMER25' available for 25% off",
+    isRead: true,
+    createdAt: "2024-08-04T12:00:00.000+00:00",
+  },
+  {
+    type: "stock",
+    message: "Chicken dish stock is critically low",
+    isRead: false,
+    createdAt: "2024-08-03T08:45:15.000+00:00",
+  },
+  {
+    type: "order",
+    message: "Order #5678 has been delivered",
+    isRead: true,
+    createdAt: "2024-08-02T18:30:00.000+00:00",
+  },
+  {
+    type: "account",
+    message: "Account update requested by Chef Mike",
+    isRead: false,
+    createdAt: "2024-08-01T11:50:22.000+00:00",
+  },
+  {
+    type: "coupon",
+    message: "Exclusive coupon 'WELCOME10' for new users",
+    isRead: true,
+    createdAt: "2024-07-31T14:15:00.000+00:00",
+  },
+  {
+    type: "stock",
+    message: "Vegetable stock updated successfully",
+    isRead: false,
+    createdAt: "2024-07-30T10:00:00.000+00:00",
+  },
+  {
+    type: "order",
+    message: "Order #9101 is pending payment",
+    isRead: false,
+    createdAt: "2024-07-29T16:45:00.000+00:00",
+  },
+  {
+    type: "account",
+    message: "Chef Lisa's account approved",
+    isRead: true,
+    createdAt: "2024-07-28T09:00:00.000+00:00",
+  },
+  {
+    type: "coupon",
+    message: "Limited time offer 'FALL15' - 15% off on all meals",
+    isRead: false,
+    createdAt: "2024-07-27T13:30:00.000+00:00",
+  },
+  {
+    type: "stock",
+    message: "Seafood stock is running low",
+    isRead: true,
+    createdAt: "2024-07-26T08:10:00.000+00:00",
+  },
+  {
+    type: "order",
+    message: "Order #1122 has been canceled",
+    isRead: false,
+    createdAt: "2024-07-25T17:05:00.000+00:00",
+  },
+  {
+    type: "account",
+    message: "Chef Alex requested to update their account information",
+    isRead: false,
+    createdAt: "2024-07-24T11:20:00.000+00:00",
   },
 ];

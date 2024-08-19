@@ -24,7 +24,7 @@ const DashboardLayout = () => {
       <Aside setAsideOpen={setAsideOpen} asideOpen={asideOpen} />
 
       <Box
-        className={`  content-wrapper ${asideOpen ? "active-aside" : ""}`}
+        className={`  content-wrapper notifications{asideOpen ? "active-aside" : ""}`}
         style={{
           width: "100%",
           transition: ".4s",
