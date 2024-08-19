@@ -1,8 +1,8 @@
-import { BarChart } from "@mantine/charts";
+import { AreaChart } from "@mantine/charts";
 import { Box, Flex, Select, Title } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
 
-const AnalyticsChart = () => {
+const InComeChart = () => {
   const barRef = useRef();
   const [chartHeight, setchartHeight] = useState(600);
   useEffect(() => {
@@ -10,7 +10,6 @@ const AnalyticsChart = () => {
     console.log("height", height);
     setchartHeight(height - 100);
   }, []);
-
   return (
     <Box
       direction={"column"}
@@ -29,7 +28,7 @@ const AnalyticsChart = () => {
           fw={"500"}
           c={"#2E3459"}
         >
-          Orders Analytics
+          Income Analytics
         </Title>
 
         <Select
@@ -49,15 +48,17 @@ const AnalyticsChart = () => {
         />
       </Flex>
       <Box className={"px-5 mt-5  h-full"} ref={barRef}>
-        <BarChart
+        <AreaChart
           barProps={{
-            barSize: 32,
+            barSize: 40,
             radius: 6,
           }}
+          unit="€"
+          withGradient
           h={chartHeight}
           data={chartData}
           dataKey="month"
-          series={[{ name: "Orders", color: "#3DA270" }]}
+          series={[{ name: "Income", color: "#3DA270" }]}
           tickLine="xy"
         />
       </Box>
@@ -65,18 +66,18 @@ const AnalyticsChart = () => {
   );
 };
 
-export default AnalyticsChart;
+export default InComeChart;
 const chartData = [
-  { month: "Jan", Orders: 15 },
-  { month: "Feb", Orders: 33 },
-  { month: "Mar", Orders: 10 },
-  { month: "Apr", Orders: 45 },
-  { month: "May", Orders: 28 },
-  { month: "June", Orders: 50 },
-  { month: "July", Orders: 27 },
-  { month: "Aug", Orders: 47 },
-  { month: "Sept", Orders: 29 },
-  { month: "Oct", Orders: 11 },
-  { month: "Nov", Orders: 23 },
-  { month: "Dec", Orders: 32 },
+  { month: "Jan", Income: 90 },
+  { month: "Feb", Income: 30 },
+  { month: "Mar", Income: 100 },
+  { month: "Apr", Income: 45 },
+  { month: "May", Income: 28 },
+  { month: "June", Income: 50 },
+  { month: "July", Income: 27 },
+  { month: "Aug", Income: 47 },
+  { month: "Sept", Income: 29 },
+  { month: "Oct", Income: 10 },
+  { month: "Nov", Income: 35 },
+  { month: "Dec", Income: 58 },
 ];

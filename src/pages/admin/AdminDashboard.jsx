@@ -10,6 +10,7 @@ import {
 import SummaryCards from "@/components/dashboard/SummaryCards";
 import AnalyticsChart from "@/components/dashboard/AnalyticsChart";
 import RecentActivities from "@/components/dashboard/RecentActivities";
+import InComeChart from "@/components/dashboard/InComeChart";
 
 const AdminDashboard = () => {
   const dashboardOverviewCards = [
@@ -53,11 +54,11 @@ const AdminDashboard = () => {
         ))}
 
         <Grid h={"full"} className="w-full">
-          <Grid.Col span={{ base: 12, lg: 9, md: 9, sm: 6 }}>
-            <AnalyticsChart />
+          <Grid.Col span={{ base: 12, lg: 7, md: 12, sm: 12 }}>
+            <InComeChart />
           </Grid.Col>
-          <Grid.Col span={{ base: 12, lg: 3, md: 3, sm: 6 }}>
-            <RecentActivities />
+          <Grid.Col span={{ base: 12, lg: 5, md: 12, sm: 12 }}>
+            <AnalyticsChart />
           </Grid.Col>
         </Grid>
       </Grid>

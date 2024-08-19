@@ -21,6 +21,7 @@ const Aside = ({ asideOpen, setAsideOpen }) => {
         height: "100%",
         minWidth: isMobile ? "0" : "70px",
       }}
+      className="border-2 shadow-md"
     >
       <Box
         style={{
