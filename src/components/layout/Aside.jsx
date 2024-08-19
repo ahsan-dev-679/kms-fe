@@ -33,24 +33,26 @@ const Aside = ({ asideOpen, setAsideOpen }) => {
         }}
       ></Box>
       <Box className="z-10">
-        <Box
-          right={isMobile && !asideOpen ? "-35px" : "-24px"}
-          top={isMobile && !asideOpen ? "-10px" : "60px"}
-          style={{
-            transform: isMobile && !asideOpen ? "rotate(47deg)" : "unset",
-          }}
-          className="z-10 flex items-center absolute  top-6 justify-center cursor-pointer rounded-full bg-[#BBF0D6] h-[48px] w-[48px]"
-          onClick={() => setAsideOpen(!asideOpen)}
-        >
-          <FaChevronLeft
-            color="#208251"
-            className="text-[18px]"
+        {isMobile && (
+          <Box
+            right={isMobile && !asideOpen ? "-35px" : "-24px"}
+            top={isMobile && !asideOpen ? "-10px" : "60px"}
             style={{
-              transition: "all 0.2s cubic-bezier(0.8, 0.74, 0.3, 0.99) 0s",
-              transform: asideOpen ? "scaleX(1)" : "scaleX(-1)",
+              transform: isMobile && !asideOpen ? "rotate(47deg)" : "unset",
             }}
-          />
-        </Box>
+            className="z-10 flex items-center absolute  top-6 justify-center cursor-pointer rounded-full bg-[#BBF0D6] h-[48px] w-[48px]"
+            onClick={() => setAsideOpen(!asideOpen)}
+          >
+            <FaChevronLeft
+              color="#208251"
+              className="text-[18px]"
+              style={{
+                transition: "all 0.2s cubic-bezier(0.8, 0.74, 0.3, 0.99) 0s",
+                transform: asideOpen ? "scaleX(1)" : "scaleX(-1)",
+              }}
+            />
+          </Box>
+        )}
         <Flex
           direction={"column"}
           style={{
@@ -120,6 +122,7 @@ const Menu = ({ asideOpen }) => {
               paddingLeft: asideOpen ? "15px" : "0",
               marginTop: "10px",
               justifyContent: asideOpen ? "flex-start" : "center",
+              padding: "10px 10px",
             }}
             className={
               item.path.includes(pathName)
@@ -136,38 +139,6 @@ const Menu = ({ asideOpen }) => {
       ))}
 
       <Box className="pt-5 mt-5 border-t border-t-[#EAEAEA] w-full">
-        <Tooltip
-          disabled={!isMobile}
-          withArrow
-          arrowOffset={11}
-          color={"#208251"}
-          arrowSize={10}
-          position="right-start"
-          offset={5}
-          label={"My Setting"}
-        >
-          <Link
-            style={{
-              color: "#909FAF",
-              fontSize: "15px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              paddingLeft: asideOpen ? "15px" : "0",
-              marginTop: "10px",
-              justifyContent: asideOpen ? "flex-start" : "center",
-            }}
-            className={
-              ["/dashboard/setting"].includes(pathName)
-                ? `active-menu aside-menu line-clamp-1`
-                : "aside-menu line-clamp-1"
-            }
-            to={"/dashboard/settings"}
-          >
-            <IconSettings />
-            {asideOpen ? "My Setting" : ""}
-          </Link>
-        </Tooltip>
         <Tooltip
           disabled={!isMobile}
           withArrow

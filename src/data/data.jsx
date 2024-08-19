@@ -3,6 +3,7 @@ import {
   IconChecklist,
   IconChefHat,
   IconToolsKitchen,
+  IconSettings,
 } from "@tabler/icons-react";
 import { LuHome } from "react-icons/lu";
 
@@ -101,7 +102,7 @@ export const mealCategories = [
 export const dashboardAsideMenus = [
   {
     label: "Dashboard",
-    path: "/dashboard/",
+    path: "/dashboard",
     role: ["admin", "manager"],
     icon: <LuHome />,
   },
@@ -124,12 +125,12 @@ export const dashboardAsideMenus = [
     role: ["admin"],
     icon: <IconChecklist />,
   },
-  // {
-  //   label: "Analytics",
-  //   path: "/reports",
-  //   role: ["admin"],
-  //   icon: <LuHome />,
-  // },
+  {
+    label: "Analytics",
+    path: "/dashboard/settings",
+    role: ["admin", "chef"],
+    icon: <IconSettings />,
+  },
 ];
 export const chefList = [
   {
