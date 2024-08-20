@@ -1,28 +1,11 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  Button,
-  Grid,
-  Title,
-  Text,
-  Image,
-  Flex,
-  ActionIcon,
-  NumberInput,
-  Box,
-} from "@mantine/core";
+import { Modal, Grid, Image } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { Carousel } from "@mantine/carousel";
-import { IconCircleArrowRightFilled } from "@tabler/icons-react";
-import { colors } from "@/configs/theme.config";
-import { ImPlus, ImMinus } from "react-icons/im";
-import { FaPlus, FaMinus } from "react-icons/fa6";
-import { useCartStore } from "@/stores/cart.store";
+
 import MainImg from "@/assets/common/food-ordering.png";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 // import Logo from "/logos/logos192.png";
-import Logo from "../../../public/logos/logo512.png";
 
 const AuthModal = ({ opened, close, formType }) => {
   const mobile = useMediaQuery("(max-width: 1024px)");

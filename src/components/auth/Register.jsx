@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { colors } from "@/configs/theme.config";
-import AuthModal from "../modal/authModal";
+import AuthModal from "../modal/AuthModal";
 import { useDisclosure } from "@mantine/hooks";
 
 const Register = () => {
