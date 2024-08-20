@@ -14,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import { colors } from "@/configs/theme.config";
 import { useDisclosure } from "@mantine/hooks";
+import AuthModal from "../modal/AuthModal";
 
 const Login = () => {
   const [openedAuthModal, { open: openAuthModal, close: closeAuthModal }] =
