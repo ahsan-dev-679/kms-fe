@@ -16,7 +16,7 @@ const AdminDashboard = () => {
   const dashboardOverviewCards = [
     {
       heading: "Total Earning",
-      amount: "10,500€",
+      amount: "1,500€",
       icon: <IconDatabaseDollar />,
     },
     {

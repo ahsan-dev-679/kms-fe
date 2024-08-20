@@ -90,6 +90,7 @@ div[asideopen="false"] {
 }
 .aside-menu.active-menu,
 .aside-menu.active-menu {
+  position: relative;
   filter: grayscale(0);
   opacity: 1;
   font-weight: 600 !important;
@@ -108,7 +109,7 @@ div[asideopen="false"] {
   right: 0;
   z-index: 99;
   position: absolute;
-  border-radius: 0 50px 50px 0 !important;
+  border-radius: 0 80px 80px 0 !important;
 }
 
 .aside-menu.active-menu {
@@ -163,4 +164,10 @@ div[asideopen="false"] {
   75% {
     transform: rotateZ(2deg);
   }
+}
+.mantine-Table-td {
+  background-color: transparent !important;
+}
+.mantine-Table-td:hover {
+  background-color: transparent !important;
 }

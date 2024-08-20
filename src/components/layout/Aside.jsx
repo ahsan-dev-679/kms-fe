@@ -99,6 +99,25 @@ const Menu = ({ asideOpen }) => {
   const navigate = useNavigate();
   const pathName = location.pathname;
 
+  const normalizePath = (path) => path.replace(/\/+$/, "");
+  const isActiveMenuItem = (currentPath, menuItemPath) => {
+    const normalizedCurrentPath = normalizePath(currentPath);
+    const normalizedMenuItemPath = normalizePath(menuItemPath);
+
+    if (normalizedCurrentPath === normalizedMenuItemPath) {
+      return true;
+    }
+    const currentSegments = normalizedCurrentPath.split("/").slice(1, 3);
+    const menuItemSegments = normalizedMenuItemPath.split("/").slice(1, 3);
+
+    return (
+      currentSegments.length >= 2 &&
+      menuItemSegments.length >= 2 &&
+      currentSegments[0] === menuItemSegments[0] &&
+      currentSegments[1] === menuItemSegments[1]
+    );
+  };
+
   return (
     <Box className="pt-6 relative overflow-y-auto" asideopen={`${asideOpen}`}>
       {dashboardAsideMenus.map((item, i) => (
@@ -126,7 +145,8 @@ const Menu = ({ asideOpen }) => {
               padding: "10px 10px",
             }}
             className={
-              item.path.includes(pathName)
+              // item.path.includes(pathName)
+              isActiveMenuItem(pathName, item.path)
                 ? `active-menu aside-menu line-clamp-1`
                 : "aside-menu line-clamp-1"
             }

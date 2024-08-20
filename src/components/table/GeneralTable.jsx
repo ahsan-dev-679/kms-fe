@@ -8,6 +8,7 @@ const GeneralTable = ({ columns, data, heading }) => {
   const table = useMantineReactTable({
     columns,
     data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    enableRowSelection: true,
 
     renderTopToolbarCustomActions: ({ table }) => (
       <>

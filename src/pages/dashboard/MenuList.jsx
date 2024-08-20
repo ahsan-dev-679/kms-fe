@@ -1,7 +1,16 @@
 import * as uuid from "uuid";
 import React, { useMemo, useState } from "react";
 import GeneralTable from "../../components/table/GeneralTable";
-import { Box, Flex, Text, Image, Tooltip, Menu, Button } from "@mantine/core";
+import {
+  Box,
+  Flex,
+  Text,
+  Image,
+  Tooltip,
+  Menu,
+  Button,
+  Title,
+} from "@mantine/core";
 import { formatPrice, getStockIcon } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -10,6 +19,8 @@ import MealDetail from "@/components/modal/MealDetail";
 import { DeletePopup } from "@/components/alert/DeletePopup";
 import Transition from "@/components/layout/Transition";
 import { colors } from "@/configs/theme.config";
+import RowActionPopup from "@/components/dashboard/RowActionPopup";
+import { IconTrash, IconAssembly } from "@tabler/icons-react";
 
 const MenuList = () => {
   const navigate = useNavigate();
@@ -183,8 +194,8 @@ const MenuList = () => {
       },
 
       {
-        accessorKey: "action",
-        header: "Action",
+        accessorKey: "actions",
+        header: "Actions",
         Cell: ({ cell }) => {
           return (
             <Menu width={150} shadow="md">
@@ -242,6 +253,26 @@ const MenuList = () => {
           </Button>
         </Flex>
         <GeneralTable columns={columns} data={data} heading={"Menu List"} />
+        <RowActionPopup className="p-3" isOpen={true}>
+          <Title order={4}>Add Meals</Title>
+          <Flex>
+            <Button
+              className="gap-2 bg-red-500 hover:bg-red-600"
+              // disabled={!table.getSelectedRowModel().rows.length}
+            >
+              <IconTrash size={20} />
+              <p className="hidden md:block">Delete Selected</p>
+            </Button>
+            <Button
+              variant={"outline"}
+              // disabled={!(table.getSelectedRowModel().rows.length === 1)}
+              className="gap-2 border !border-spring-green-500 !text-spring-green-500"
+            >
+              <IconAssembly size={20} />
+              <p className="hidden md:block">Edit</p>
+            </Button>
+          </Flex>
+        </RowActionPopup>
       </Box>
 
       <MealDetail detail={detail} opened={openedModal} close={closeModal} />
