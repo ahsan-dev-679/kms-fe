@@ -11,6 +11,8 @@ import {
   TextInput,
   Title,
   Avatar,
+  Group,
+  FileButton,
 } from "@mantine/core";
 import { isEmail, useForm } from "@mantine/form";
 import React, { useEffect, useState } from "react";
@@ -153,6 +155,20 @@ const Settings = () => {
               />
             </Box>
           </Flex>
+          <Group justify="center">
+            <FileButton accept="image/png,image/jpeg">
+              {(props) => (
+                <Button
+                  variant="light"
+                  radius={"sm"}
+                  color={colors.primary[100]}
+                  {...props}
+                >
+                  Upload image
+                </Button>
+              )}
+            </FileButton>
+          </Group>
         </Flex>
         <Box mt={isMobile ? "20px" : "40px"} pt={isMobile ? "20px" : "40px"}>
           <Box

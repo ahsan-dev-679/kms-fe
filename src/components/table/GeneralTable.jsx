@@ -8,7 +8,7 @@ const GeneralTable = ({ columns, data, heading }) => {
   const table = useMantineReactTable({
     columns,
     data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    enableRowSelection: true,
+    // enableRowSelection: true,
 
     renderTopToolbarCustomActions: ({ table }) => (
       <>
@@ -16,7 +16,7 @@ const GeneralTable = ({ columns, data, heading }) => {
           fw={550}
           px={6}
           style={{
-            color: colors.primary[100],
+            color: "#141B43",
             fontSize: "clamp(0.875rem, 0.5417rem + 1.7778vw, 1.875rem)",
           }}
         >

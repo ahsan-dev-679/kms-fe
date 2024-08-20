@@ -10,6 +10,7 @@ import {
   Menu,
   Button,
   Title,
+  Group,
 } from "@mantine/core";
 import { formatPrice, getStockIcon } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,6 +22,7 @@ import Transition from "@/components/layout/Transition";
 import { colors } from "@/configs/theme.config";
 import RowActionPopup from "@/components/dashboard/RowActionPopup";
 import { IconTrash, IconAssembly } from "@tabler/icons-react";
+import GeneralModal from "@/components/modal/GeneralModal";
 
 const MenuList = () => {
   const navigate = useNavigate();
@@ -30,6 +32,10 @@ const MenuList = () => {
     useDisclosure(false);
   const [openedAlert, { open: openAlert, close: closeAlert }] =
     useDisclosure(false);
+  const [
+    openedRowSelection,
+    { open: openRowSelection, close: closeRowSelection },
+  ] = useDisclosure(false);
 
   const deleteHandler = () => {
     console.log("id.....", id);
@@ -253,26 +259,24 @@ const MenuList = () => {
           </Button>
         </Flex>
         <GeneralTable columns={columns} data={data} heading={"Menu List"} />
-        <RowActionPopup className="p-3" isOpen={true}>
+        {/* <RowActionPopup className="p-3" isOpen={true}>
           <Title order={4}>Add Meals</Title>
           <Flex>
             <Button
-              className="gap-2 bg-red-500 hover:bg-red-600"
-              // disabled={!table.getSelectedRowModel().rows.length}
+              className="gap-2 bg-red-500 hover:bg-red-600" 
             >
               <IconTrash size={20} />
               <p className="hidden md:block">Delete Selected</p>
             </Button>
             <Button
-              variant={"outline"}
-              // disabled={!(table.getSelectedRowModel().rows.length === 1)}
+              variant={"outline"} 
               className="gap-2 border !border-spring-green-500 !text-spring-green-500"
             >
               <IconAssembly size={20} />
               <p className="hidden md:block">Edit</p>
             </Button>
           </Flex>
-        </RowActionPopup>
+        </RowActionPopup> */}
       </Box>
 
       <MealDetail detail={detail} opened={openedModal} close={closeModal} />
@@ -283,6 +287,23 @@ const MenuList = () => {
         opened={openedAlert}
         close={closeAlert}
       />
+      {/* <GeneralModal
+        close={closeRowSelection}
+        opened={openRowSelection}
+        component={
+          <>
+            <Group justify="flex-end" my={4} py={16}>
+              <Button onClick={closeRowSelection} variant="default">
+                Cancel
+              </Button>
+              <Button variant="filled" color="red">
+                Publish
+
+              </Button>
+            </Group>
+          </>
+        }
+      /> */}
     </Transition>
   );
 };
