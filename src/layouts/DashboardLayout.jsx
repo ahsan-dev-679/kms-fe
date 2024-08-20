@@ -4,7 +4,6 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Box } from "@mantine/core";
 import Aside from "@/components/layout/Aside";
 import Header from "@/components/layout/Header";
-import { DatesProvider } from "@mantine/dates";
 
 const DashboardLayout = () => {
   const isMobile = useMediaQuery("(max-width:1023px)");
@@ -24,7 +23,7 @@ const DashboardLayout = () => {
       <Aside setAsideOpen={setAsideOpen} asideOpen={asideOpen} />
 
       <Box
-        className={`  content-wrapper notifications{asideOpen ? "active-aside" : ""}`}
+        className={`content-wrapper notifications{asideOpen ? "active-aside" : ""}`}
         style={{
           width: "100%",
           transition: ".4s",
