@@ -34,7 +34,7 @@ const Navbar = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { cart } = useCartStore();
   const [formType, setformType] = useState("login");
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   return (
     <>
       <div className="top-0 sticky py-1 lg:py-2 w-full bg-[#fff] lg:relative z-50 border-b-2 mb-6">
@@ -67,7 +67,7 @@ const Navbar = () => {
               <div className="hidden lg:flex lg:items-center gap-x-2">
                 {isAuthenticated ? (
                   <Flex align={"center"} gap={20}>
-                    <Indicator color="#40C057" inline label="2" size={16}>
+                    {/* <Indicator color="#40C057" inline label="2" size={16}>
                       <IconBell
                         style={{
                           width: rem(30),
@@ -75,7 +75,7 @@ const Navbar = () => {
                           cursor: "pointer",
                         }}
                       />
-                    </Indicator>
+                    </Indicator> */}
 
                     <Indicator
                       color="#40C057"

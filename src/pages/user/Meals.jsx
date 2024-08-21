@@ -94,7 +94,7 @@ const Meals = () => {
                 Array.from({ length: 8 }).map((_, idx) => (
                   <MealCardSk key={idx} />
                 ))
-              ) : menuList && !menuList.length > 0 ? (
+              ) : menuList && menuList.length > 0 ? (
                 menuList?.map((value, idx) => (
                   <MealsCard meal={value} key={idx} />
                 ))
