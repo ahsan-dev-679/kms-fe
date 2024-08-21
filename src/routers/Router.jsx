@@ -17,6 +17,8 @@ import OrderList from "@/pages/dashboard/OrderList";
 import ChefList from "@/pages/admin/ChefList";
 import Settings from "@/pages/dashboard/Settings";
 import MenuManagement from "@/pages/dashboard/MenuManagement";
+import About from "@/pages/About";
+import Contact from "@/pages/Contact";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -26,6 +28,8 @@ const Router = () => {
       {/* Default Layout routes */}
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/meals" element={<Meals />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/my-orders" element={<Orders />} />
