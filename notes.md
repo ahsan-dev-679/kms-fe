@@ -1,7 +1,5 @@
-==> Sidebar links
-==> Notification
-==> Charts
-Read the documentation
-==> Meals Page (add or update)
-
-==> Breadcrumbs (Not Important)
+==> Add Skeleton and Loader
+==> Auth Modal issue
+==> add badge for discount and strike thorugh
+==> Home Page
+==> layout for Chef

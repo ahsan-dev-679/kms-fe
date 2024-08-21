@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Card,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  Flex,
-  Title,
-} from "@mantine/core";
+import { Card, Image, Text, Button, Flex } from "@mantine/core";
 import { ImPlus } from "react-icons/im";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { useDisclosure } from "@mantine/hooks";
@@ -21,8 +12,9 @@ const MealsCard = ({ meal }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
-  const { cart, addToCart } = useCartStore();
+  const { addToCart } = useCartStore();
 
+  const discount = 0;
   return (
     <>
       <Card
@@ -51,7 +43,10 @@ const MealsCard = ({ meal }) => {
 
         <Flex align={"center"} justify={"space-between"} mt={2}>
           <Text size="md" c="black" fw={700}>
-         {meal.price}
+            {discount > 0 && (
+              <span className="pr-2 line-through font-thin">{meal.price}€</span>
+            )}
+            {meal.price}€
           </Text>
           <Button
             onClick={(e) => {
