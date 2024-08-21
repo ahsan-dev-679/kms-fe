@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Title } from "@mantine/core";
+import { Box, Flex, Grid, Skeleton, Title } from "@mantine/core";
 import {
   IconGauge,
   IconChefHat,
@@ -35,6 +35,7 @@ const AdminDashboard = () => {
       icon: <IconChefHat />,
     },
   ];
+  const loading = false;
   return (
     <Box h={"full"}>
       <Title mb={"lg"} mt={"lg"} fw={"500"} c={"#2E3459"}>
@@ -42,23 +43,59 @@ const AdminDashboard = () => {
       </Title>
 
       <Grid h={"full"}>
-        {dashboardOverviewCards.map((item, index) => (
-          <Grid.Col span={{ base: 12, lg: 3, md: 3, sm: 6 }} key={index}>
-            <SummaryCards
-              heading={item.heading}
-              subHeadng={item.subHeadng}
-              amount={item.amount}
-              icon={item.icon}
-            />
-          </Grid.Col>
-        ))}
+        {loading
+          ? Array.from({ length: 4 }).map((_, idx) => (
+              <Grid.Col key={idx} span={{ base: 12, lg: 3, md: 3, sm: 6 }}>
+                <Flex
+                  direction={"column"}
+                  justify={"space-between"}
+                  className="bg-white px-5 py-4 h-full shadow-md rounded-lg"
+                >
+                  <Skeleton height={15} radius="md" />
+                  <Skeleton height={15} mt={12} radius="md" />
+                  <Skeleton height={15} mt={12} width="70%" radius="md" />
+                </Flex>
+              </Grid.Col>
+            ))
+          : dashboardOverviewCards.map((item, index) => (
+              <Grid.Col span={{ base: 12, lg: 3, md: 3, sm: 6 }} key={index}>
+                <SummaryCards
+                  heading={item.heading}
+                  subHeadng={item.subHeadng}
+                  amount={item.amount}
+                  icon={item.icon}
+                />
+              </Grid.Col>
+            ))}
 
         <Grid h={"full"} className="w-full">
           <Grid.Col span={{ base: 12, lg: 7, md: 12, sm: 12 }}>
-            <InComeChart />
+            {loading ? (
+              <Box
+                direction={"column"}
+                justify={"space-between"}
+                className="bg-white p-2 h-[55vh] overflow-hidden relative shadow-md rounded-lg"
+                mt={"md"}
+              >
+                <Skeleton height={"100%"} radius="md" />
+              </Box>
+            ) : (
+              <InComeChart />
+            )}
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 5, md: 12, sm: 12 }}>
-            <AnalyticsChart />
+            {loading ? (
+              <Box
+                direction={"column"}
+                justify={"space-between"}
+                className="bg-white p-2 h-[55vh] overflow-hidden relative shadow-md rounded-lg"
+                mt={"md"}
+              >
+                <Skeleton height={"100%"} radius="md" />
+              </Box>
+            ) : (
+              <AnalyticsChart />
+            )}
           </Grid.Col>
         </Grid>
       </Grid>

@@ -156,7 +156,10 @@ const OrderList = () => {
   return (
     <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
-        <GeneralTable columns={columns} data={data} heading={"Order List"} />
+        <GeneralTable
+        isLoading={false}
+        
+        columns={columns} data={data} heading={"Order List"} />
       </Box>
     </Transition>
   );

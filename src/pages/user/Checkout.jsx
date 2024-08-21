@@ -17,11 +17,12 @@ import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
+const loading = false;
+
 const Checkout = () => {
   const navigate = useNavigate();
   const tablet = useMediaQuery("(max-width: 1024px)");
   const midScreen = useMediaQuery("(max-width: 768px)");
-  const loading = false;
   const ItemComponent = () => {
     return (
       <Box>

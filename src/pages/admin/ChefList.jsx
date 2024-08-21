@@ -79,7 +79,10 @@ const ChefList = () => {
   return (
     <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
-        <GeneralTable columns={columns} data={chefList} heading={"Chef List"} />
+        <GeneralTable
+        isLoading={false}
+        
+        columns={columns} data={chefList} heading={"Chef List"} />
       </Box>
     </Transition>
   );

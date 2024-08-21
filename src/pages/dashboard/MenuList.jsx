@@ -258,7 +258,12 @@ const MenuList = () => {
             Add New Meal
           </Button>
         </Flex>
-        <GeneralTable columns={columns} data={data} heading={"Menu List"} />
+        <GeneralTable
+          isLoading={false}
+          columns={columns}
+          data={data}
+          heading={"Menu List"}
+        />
         {/* <RowActionPopup className="p-3" isOpen={true}>
           <Title order={4}>Add Meals</Title>
           <Flex>

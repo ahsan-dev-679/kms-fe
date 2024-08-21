@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, Text, Title } from "@mantine/core";
+import { Box, Flex, Skeleton, Text, Title } from "@mantine/core";
 
 const SummaryCards = ({ heading = "", amount = "0", icon }) => {
   return (
