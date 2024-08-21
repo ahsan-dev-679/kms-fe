@@ -1,11 +1,34 @@
 import React from "react";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { Text } from "@mantine/core";
-import { theme } from "@/configs/matine.config";
-import { colors } from "@/configs/theme.config";
 
-const GeneralTable = ({ columns, data, heading }) => {
+const GeneralTable = ({ columns, data, heading, isLoading }) => {
   const table = useMantineReactTable({
+    state: {
+      showLoadingOverlay: false,
+      showSkeletons: isLoading,
+    },
+    mantineSkeletonProps: {
+      animate: "pulse",
+    },
+    mantineProgressProps: {
+      color: "teal",
+    },
+    mantineLoadingOverlayProps: {
+      color: "teal",
+    },
+    mantinePaginationProps: {
+      color: "teal",
+    },
+    mantineSelectCheckboxProps: {
+      color: "teal",
+    },
+    mantineSelectAllCheckboxProps: {
+      color: "teal",
+    },
+    paginationDisplayMode: "pages",
+    loaderProps: { color: "pink", type: "bars" },
+
     columns,
     data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // enableRowSelection: true,

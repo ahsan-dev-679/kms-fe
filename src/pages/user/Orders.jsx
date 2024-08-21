@@ -3,8 +3,11 @@ import GeneralTable from "./../../components/table/GeneralTable";
 import { Box, Flex, Text } from "@mantine/core";
 import { formatDate, formatPrice, getStatusColor } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "@/components/layout/Loader";
 
 const Orders = () => {
+  const loading = false;
+
   const navigate = useNavigate();
   const data = [
     {
@@ -140,7 +143,12 @@ const Orders = () => {
   );
   return (
     <Box className="mx-12 my-8 shadow-md !rounded-xl ">
-      <GeneralTable columns={columns} data={data} heading={"My Orders"} />
+      <GeneralTable
+        isLoading={false}
+        columns={columns}
+        data={data}
+        heading={"My Orders"}
+      />
     </Box>
   );
 };
