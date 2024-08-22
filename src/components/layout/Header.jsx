@@ -28,28 +28,32 @@ const Header = () => {
           <NotificationMenu />
 
           <MobileProfileBox profile={user} />
-          <Button
-            variant="light"
-            radius={"sm"}
-            color={colors.primary[100]}
-            rightSection={<IconCheckbox stroke={2} />}
-          >
-            Mark attendence
-          </Button>
+          {role === "chef" && (
+            <Button
+              variant="light"
+              radius={"sm"}
+              color={colors.primary[100]}
+              rightSection={<IconCheckbox stroke={2} />}
+            >
+              Mark attendence
+            </Button>
+          )}
         </Flex>
       ) : (
         <Flex align={"center"} gap={"lg"}>
           <NotificationMenu />
 
           <DesktopProfileBox profile={user} />
-          <Button
-            variant="light"
-            radius={"sm"}
-            color={colors.primary[100]}
-            rightSection={<IconCheckbox stroke={2} />}
-          >
-            Mark Attendence
-          </Button>
+          {role === "chef" && (
+            <Button
+              variant="light"
+              radius={"sm"}
+              color={colors.primary[100]}
+              rightSection={<IconCheckbox stroke={2} />}
+            >
+              Mark Attendence
+            </Button>
+          )}
         </Flex>
       )}
     </Flex>
