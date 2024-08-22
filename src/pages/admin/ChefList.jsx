@@ -69,7 +69,13 @@ const ChefList = () => {
         header: "Action",
         Cell: ({ cell }) => {
           return (
-            <Switch className="cursor-pointer" defaultChecked color="green" />
+            // <Switch className="cursor-pointer" defaultChecked color="green" />
+            <Link
+              to={"/dashboard/chef/attendence"}
+              className="text-blue-700 font-medium hover:underline cursor-pointer"
+            >
+              View Detail
+            </Link>
           );
         },
       },
@@ -80,9 +86,11 @@ const ChefList = () => {
     <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable
-        isLoading={false}
-        
-        columns={columns} data={chefList} heading={"Chef List"} />
+          isLoading={false}
+          columns={columns}
+          data={chefList}
+          heading={"Chef List"}
+        />
       </Box>
     </Transition>
   );

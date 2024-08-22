@@ -9,6 +9,8 @@ import { FaChevronLeft } from "react-icons/fa";
 const Aside = ({ asideOpen, setAsideOpen }) => {
   const isMobile = useMediaQuery("(max-width:1023px)");
 
+  const role = "admin";
+
   return (
     <Box
       style={{

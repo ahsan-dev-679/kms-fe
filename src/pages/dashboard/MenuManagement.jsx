@@ -112,7 +112,7 @@ const MenuManagement = () => {
       <Box className=" border-2 bg-[#fff] shadow-md rounded-md">
         <IconArrowNarrowLeft
           size={32}
-          className="mx-4 my-2"
+          className="mx-4 my-2 cursor-pointer"
           stroke={2}
           onClick={() => navigate(-1)}
         />

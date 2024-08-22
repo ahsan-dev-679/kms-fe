@@ -2,7 +2,13 @@ import React from "react";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { Text } from "@mantine/core";
 
-const GeneralTable = ({ columns, data, heading, isLoading }) => {
+const GeneralTable = ({
+  columns,
+  data,
+  heading,
+  isLoading,
+  otherComponent,
+}) => {
   const table = useMantineReactTable({
     state: {
       showLoadingOverlay: false,
@@ -32,7 +38,8 @@ const GeneralTable = ({ columns, data, heading, isLoading }) => {
     columns,
     data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // enableRowSelection: true,
-
+    renderToolbarInternalActions: ({ table }) =>
+      otherComponent ? otherComponent : null,
     renderTopToolbarCustomActions: ({ table }) => (
       <>
         <Text
