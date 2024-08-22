@@ -25,6 +25,7 @@ import { IconTrash, IconAssembly } from "@tabler/icons-react";
 import GeneralModal from "@/components/modal/GeneralModal";
 
 const MenuList = () => {
+  const role = "chef";
   const navigate = useNavigate();
   const [id, setId] = useState(null);
   const [detail, setDetail] = useState({});
@@ -204,7 +205,7 @@ const MenuList = () => {
         header: "Actions",
         Cell: ({ cell }) => {
           return (
-            <Menu width={150} shadow="md">
+            <Menu width={"fit-content"} shadow="md">
               <Menu.Target>
                 <Button p={"0"} variant="transparent" color="black">
                   <BsThreeDotsVertical
@@ -225,17 +226,26 @@ const MenuList = () => {
                   View
                 </Menu.Item>
 
-                <Menu.Item className="font-medium">Edit</Menu.Item>
-                <Menu.Item
-                  onClick={() => {
-                    setId(cell.row.original?._id);
-                    openAlert();
-                  }}
-                  className="font-semibold"
-                  color="red"
-                >
-                  Delete
-                </Menu.Item>
+                {role === "chef" && (
+                  <Menu.Item className="font-medium">
+                    Low stock notification
+                  </Menu.Item>
+                )}
+                {role === "admin" && (
+                  <Menu.Item className="font-medium">Edit</Menu.Item>
+                )}
+                {role === "admin" && (
+                  <Menu.Item
+                    onClick={() => {
+                      setId(cell.row.original?._id);
+                      openAlert();
+                    }}
+                    className="font-semibold"
+                    color="red"
+                  >
+                    Delete
+                  </Menu.Item>
+                )}
               </Menu.Dropdown>
             </Menu>
           );
@@ -248,16 +258,18 @@ const MenuList = () => {
   return (
     <Transition>
       <Box className="my-3 shadow-md !rounded-xl">
-        <Flex justify={"end"} my={4}>
-          <Button
-            onClick={() => navigate("/dashboard/menu/management")}
-            color={colors.primary[100]}
-            radius="sm"
-            size="sm"
-          >
-            Add New Meal
-          </Button>
-        </Flex>
+        {role === "admin" && (
+          <Flex justify={"end"} my={4}>
+            <Button
+              onClick={() => navigate("/dashboard/menu/management")}
+              color={colors.primary[100]}
+              radius="sm"
+              size="sm"
+            >
+              Add New Meal
+            </Button>
+          </Flex>
+        )}
         <GeneralTable
           isLoading={false}
           columns={columns}

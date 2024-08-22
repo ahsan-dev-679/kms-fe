@@ -110,7 +110,7 @@ export const dashboardAsideMenus = [
   {
     label: "Menu Management",
     path: "/dashboard/menu/list",
-    role: ["admin"],
+    role: ["admin", "chef"],
     icon: <IconToolsKitchen />,
   },
   {

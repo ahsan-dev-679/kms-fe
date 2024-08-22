@@ -9,8 +9,6 @@ import { FaChevronLeft } from "react-icons/fa";
 const Aside = ({ asideOpen, setAsideOpen }) => {
   const isMobile = useMediaQuery("(max-width:1023px)");
 
-  const role = "admin";
-
   return (
     <Box
       style={{
@@ -94,6 +92,8 @@ const Aside = ({ asideOpen, setAsideOpen }) => {
 };
 
 const Menu = ({ asideOpen }) => {
+  const role = "chef";
+
   const isMobile = useMediaQuery("(max-width:1023px)");
 
   const [active, setActive] = useState(0);
@@ -122,44 +122,47 @@ const Menu = ({ asideOpen }) => {
 
   return (
     <Box className="pt-6 relative overflow-y-auto" asideopen={`${asideOpen}`}>
-      {dashboardAsideMenus.map((item, i) => (
-        <Tooltip
-          disabled={!isMobile}
-          key={i}
-          withArrow
-          arrowOffset={11}
-          color={"#208251"}
-          arrowSize={10}
-          position="right-start"
-          offset={5}
-          label={item.label}
-        >
-          <Link
-            style={{
-              color: "#909FAF",
-              fontSize: "15px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              paddingLeft: asideOpen ? "15px" : "0",
-              marginTop: "10px",
-              justifyContent: asideOpen ? "flex-start" : "center",
-              padding: "10px 10px",
-            }}
-            className={
-              // item.path.includes(pathName)
-              isActiveMenuItem(pathName, item.path)
-                ? `active-menu aside-menu line-clamp-1`
-                : "aside-menu line-clamp-1"
-            }
-            to={item.path}
-          >
-            {item.icon}
+      {dashboardAsideMenus.map(
+        (item, i) =>
+          item.role.includes(role) && (
+            <Tooltip
+              disabled={!isMobile}
+              key={i}
+              withArrow
+              arrowOffset={11}
+              color={"#208251"}
+              arrowSize={10}
+              position="right-start"
+              offset={5}
+              label={item.label}
+            >
+              <Link
+                style={{
+                  color: "#909FAF",
+                  fontSize: "15px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  paddingLeft: asideOpen ? "15px" : "0",
+                  marginTop: "10px",
+                  justifyContent: asideOpen ? "flex-start" : "center",
+                  padding: "10px 10px",
+                }}
+                className={
+                  // item.path.includes(pathName)
+                  isActiveMenuItem(pathName, item.path)
+                    ? `active-menu aside-menu line-clamp-1`
+                    : "aside-menu line-clamp-1"
+                }
+                to={item.path}
+              >
+                {item.icon}
 
-            {asideOpen ? item.label : ""}
-          </Link>
-        </Tooltip>
-      ))}
+                {asideOpen ? item.label : ""}
+              </Link>
+            </Tooltip>
+          )
+      )}
 
       <Box className="pt-5 mt-5 border-t border-t-[#EAEAEA] w-full">
         <Tooltip

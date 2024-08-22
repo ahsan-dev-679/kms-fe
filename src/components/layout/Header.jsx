@@ -1,9 +1,11 @@
 import React from "react";
-import { Avatar, Box, Flex, Popover, Text, Image } from "@mantine/core";
+import { Avatar, Box, Flex, Popover, Text, Image, Button } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import NotificationMenu from "../dashboard/NotificationMenu";
-
+import { IconCheckbox } from "@tabler/icons-react";
+import { colors } from "@/configs/theme.config";
 const Header = () => {
+  const role = "chef";
   const user = {
     avatar: "https://github.com/shadcn.png",
     username: "Young Alaska",
@@ -26,12 +28,28 @@ const Header = () => {
           <NotificationMenu />
 
           <MobileProfileBox profile={user} />
+          <Button
+            variant="light"
+            radius={"sm"}
+            color={colors.primary[100]}
+            rightSection={<IconCheckbox stroke={2} />}
+          >
+            Mark attendence
+          </Button>
         </Flex>
       ) : (
         <Flex align={"center"} gap={"lg"}>
           <NotificationMenu />
 
           <DesktopProfileBox profile={user} />
+          <Button
+            variant="light"
+            radius={"sm"}
+            color={colors.primary[100]}
+            rightSection={<IconCheckbox stroke={2} />}
+          >
+            Mark Attendence
+          </Button>
         </Flex>
       )}
     </Flex>
