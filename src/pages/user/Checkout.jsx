@@ -121,20 +121,20 @@ const Checkout = () => {
 
               <Flex justify={"space-between"} className="!mt-6">
                 <Text>Total</Text>
-                <Text>{formatPrice(6000)}</Text>
+                <Text>{formatPrice(16)}</Text>
               </Flex>
               <Flex justify={"space-between"}>
                 <Text>Total</Text>
-                <Text>{formatPrice(6000)}</Text>
+                <Text>{formatPrice(16)}</Text>
               </Flex>
               <Flex justify={"space-between"}>
                 <Text>Total</Text>
-                <Text>{formatPrice(6000)}</Text>
+                <Text>{formatPrice(16)}</Text>
               </Flex>
               <Divider className="my-2" />
               <Flex justify={"space-between"}>
                 <Text fw={700}>Grand Total</Text>
-                <Text>{formatPrice(6000)}</Text>
+                <Text>{formatPrice(16)}</Text>
               </Flex>
 
               <Button

@@ -5,7 +5,7 @@ import NotificationMenu from "../dashboard/NotificationMenu";
 import { IconCheckbox } from "@tabler/icons-react";
 import { colors } from "@/configs/theme.config";
 const Header = () => {
-  const role = "chef";
+  const role = "admin";
   const user = {
     avatar: "https://github.com/shadcn.png",
     username: "Young Alaska",

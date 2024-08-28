@@ -92,7 +92,7 @@ const Aside = ({ asideOpen, setAsideOpen }) => {
 };
 
 const Menu = ({ asideOpen }) => {
-  const role = "chef";
+  const role = "admin";
 
   const isMobile = useMediaQuery("(max-width:1023px)");
 

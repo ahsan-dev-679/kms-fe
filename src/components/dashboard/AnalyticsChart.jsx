@@ -44,8 +44,8 @@ const AnalyticsChart = () => {
           }}
           variant={"filled"}
           color={"white"}
-          data={["Month", "Year"]}
-          defaultValue="Year"
+          data={["This Year", "Last year"]}
+          defaultValue="This Year"
         />
       </Flex>
       <Box className={"px-5 mt-5  h-full"} ref={barRef}>

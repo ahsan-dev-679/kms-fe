@@ -11,71 +11,71 @@ const OrderList = () => {
   const navigate = useNavigate();
   const data = [
     {
-      name: "Jhonny Sins",
-      total: 100.0,
+      name: "Young Alaska",
+      total: 10.0,
       status: "completed",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD001",
     },
     {
-      name: "Jhonny Sins",
-      total: 60.0,
+      name: "Young Alaska",
+      total: 6.0,
       status: "pending",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD002",
     },
     {
-      name: "Jhonny Sins",
-      total: 160.0,
+      name: "Young Alaska",
+      total: 16.0,
       status: "shipped",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD003",
     },
     {
-      name: "Jhonny Sins",
-      total: 240.0,
+      name: "Young Alaska",
+      total: 24.0,
       status: "completed",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD004",
     },
     {
-      name: "Jhonny Sins",
-      total: 40.0,
+      name: "Young Alaska",
+      total: 4.0,
       status: "cancelled",
       _id: "ORD005",
       date: "2024-08-17T11:49:16.378+00:00",
     },
     {
-      name: "Jhonny Sins",
-      total: 140.0,
+      name: "Young Alaska",
+      total: 14.0,
       status: "completed",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD006",
     },
     {
-      name: "Jhonny Sins",
-      total: 80.0,
+      name: "Young Alaska",
+      total: 8.0,
       status: "pending",
       _id: "ORD007",
       date: "2024-08-17T11:49:16.378+00:00",
     },
     {
-      name: "Jhonny Sins",
-      total: 120.0,
+      name: "Young Alaska",
+      total: 12.0,
       status: "shipped",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD008",
     },
     {
-      name: "Jhonny Sins",
-      total: 200.0,
+      name: "Young Alaska",
+      total: 20.0,
       status: "completed",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD009",
     },
     {
-      name: "Jhonny Sins",
-      total: 180.0,
+      name: "Young Alaska",
+      total: 18.0,
       status: "returned",
       date: "2024-08-17T11:49:16.378+00:00",
       _id: "ORD010",
@@ -157,9 +157,11 @@ const OrderList = () => {
     <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable
-        isLoading={false}
-        
-        columns={columns} data={data} heading={"Order List"} />
+          isLoading={false}
+          columns={columns}
+          data={data}
+          heading={"Order List"}
+        />
       </Box>
     </Transition>
   );
