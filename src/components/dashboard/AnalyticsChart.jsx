@@ -51,7 +51,7 @@ const AnalyticsChart = () => {
       <Box className={"px-5 mt-5  h-full"} ref={barRef}>
         <BarChart
           barProps={{
-            barSize: 32,
+            barSize: 26,
             radius: 6,
           }}
           h={chartHeight}

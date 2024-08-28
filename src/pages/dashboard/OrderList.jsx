@@ -107,7 +107,7 @@ const OrderList = () => {
       },
       {
         accessorKey: "total",
-        header: "total",
+        header: "Total",
         Cell: ({ cell }) => {
           return <Text>{formatPrice(cell.getValue())}</Text>;
         },

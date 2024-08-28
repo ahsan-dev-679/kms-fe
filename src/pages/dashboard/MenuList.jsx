@@ -25,7 +25,7 @@ import { IconTrash, IconAssembly } from "@tabler/icons-react";
 import GeneralModal from "@/components/modal/GeneralModal";
 
 const MenuList = () => {
-  const role = "chef";
+  const role = "admin";
   const navigate = useNavigate();
   const [id, setId] = useState(null);
   const [detail, setDetail] = useState({});
@@ -205,7 +205,7 @@ const MenuList = () => {
         header: "Actions",
         Cell: ({ cell }) => {
           return (
-            <Menu width={"fit-content"} shadow="md">
+            <Menu width={"150"} shadow="md">
               <Menu.Target>
                 <Button p={"0"} variant="transparent" color="black">
                   <BsThreeDotsVertical
