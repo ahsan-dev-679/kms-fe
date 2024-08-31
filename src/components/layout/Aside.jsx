@@ -1,5 +1,5 @@
 import { Box, Flex, Tooltip, Image } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "@mantine/hooks";
 import { dashboardAsideMenus } from "@/data/data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -92,7 +92,8 @@ const Aside = ({ asideOpen, setAsideOpen }) => {
 };
 
 const Menu = ({ asideOpen }) => {
-  const role = "admin";
+  const role = localStorage.getItem("role");
+  useEffect(() => {}, [role]);
 
   const isMobile = useMediaQuery("(max-width:1023px)");
 

@@ -25,7 +25,7 @@ import { IconTrash, IconAssembly } from "@tabler/icons-react";
 import GeneralModal from "@/components/modal/GeneralModal";
 
 const MenuList = () => {
-  const role = "admin";
+  const role = "chef";
   const navigate = useNavigate();
   const [id, setId] = useState(null);
   const [detail, setDetail] = useState({});

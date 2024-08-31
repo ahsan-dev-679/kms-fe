@@ -1,5 +1,5 @@
 import { useDisclosure } from "@mantine/hooks";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthModal from "../modal/AuthModal";
 import { RiMenu5Fill } from "react-icons/ri";
 import {
@@ -34,7 +34,11 @@ const Navbar = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { cart } = useCartStore();
   const [formType, setformType] = useState("login");
-  const isAuthenticated = true;
+  // const isAuthenticated = false;
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+  useEffect(() => {}, [isAuthenticated]);
+
   return (
     <>
       <div className="top-0 sticky py-1 lg:py-2 w-full bg-[#fff] lg:relative z-50 border-b-2 mb-6">
@@ -140,6 +144,10 @@ const Navbar = () => {
                         </Menu.Item>
 
                         <Menu.Item
+                          onClick={() => {
+                            localStorage.clear();
+                            window.location.reload();
+                          }}
                           color="red"
                           leftSection={
                             <IconLogout
