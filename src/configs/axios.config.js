@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { errorMessage } from "../globalFunctions";
 
-export const baseURL = "http://127.0.0.1:8000/api";
+export const baseURL = "https://kms-be-production.up.railway.app/";
 
 // axios instance for json data
 export const custAxios = axios.create({

@@ -2,19 +2,8 @@ import { useDisclosure } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import AuthModal from "../modal/AuthModal";
 import { RiMenu5Fill } from "react-icons/ri";
+import { Menu, rem, Avatar, Indicator, Flex } from "@mantine/core";
 import {
-  Menu,
-  rem,
-  Text,
-  Button,
-  Avatar,
-  Indicator,
-  Flex,
-} from "@mantine/core";
-import {
-  IconSettings,
-  IconSearch,
-  IconBell,
   IconShoppingBag,
   IconMail,
   IconChecklist,
@@ -24,6 +13,8 @@ import MobileNav from "../common/MobileNav";
 import { useCartStore } from "@/stores/cart.store";
 import CartDrawer from "../cart/CartDrawer";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth, useGetUserData } from "@/hooks/auth";
+import { useAuthStore } from "@/stores/auth.store";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -34,10 +25,9 @@ const Navbar = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { cart } = useCartStore();
   const [formType, setformType] = useState("login");
-  // const isAuthenticated = false;
-  const isAuthenticated = localStorage.getItem("isAuthenticated");
-
-  useEffect(() => {}, [isAuthenticated]);
+  const isAuthenticated = useAuth();
+  const user = useGetUserData();
+  const { logout } = useAuthStore();
 
   return (
     <>
@@ -71,16 +61,6 @@ const Navbar = () => {
               <div className="hidden lg:flex lg:items-center gap-x-2">
                 {isAuthenticated ? (
                   <Flex align={"center"} gap={20}>
-                    {/* <Indicator color="#40C057" inline label="2" size={16}>
-                      <IconBell
-                        style={{
-                          width: rem(30),
-                          height: rem(30),
-                          cursor: "pointer",
-                        }}
-                      />
-                    </Indicator> */}
-
                     <Indicator
                       color="#40C057"
                       inline
@@ -107,7 +87,7 @@ const Navbar = () => {
                           color="green"
                           size={"50"}
                         >
-                          AC
+                          {user?.firstName?.charAt(0)}
                         </Avatar>
                       </Menu.Target>
 
@@ -119,7 +99,7 @@ const Navbar = () => {
                             fontWeight: 500,
                           }}
                         >
-                          Alex Carey
+                          {user?.firstName}
                         </Menu.Label>
 
                         <Menu.Item
@@ -130,7 +110,7 @@ const Navbar = () => {
                             />
                           }
                         >
-                          alex@gmail.com
+                          {user?.email}
                         </Menu.Item>
                         <Menu.Item
                           onClick={() => navigate("/my-orders")}
@@ -145,8 +125,8 @@ const Navbar = () => {
 
                         <Menu.Item
                           onClick={() => {
-                            localStorage.clear();
-                            window.location.reload();
+                            logout();
+                            navigate("/");
                           }}
                           color="red"
                           leftSection={

@@ -8,6 +8,7 @@ import Register from "../auth/Register";
 // import Logo from "/logos/logos192.png"
 const AuthModal = ({ opened, close, formType }) => {
   const mobile = useMediaQuery("(max-width: 1024px)");
+  console.log("AuthModal", formType);
 
   return (
     <Modal
@@ -19,17 +20,11 @@ const AuthModal = ({ opened, close, formType }) => {
       title=""
     >
       <Grid gutter="lg">
-        <Grid.Col
-          style={{
-            flex: 1,
-          }}
-          span={mobile ? 12 : 6}
-          className="border-r-2 "
-        >
+        <Grid.Col style={{}} span={mobile ? 12 : 6} className="border-r-2 ">
           <Image
             style={{
               width: 200,
-              height: 150,
+              height: 120,
               objectFit: "contain",
             }}
             src={

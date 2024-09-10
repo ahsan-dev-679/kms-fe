@@ -1,27 +1,15 @@
 import { useForm, isEmail } from "@mantine/form";
 import React, { useState } from "react";
-import {
-  BackgroundImage,
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  PasswordInput,
-  Text,
-  TextInput,
-  Title,
-  Radio,
-  Group,
-} from "@mantine/core";
+import { Button, Flex, PasswordInput, TextInput, Title } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import { colors } from "@/configs/theme.config";
 import { useDisclosure } from "@mantine/hooks";
 import AuthModal from "../modal/AuthModal";
+import { useLogin } from "@/lib/tanstack-query/authQueries";
 
 const Login = () => {
-  const [value, setValue] = useState("user");
   const navigate = useNavigate();
-
+  const { isPending: loading, mutateAsync: loginFunc } = useLogin();
   const [openedAuthModal, { open: openAuthModal, close: closeAuthModal }] =
     useDisclosure(false);
   const form = useForm({
@@ -39,21 +27,28 @@ const Login = () => {
       },
     },
   });
-  const handleAuth = () => {
-    localStorage.setItem("role", value);
-    localStorage.setItem("isAuthenticated", true);
-    if (value === "user") {
-      closeAuthModal();
-    } else {
-      navigate("/dashboard");
+
+  const handelSubmit = async (values) => {
+    if (form.isValid) {
+      const res = await loginFunc({
+        ...values,
+      });
+
+      if (res?.success) {
+        closeAuthModal();
+        if (res?.data?.user?.role !== "user") {
+          navigate("/dashboard");
+        }
+        form.reset();
+      }
     }
-    window.location.reload();
   };
+
   return (
     <>
       <Flex
-        // component="form"
-        // onSubmit={form.onSubmit((values) => handelSubmit(values))}
+        component="form"
+        onSubmit={form.onSubmit((values) => handelSubmit(values))}
         className="flex-col w-full gap-3"
       >
         <Title order={3}>Login</Title>
@@ -71,23 +66,13 @@ const Login = () => {
           {...form.getInputProps("password")}
         />
 
-        <span className="text-blue-700 font-medium hover:underline cursor-pointer w-fit ml-auto">
+        {/* <span className="text-blue-700 font-medium hover:underline cursor-pointer w-fit ml-auto">
           Forgot Password?
-        </span>
+        </span> */}
 
-        <Radio.Group defaultValue="user" onChange={setValue} label="Role">
-          <Group mt="xs">
-            <Radio color={colors.primary[100]} value="user" label="User" />
-            <Radio color={colors.primary[100]} value="admin" label="Admin" />
-            <Radio color={colors.primary[100]} value="chef" label="Chef" />
-          </Group>
-        </Radio.Group>
         <Button
-          onClick={handleAuth}
-          false={false}
-          disabled={false}
-          // type="submit"
-          type="button"
+          loading={loading}
+          type="submit"
           mt={"2rem"}
           color={colors.primary[100]}
           radius="md"
@@ -113,7 +98,7 @@ const Login = () => {
       <AuthModal
         opened={openedAuthModal}
         close={closeAuthModal}
-        formType={"register"}
+        formType={"login"}
       />
     </>
   );

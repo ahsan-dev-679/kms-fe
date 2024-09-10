@@ -1,5 +1,5 @@
 import { Drawer, Flex, Indicator, Menu, rem, Avatar } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   IconShoppingBag,
@@ -10,13 +10,21 @@ import {
 import { useCartStore } from "@/stores/cart.store";
 import { useDisclosure } from "@mantine/hooks";
 import CartDrawer from "../cart/CartDrawer";
+import { useAuth, useGetUserData } from "@/hooks/auth";
+import { useAuthStore } from "@/stores/auth.store";
+import AuthModal from "../modal/AuthModal";
 
 const MobileNav = ({ opened, close }) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated");
   const navigate = useNavigate();
   const { cart } = useCartStore();
   const [openedCart, { open: openCart, close: closeCart }] =
     useDisclosure(false);
+  const [openedAuthModal, { open: openAuthModal, close: closeAuthModal }] =
+    useDisclosure(false);
+  const isAuthenticated = useAuth();
+  const user = useGetUserData();
+  const { logout } = useAuthStore();
+  const [formType, setformType] = useState("login");
 
   return (
     <>
@@ -48,7 +56,7 @@ const MobileNav = ({ opened, close }) => {
                   color="green"
                   size={"50"}
                 >
-                  AC
+                  {user?.firstName?.charAt(0)}
                 </Avatar>
               </Menu.Target>
 
@@ -60,7 +68,7 @@ const MobileNav = ({ opened, close }) => {
                     fontWeight: 500,
                   }}
                 >
-                  Alex Carey
+                  {user?.firstName}
                 </Menu.Label>
 
                 <Menu.Item
@@ -69,7 +77,7 @@ const MobileNav = ({ opened, close }) => {
                     <IconMail style={{ width: rem(20), height: rem(20) }} />
                   }
                 >
-                  alex@gmail.com
+                  {user?.email}
                 </Menu.Item>
                 <Menu.Item
                   onClick={() => navigate("/my-orders")}
@@ -83,6 +91,10 @@ const MobileNav = ({ opened, close }) => {
                 </Menu.Item>
 
                 <Menu.Item
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
                   color="red"
                   leftSection={
                     <IconLogout style={{ width: rem(20), height: rem(20) }} />
@@ -114,16 +126,33 @@ const MobileNav = ({ opened, close }) => {
 
         {!isAuthenticated && (
           <div className="flex flex-col gap-4 my-2">
-            <button className="flex items-center bg-[#ececec] text-black justify-center px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200 rounded-md">
+            <button
+              onClick={() => {
+                setformType("register");
+                openAuthModal();
+              }}
+              className="flex items-center bg-[#ececec] text-black justify-center px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200 rounded-md"
+            >
               Sign up
             </button>
-            <button className="flex items-center justify-center rounded-md bg-[#4FAE5A] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
+            <button
+              onClick={() => {
+                setformType("login");
+                openAuthModal();
+              }}
+              className="flex items-center justify-center rounded-md bg-[#4FAE5A] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200"
+            >
               Login
             </button>
           </div>
         )}
       </Drawer>
       <CartDrawer opened={openedCart} close={closeCart} />
+      <AuthModal
+        opened={openedAuthModal}
+        close={closeAuthModal}
+        formType={formType}
+      />
     </>
   );
 };

@@ -1,12 +1,13 @@
 import { useForm, isEmail } from "@mantine/form";
-import React from "react";
+import React, { useState } from "react";
 import {
   BackgroundImage,
   Box,
   Button,
-  Checkbox,
+  Group,
   Flex,
   PasswordInput,
+  Radio,
   Text,
   TextInput,
   Title,
@@ -15,19 +16,24 @@ import { Link } from "react-router-dom";
 import { colors } from "@/configs/theme.config";
 import AuthModal from "../modal/AuthModal";
 import { useDisclosure } from "@mantine/hooks";
+import { useRegister } from "@/lib/tanstack-query/authQueries";
 
 const Register = () => {
   const [openedAuthModal, { open: openAuthModal, close: closeAuthModal }] =
     useDisclosure(false);
+  const [value, setValue] = useState("user");
+  const [formType, setFormType] = useState("register");
+  const { isPending: loading, mutateAsync: registerFunc } = useRegister();
 
   const form = useForm({
     initialValues: {
-      name: "",
+      firstName: "",
       email: "",
       password: "",
     },
     validate: {
-      // name: values.name.length < 2 ? "Too short name" : null,
+      firstName: (value) =>
+        value.length < 2 ? "Name must have at least 2 letters" : null,
       email: isEmail("Invalid email"),
       password: (value) => {
         if (value.length < 8) {
@@ -37,11 +43,20 @@ const Register = () => {
       },
     },
   });
+  const handelSubmit = async (values) => {
+    if (form.isValid) {
+      const res = await registerFunc({
+        ...values,
+        role: value,
+        lastName: "dummy",
+      });
+    }
+  };
   return (
     <>
       <Flex
         component="form"
-        // onSubmit={form.onSubmit((values) => handelSubmit(values))}
+        onSubmit={form.onSubmit((values) => handelSubmit(values))}
         className="flex-col w-full gap-3"
       >
         <Title order={3}>Signup </Title>
@@ -50,7 +65,7 @@ const Register = () => {
           placeholder="Name"
           size="md"
           radius="md"
-          {...form.getInputProps("email")}
+          {...form.getInputProps("firstName")}
         />
 
         <TextInput
@@ -66,9 +81,14 @@ const Register = () => {
           radius="md"
           {...form.getInputProps("password")}
         />
-
+        <Radio.Group defaultValue="user" onChange={setValue} label="Role">
+          <Group mt="xs">
+            <Radio color={colors.primary[100]} value="user" label="User" />
+            <Radio color={colors.primary[100]} value="chef" label="Chef" />
+          </Group>
+        </Radio.Group>
         <Button
-          false={false}
+          loading={loading}
           disabled={false}
           type="submit"
           mt={"2rem"}
@@ -85,6 +105,7 @@ const Register = () => {
             className="text-blue-700 font-medium hover:underline cursor-pointer"
             onClick={() => {
               closeAuthModal();
+              setFormType("login");
               openAuthModal();
             }}
           >
@@ -95,7 +116,7 @@ const Register = () => {
       <AuthModal
         opened={openedAuthModal}
         close={closeAuthModal}
-        formType={"register"}
+        formType={formType}
       />
     </>
   );
