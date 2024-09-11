@@ -8,12 +8,13 @@ import {
   IconMail,
   IconChecklist,
   IconLogout,
+  IconHome,
 } from "@tabler/icons-react";
 import MobileNav from "../common/MobileNav";
 import { useCartStore } from "@/stores/cart.store";
 import CartDrawer from "../cart/CartDrawer";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth, useGetUserData } from "@/hooks/auth";
+import { useAuth, useGetRole, useGetUserData } from "@/hooks/auth";
 import { useAuthStore } from "@/stores/auth.store";
 
 const Navbar = () => {
@@ -28,6 +29,7 @@ const Navbar = () => {
   const isAuthenticated = useAuth();
   const user = useGetUserData();
   const { logout } = useAuthStore();
+  const role = useGetRole();
 
   return (
     <>
@@ -61,21 +63,23 @@ const Navbar = () => {
               <div className="hidden lg:flex lg:items-center gap-x-2">
                 {isAuthenticated ? (
                   <Flex align={"center"} gap={20}>
-                    <Indicator
-                      color="#40C057"
-                      inline
-                      label={cart.length}
-                      size={16}
-                    >
-                      <IconShoppingBag
-                        onClick={openCart}
-                        style={{
-                          width: rem(30),
-                          height: rem(30),
-                          cursor: "pointer",
-                        }}
-                      />
-                    </Indicator>
+                    {role === "user" && (
+                      <Indicator
+                        color="#40C057"
+                        inline
+                        label={cart.length}
+                        size={16}
+                      >
+                        <IconShoppingBag
+                          onClick={openCart}
+                          style={{
+                            width: rem(30),
+                            height: rem(30),
+                            cursor: "pointer",
+                          }}
+                        />
+                      </Indicator>
+                    )}
                     <Menu
                       shadow="md"
                       width={200}
@@ -112,16 +116,29 @@ const Navbar = () => {
                         >
                           {user?.email}
                         </Menu.Item>
-                        <Menu.Item
-                          onClick={() => navigate("/my-orders")}
-                          leftSection={
-                            <IconChecklist
-                              style={{ width: rem(20), height: rem(20) }}
-                            />
-                          }
-                        >
-                          Orders
-                        </Menu.Item>
+                        {role !== "user" ? (
+                          <Menu.Item
+                            onClick={() => navigate("/dashboard")}
+                            leftSection={
+                              <IconHome
+                                style={{ width: rem(20), height: rem(20) }}
+                              />
+                            }
+                          >
+                            Dashboard
+                          </Menu.Item>
+                        ) : (
+                          <Menu.Item
+                            onClick={() => navigate("/my-orders")}
+                            leftSection={
+                              <IconChecklist
+                                style={{ width: rem(20), height: rem(20) }}
+                              />
+                            }
+                          >
+                            Orders
+                          </Menu.Item>
+                        )}
 
                         <Menu.Item
                           onClick={() => {

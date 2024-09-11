@@ -23,9 +23,11 @@ import { colors } from "@/configs/theme.config";
 import RowActionPopup from "@/components/dashboard/RowActionPopup";
 import { IconTrash, IconAssembly } from "@tabler/icons-react";
 import GeneralModal from "@/components/modal/GeneralModal";
+import { useGetRole } from "@/hooks/auth";
+import { useCreateCategory } from "@/lib/tanstack-query/categoryQueries";
 
 const MenuList = () => {
-  const role = "chef";
+  const role = useGetRole();
   const navigate = useNavigate();
   const [id, setId] = useState(null);
   const [detail, setDetail] = useState({});

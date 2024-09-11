@@ -5,6 +5,7 @@ import { dashboardAsideMenus } from "@/data/data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IconSettings, IconPower } from "@tabler/icons-react";
 import { FaChevronLeft } from "react-icons/fa";
+import { useGetRole } from "@/hooks/auth";
 
 const Aside = ({ asideOpen, setAsideOpen }) => {
   const isMobile = useMediaQuery("(max-width:1023px)");
@@ -92,11 +93,8 @@ const Aside = ({ asideOpen, setAsideOpen }) => {
 };
 
 const Menu = ({ asideOpen }) => {
-  const role = localStorage.getItem("role");
-  useEffect(() => {}, [role]);
-
+  const role = useGetRole();
   const isMobile = useMediaQuery("(max-width:1023px)");
-
   const [active, setActive] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();

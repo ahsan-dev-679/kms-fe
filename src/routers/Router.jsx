@@ -20,6 +20,7 @@ import MenuManagement from "@/pages/dashboard/MenuManagement";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import AttendenceList from "@/pages/dashboard/AttendenceList";
+import DashboardRoute from "./DashboardRoute";
 
 const Router = () => {
   // use protected routes for authenticated users (i.e: UserRoute & AdminRoute or make more if you've to)..
@@ -39,28 +40,40 @@ const Router = () => {
         <Route path="/order-detail/:id" element={<OrderDetail />} />
       </Route>
 
-      {role !== "user" && isAuthenticated && (
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route
-            path="/dashboard"
-            // element={<AdminRoute Component={Dashboard} />}
-            element={<AdminDashboard />}
-          />
-          <Route path="/dashboard/menu/list" element={<MenuList />} />
-          <Route path="/dashboard/order/list" element={<OrderList />} />
-          <Route path="/dashboard/order/detail/:id" element={<OrderDetail />} />
-          <Route path="/dashboard/chef/list" element={<ChefList />} />
-          <Route
-            path="/dashboard/chef/attendence"
-            element={<AttendenceList />}
-          />
-          <Route
-            path="/dashboard/menu/management"
-            element={<MenuManagement />}
-          />
-          <Route path="/dashboard/settings" element={<Settings />} />
-        </Route>
-      )}
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route
+          path="/dashboard"
+          element={<DashboardRoute Component={AdminDashboard} />}
+        />
+        <Route
+          path="/dashboard/menu/list"
+          element={<DashboardRoute Component={MenuList} />}
+        />
+        <Route
+          path="/dashboard/order/list"
+          element={<DashboardRoute Component={OrderList} />}
+        />
+        <Route
+          path="/dashboard/order/detail/:id"
+          element={<DashboardRoute Component={OrderDetail} />}
+        />
+        <Route
+          path="/dashboard/chef/list"
+          element={<DashboardRoute Component={ChefList} />}
+        />
+        <Route
+          path="/dashboard/chef/attendence"
+          element={<DashboardRoute Component={AttendenceList} />}
+        />
+        <Route
+          path="/dashboard/menu/management"
+          element={<DashboardRoute Component={MenuManagement} />}
+        />
+        <Route
+          path="/dashboard/settings"
+          element={<DashboardRoute Component={Settings} />}
+        />
+      </Route>
 
       {/* Auth routes */}
       <Route path="/auth" element={<AuthLayout />}>

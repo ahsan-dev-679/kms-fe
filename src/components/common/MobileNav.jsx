@@ -6,11 +6,12 @@ import {
   IconMail,
   IconChecklist,
   IconLogout,
+  IconHome,
 } from "@tabler/icons-react";
 import { useCartStore } from "@/stores/cart.store";
 import { useDisclosure } from "@mantine/hooks";
 import CartDrawer from "../cart/CartDrawer";
-import { useAuth, useGetUserData } from "@/hooks/auth";
+import { useAuth, useGetRole, useGetUserData } from "@/hooks/auth";
 import { useAuthStore } from "@/stores/auth.store";
 import AuthModal from "../modal/AuthModal";
 
@@ -25,6 +26,8 @@ const MobileNav = ({ opened, close }) => {
   const user = useGetUserData();
   const { logout } = useAuthStore();
   const [formType, setformType] = useState("login");
+  const role = useGetRole();
+  console.log("role.......", role);
 
   return (
     <>
@@ -79,16 +82,27 @@ const MobileNav = ({ opened, close }) => {
                 >
                   {user?.email}
                 </Menu.Item>
-                <Menu.Item
-                  onClick={() => navigate("/my-orders")}
-                  leftSection={
-                    <IconChecklist
-                      style={{ width: rem(20), height: rem(20) }}
-                    />
-                  }
-                >
-                  Orders
-                </Menu.Item>
+                {role !== "user" ? (
+                  <Menu.Item
+                    onClick={() => navigate("/dashboard")}
+                    leftSection={
+                      <IconHome style={{ width: rem(20), height: rem(20) }} />
+                    }
+                  >
+                    Dashboard
+                  </Menu.Item>
+                ) : (
+                  <Menu.Item
+                    onClick={() => navigate("/my-orders")}
+                    leftSection={
+                      <IconChecklist
+                        style={{ width: rem(20), height: rem(20) }}
+                      />
+                    }
+                  >
+                    Orders
+                  </Menu.Item>
+                )}
 
                 <Menu.Item
                   onClick={() => {

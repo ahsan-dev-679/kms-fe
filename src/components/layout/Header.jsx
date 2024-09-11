@@ -4,9 +4,10 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import NotificationMenu from "../dashboard/NotificationMenu";
 import { IconCheckbox } from "@tabler/icons-react";
 import { colors } from "@/configs/theme.config";
-const Header = () => {
-  const role = localStorage.getItem("role");
+import { useGetRole } from "@/hooks/auth";
 
+const Header = () => {
+  const role = useGetRole();
   const user = {
     avatar: "https://github.com/shadcn.png",
     username: "Young Alaska",

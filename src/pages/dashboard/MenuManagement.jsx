@@ -23,6 +23,7 @@ import { colors } from "@/configs/theme.config";
 import Uploader from "@/assets/svg/uploader.svg";
 import GeneralModal from "@/components/modal/GeneralModal";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useCreateCategory } from "@/lib/tanstack-query/categoryQueries";
 
 const MenuManagement = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const MenuManagement = () => {
   const [selectedCateg, setSelectedCateg] = useState("");
   const lg = useMediaQuery("(max-width: 1024px)");
   const md = useMediaQuery("(max-width: 768px)");
+  const { isPending, mutateAsync } = useCreateCategory();
 
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
@@ -94,17 +96,24 @@ const MenuManagement = () => {
     }
   };
 
-  const newCategoryHandler = () => {
-    // const data = {
-    //   newCategory: newCategory,
-    // };
+  const newCategoryHandler = async () => {
+    // const res = await mutateAsync(values);
+    // console.log(res);
     // if (res?.success) {
-    //   setSelectedCateg(res?.data?.data?._id);
-    //   form.setFieldValue("catgeory", res?.data?.data?._id);
-    //   // await fetchCategories();
-    //   setNewCategory("");
-    //   closeModal();
+    //   close();
     // }
+    const data = {
+      category: newCategory,
+    };
+    const res = await mutateAsync(data);
+    console.log(res);
+    if (res?.success) {
+      console.log("res?.data?.data", res?.data?.data);
+      // setSelectedCateg(res?.data?.data?._id);
+      // form.setFieldValue("catgeory", res?.data?.data?._id);
+      setNewCategory("");
+      closeModal();
+    }
   };
 
   return (
@@ -314,7 +323,7 @@ const MenuManagement = () => {
 
               <Button
                 type="button"
-                loading={false}
+                loading={isPending}
                 disabled={!newCategory}
                 className="mt-2"
                 radius={"sm"}
