@@ -48,7 +48,7 @@ const Register = () => {
       const res = await registerFunc({
         ...values,
         role: value,
-        lastName: "dummy",
+        lastName: " ",
       });
     }
   };

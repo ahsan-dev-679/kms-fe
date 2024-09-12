@@ -23,7 +23,12 @@ import { colors } from "@/configs/theme.config";
 import Uploader from "@/assets/svg/uploader.svg";
 import GeneralModal from "@/components/modal/GeneralModal";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { useCreateCategory } from "@/lib/tanstack-query/categoryQueries";
+import {
+  useCategory,
+  useCreateCategory,
+} from "@/lib/tanstack-query/categoryQueries";
+import { warningMessage } from "@/utils/toast";
+import { useCreateMeal } from "@/lib/tanstack-query/mealQueries";
 
 const MenuManagement = () => {
   const navigate = useNavigate();
@@ -32,51 +37,44 @@ const MenuManagement = () => {
   const lg = useMediaQuery("(max-width: 1024px)");
   const md = useMediaQuery("(max-width: 768px)");
   const { isPending, mutateAsync } = useCreateCategory();
+  const { isPending: loading, mutateAsync: createMeal } = useCreateMeal();
+  const { categories } = useCategory();
 
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
 
-  const categoryList = [
-    "Breakfast",
-    "Brunch",
-    "Lunch",
-    "Dinner",
-    "Snacks",
-    "Desserts",
-    "Appetizers",
-    "Salads",
-    "Soups",
-    "Pasta",
-    "Grilled",
-    "Vegan",
-    "Vegetarian",
-    "Seafood",
-    "Barbecue",
-  ];
+  const categoryList =
+    categories?.map((categ) => ({
+      value: categ?._id,
+      label: categ?.name,
+    })) || [];
+
   const tagsList = ["Healthy", "Quick", "Easy", "Vegetarian", "Vegan"];
 
   const form = useForm({
     initialValues: {
       title: "",
-      desc: "",
+      description: "",
       discount: 0,
+      price: null,
+      stock: null,
       category: "",
       images: [],
-      brands: [],
+      tags: [],
+      servings: 0,
     },
 
     validate: {
       title: (value) => (value?.trim() === "" ? "Title is required" : null),
-      desc: (value) =>
+      description: (value) =>
         value?.trim() === "" ? "Description is required" : null,
-      sku: (value) => (value?.trim() === "" ? "SKU is required" : null),
       discount: (value) =>
         value > 100 ? "Discount cannot exceed more than 100%" : null,
       category: (value) => (value === "" ? "Category is required" : null),
-      brands: (value) => (value.length > 0 ? null : "Brands is required"),
+      tags: (value) => (value.length > 0 ? null : "Tags are required"),
       price: (value) =>
         isNaN(value) || value <= 0 ? "Price is required" : null,
-      quantity: (value) =>
+      stock: (value) =>
         isNaN(value) || value <= 0 ? "Quantity is required" : null,
     },
   });
@@ -97,23 +95,31 @@ const MenuManagement = () => {
   };
 
   const newCategoryHandler = async () => {
-    // const res = await mutateAsync(values);
-    // console.log(res);
-    // if (res?.success) {
-    //   close();
-    // }
     const data = {
       category: newCategory,
     };
     const res = await mutateAsync(data);
-    console.log(res);
     if (res?.success) {
-      console.log("res?.data?.data", res?.data?.data);
-      // setSelectedCateg(res?.data?.data?._id);
-      // form.setFieldValue("catgeory", res?.data?.data?._id);
+      setSelectedCateg(res?.data?._id);
+      form.setFieldValue("catgeory", res?.data?._id);
       setNewCategory("");
       closeModal();
     }
+  };
+
+  const handleSubmit = async (values) => {
+    if (values.images.length <= 0) {
+      return warningMessage("Image is required");
+    }
+    const payload = {
+      ...values,
+      tags: JSON.stringify(values?.tags),
+    };
+    const res = await createMeal(payload);
+    if (res?.success) {
+      navigate(-1);
+    }
+    console.log("values........", values);
   };
 
   return (
@@ -131,178 +137,187 @@ const MenuManagement = () => {
           }}
           className="px-16 py-2"
         >
-          <Title order={3} py={3}>
-            Add Menu
-          </Title>
+          <form onSubmit={form.onSubmit(handleSubmit)}>
+            <Title order={3} py={3}>
+              Add Menu
+            </Title>
 
-          <TextInput
-            className="mb-2"
-            w={md ? "100%" : "70%"}
-            label="Title"
-            placeholder="Input placeholder"
-          />
-          <Textarea
-            className="mb-2"
-            autosize
-            minRows={5}
-            maxRows={12}
-            w={md ? "100%" : "70%"}
-            label="Description"
-            placeholder="Input placeholder"
-          />
-          <Flex gap={"lg"} direction={lg ? "column" : "row"}>
-            <div className={`${md ? "w-full" : "w-1/2"} `}>
-              <NumberInput
+            <TextInput
+              className="mb-2"
+              w={md ? "100%" : "70%"}
+              label="Title"
+              placeholder="Input placeholder"
+              {...form.getInputProps("title")}
+            />
+            <Textarea
+              className="mb-2"
+              autosize
+              minRows={5}
+              maxRows={12}
+              w={md ? "100%" : "70%"}
+              label="Description"
+              placeholder="Input placeholder"
+              {...form.getInputProps("description")}
+            />
+            <Flex gap={"lg"} direction={lg ? "column" : "row"}>
+              <div className={`${md ? "w-full" : "w-1/2"} `}>
+                {/* <NumberInput
                 className="mb-2"
                 label="Servings"
                 placeholder="Enter Servings"
                 hideControls
                 allowNegative={false}
-              />
-              <NumberInput
-                className="mb-2"
-                label="Price"
-                placeholder="Enter Price"
-                hideControls
-                allowNegative={false}
-              />
-              <NumberInput
-                className="mb-2"
-                label="Stock"
-                placeholder="Enter Stock"
-                hideControls
-                allowNegative={false}
-              />
-              <NumberInput
-                className="mb-2"
-                label="Discount (%)"
-                placeholder="Enter discount percentage"
-                suffix="%"
-                hideControls
-                maxLength={3}
-                min={0}
-                allowNegative={false}
-              />
-              <Select
-                className="mb-2"
-                label="Product Category"
-                placeholder="Select category"
-                data={["Add New Category", ...categoryList]}
-                comboboxProps={{
-                  transitionProps: { transition: "pop", duration: 200 },
-                  shadow: "md",
-                }}
-                {...form.getInputProps("category")}
-                value={selectedCateg}
-                onChange={(_value, options) =>
-                  handleCategoryChange(_value, options)
-                }
-              />
-              <TagsInput
-                className="mb-2"
-                label="Tags"
-                placeholder="Select Tags"
-                data={tagsList}
-                // {...form.getInputProps("brands")}
-              />
-            </div>
+                {...form.getInputProps("servings")}
+              /> */}
+                <NumberInput
+                  className="mb-2"
+                  label="Price"
+                  placeholder="Enter Price"
+                  hideControls
+                  allowNegative={false}
+                  {...form.getInputProps("price")}
+                />
+                <NumberInput
+                  className="mb-2"
+                  label="Stock"
+                  placeholder="Enter Stock"
+                  hideControls
+                  allowNegative={false}
+                  {...form.getInputProps("stock")}
+                />
+                <NumberInput
+                  className="mb-2"
+                  label="Discount (%)"
+                  placeholder="Enter discount percentage"
+                  suffix="%"
+                  hideControls
+                  maxLength={3}
+                  min={0}
+                  allowNegative={false}
+                  {...form.getInputProps("discount")}
+                />
+                <Select
+                  className="mb-2"
+                  label="Product Category"
+                  placeholder="Select category"
+                  data={["Add New Category", ...categoryList]}
+                  comboboxProps={{
+                    transitionProps: { transition: "pop", duration: 200 },
+                    shadow: "md",
+                  }}
+                  {...form.getInputProps("category")}
+                  value={selectedCateg}
+                  onChange={(_value, options) =>
+                    handleCategoryChange(_value, options)
+                  }
+                />
+                <TagsInput
+                  className="mb-2"
+                  label="Tags"
+                  placeholder="Select Tags"
+                  data={tagsList}
+                  {...form.getInputProps("tags")}
+                />
+              </div>
 
-            <div className="flex-1 py-4 border-[1px] border-[#333] rounded-sm px-4 my-4">
-              <Dropzone
-                className="w-full"
-                bg={"#F8F9FA"}
-                onDrop={(files) => {
-                  form.setFieldValue(`images`, [
-                    ...form.values.images,
-                    ...files,
-                  ]);
-                }}
-                onReject={(files) => console.log("rejected files", files)}
-                maxSize={2 * 1024 ** 2}
-                accept={[
-                  MIME_TYPES.png,
-                  MIME_TYPES.jpeg,
-                  MIME_TYPES.svg,
-                  MIME_TYPES.gif,
-                ]}
-                radius={"md"}
-              >
-                <Group
-                  justify="center"
-                  gap="xl"
-                  mih={180}
-                  style={{ pointerEvents: "none" }}
+              <div className="flex-1 py-4 border-[1px] border-[#333] rounded-sm px-4 my-4">
+                <Dropzone
+                  className="w-full"
+                  bg={"#F8F9FA"}
+                  onDrop={(files) => {
+                    form.setFieldValue(`images`, [
+                      ...form.values.images,
+                      ...files,
+                    ]);
+                  }}
+                  onReject={(files) => console.log("rejected files", files)}
+                  maxSize={2 * 1024 ** 2}
+                  accept={[
+                    MIME_TYPES.png,
+                    MIME_TYPES.jpeg,
+                    MIME_TYPES.svg,
+                    MIME_TYPES.gif,
+                  ]}
+                  radius={"md"}
                 >
-                  <Flex
-                    direction="column"
+                  <Group
                     justify="center"
-                    align="center"
-                    gap={10}
+                    gap="xl"
+                    mih={180}
+                    style={{ pointerEvents: "none" }}
                   >
-                    <Dropzone.Accept>
-                      <Image src={Uploader} />
-                    </Dropzone.Accept>
-                    <Dropzone.Reject>
-                      <IconX
-                        style={{
-                          width: rem(52),
-                          height: rem(52),
-                          color: "var(--mantine-color-red-6)",
-                        }}
-                        stroke={1.5}
-                      />
-                    </Dropzone.Reject>
-                    <Dropzone.Idle>
-                      <Image w={100} src={Uploader} />
-                    </Dropzone.Idle>
-
-                    <Text className="text-center" size="md" inline>
-                      Drag and Drop Files or Browse
-                    </Text>
-                  </Flex>
-                </Group>
-              </Dropzone>
-
-              <div className="flex mt-4 flex-wrap gap-2">
-                {form?.values?.images?.length > 0 &&
-                  form?.values?.images?.map((i, index) => (
-                    <div
-                      key={index}
-                      className="relative bg-[#F0F1F1] rounded-md px-4 py-8"
+                    <Flex
+                      direction="column"
+                      justify="center"
+                      align="center"
+                      gap={10}
                     >
-                      <div className="absolute top-2 right-1 text-white text-lg cursor-pointer">
-                        <IoIosCloseCircle
-                          onClick={() => removeImage(index)}
-                          fill="gray"
-                          size={22}
+                      <Dropzone.Accept>
+                        <Image src={Uploader} />
+                      </Dropzone.Accept>
+                      <Dropzone.Reject>
+                        <IconX
+                          style={{
+                            width: rem(52),
+                            height: rem(52),
+                            color: "var(--mantine-color-red-6)",
+                          }}
+                          stroke={1.5}
+                        />
+                      </Dropzone.Reject>
+                      <Dropzone.Idle>
+                        <Image w={100} src={Uploader} />
+                      </Dropzone.Idle>
+
+                      <Text className="text-center" size="md" inline>
+                        Drag and Drop Files or Browse
+                      </Text>
+                    </Flex>
+                  </Group>
+                </Dropzone>
+
+                <div className="flex mt-4 flex-wrap gap-2">
+                  {form?.values?.images?.length > 0 &&
+                    form?.values?.images?.map((i, index) => (
+                      <div
+                        key={index}
+                        className="relative bg-[#F0F1F1] rounded-md px-4 py-8"
+                      >
+                        <div className="absolute top-2 right-1 text-white text-lg cursor-pointer">
+                          <IoIosCloseCircle
+                            onClick={() => removeImage(index)}
+                            fill="gray"
+                            size={22}
+                          />
+                        </div>
+                        <Image
+                          h={80}
+                          w={100}
+                          fit="contain"
+                          src={
+                            // product?.product && isEdit ? i :
+                            URL?.createObjectURL(i)
+                          }
                         />
                       </div>
-                      <Image
-                        h={80}
-                        w={100}
-                        fit="contain"
-                        src={
-                          // product?.product && isEdit ? i :
-                          URL?.createObjectURL(i)
-                        }
-                      />
-                    </div>
-                  ))}
+                    ))}
+                </div>
               </div>
-            </div>
-          </Flex>
+            </Flex>
 
-          <Flex justify={"end"} my={4}>
-            <Button
-              onClick={() => navigate("/dashboard/menu/list")}
-              color={colors.primary[100]}
-              radius="sm"
-              size="sm"
-              px={8}
-            >
-              Publish
-            </Button>
-          </Flex>
+            <Flex justify={"end"} my={4}>
+              <Button
+                loading={loading}
+                type="submit"
+                color={colors.primary[100]}
+                radius="sm"
+                size="sm"
+                px={8}
+              >
+                Publish
+              </Button>
+            </Flex>
+          </form>
         </Box>
       </Box>
 

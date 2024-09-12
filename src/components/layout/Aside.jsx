@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IconSettings, IconPower } from "@tabler/icons-react";
 import { FaChevronLeft } from "react-icons/fa";
 import { useGetRole } from "@/hooks/auth";
+import { useAuthStore } from "@/stores/auth.store";
 
 const Aside = ({ asideOpen, setAsideOpen }) => {
   const isMobile = useMediaQuery("(max-width:1023px)");
@@ -93,6 +94,7 @@ const Aside = ({ asideOpen, setAsideOpen }) => {
 };
 
 const Menu = ({ asideOpen }) => {
+  const { logout } = useAuthStore();
   const role = useGetRole();
   const isMobile = useMediaQuery("(max-width:1023px)");
   const [active, setActive] = useState(0);
@@ -175,6 +177,10 @@ const Menu = ({ asideOpen }) => {
           label={"Logout"}
         >
           <Link
+            onClick={() => {
+              logout();
+              navigate("/");
+            }}
             style={{
               color: "#909FAF",
               fontSize: "15px",
@@ -186,7 +192,6 @@ const Menu = ({ asideOpen }) => {
               justifyContent: asideOpen ? "flex-start" : "center",
             }}
             className={"aside-menu line-clamp-1"}
-            to={"#"}
           >
             <IconPower />
 

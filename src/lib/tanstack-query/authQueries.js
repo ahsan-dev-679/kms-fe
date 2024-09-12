@@ -89,7 +89,7 @@ export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: async (values) => {
       attachTokenWithFormAxios();
-      const res = await formAxios.put(`/auth/updateAdminProfile`, values);
+      const res = await formAxios.put(`/auth/profile/${values.id}`, values);
       return res?.data;
     },
     onSuccess: (data) => {

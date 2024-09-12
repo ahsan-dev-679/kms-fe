@@ -6,10 +6,8 @@ import {
   Grid,
   GridCol,
   PasswordInput,
-  Select,
   Text,
   TextInput,
-  Title,
   Avatar,
   Group,
   FileButton,
@@ -17,36 +15,39 @@ import {
 import { isEmail, useForm } from "@mantine/form";
 import React, { useEffect, useState } from "react";
 import { PhoneInput } from "react-international-phone";
-// import { counties } from '@/data/US.County'
-// import profileShadow from "/public/assets/bg/profile-shadow.svg";
 import { useMediaQuery } from "@mantine/hooks";
 import Shadow from "@/assets/svg/shadow.svg";
 import { colors } from "@/configs/theme.config";
 import Transition from "@/components/layout/Transition";
 import Loader from "@/components/layout/Loader";
-
-const loading = false;
+import { useAuthStore } from "@/stores/auth.store";
+import { errorMessage } from "@/utils/toast";
+import { useUpdateProfile } from "@/lib/tanstack-query/authQueries";
+import { baseURL } from "@/configs/axios.config";
 
 const Settings = () => {
-  const [loading, setLoading] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
+  const { user } = useAuthStore();
+  const [profileFile, setProfileFile] = useState(null);
+  const [file, setfile] = useState(null);
+  const { isPending: loading, mutateAsync } = useUpdateProfile();
+
   const form = useForm({
     initialValues: {
-      first_name: "",
-      last_name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       phone: "",
       password: "",
       confirm_password: "",
-      county: "",
     },
     validate: {
-      first_name: (value) => {
+      firstName: (value) => {
         if (value.length == 0) {
           return "First Name is required!";
         }
       },
-      last_name: (value) => {
+      lastName: (value) => {
         if (value.length == 0) {
           return "Last Name is required";
         }
@@ -65,10 +66,10 @@ const Settings = () => {
         }
       },
       password: (value) => {
-        if (value.length == 0) {
+        if (value.length > 0) {
           return "Password is required";
         }
-        if (value.length < 8) {
+        if (value.length > 0 && value.length < 8) {
           return "Password length should be greater then 7";
         }
       },
@@ -77,48 +78,60 @@ const Settings = () => {
           return "Password and  Confirm password not matched!";
         }
       },
-      county: (value) => {
-        if (value.length == 0) {
-          return "County is required";
-        }
-      },
     },
   });
-  const handelSubmit = async () => {
-    console.log(" phone ", form.errors);
-    console.log(" phone ", form.values.phone);
-    setLoading(true);
-    try {
-      if (!form.isValid()) {
-        return;
+
+  const handleFileChange = (file) => {
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        return errorMessage("File size exceeds 5MB. Upload an image under 5MB");
+      } else {
+        setfile(file);
+        const profileFile = URL.createObjectURL(file);
+        setProfileFile(profileFile);
       }
-      setTimeout(() => {
-        setLoading(false);
-        form.reset();
-      }, 1500);
-    } catch (error) {
-      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    form.setValues({
+      email: user?.userData?.email,
+      firstName: user?.userData?.firstName,
+      lastName: user?.userData?.lastName,
+      phone: user?.userData?.phone || "",
+    });
+  }, []);
+
+  const handleSubmit = async (values) => {
+    let payload = { ...values, id: user?.userData?._id };
+    if (file) {
+      payload = {
+        ...payload,
+        profileImage: file,
+      };
+    }
+    console.log(user?.userData?._id);
+
+    console.log(payload);
+    await mutateAsync(payload);
+    setProfileFile(null);
+  };
+  console.log(baseURL + user?.userData?.profileImage);
+
   return (
     <Transition>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Flex
-          direction={"column"}
-          style={{
-            border: "1px solid #EDEDED",
-            boxShadow: "0px 29px 20px -25px #0000000D",
-            backgroundColor: "#FFFFFF",
-            height: "fit-content",
-            position: "relative",
-          }}
-          p={{ base: "sm", sm: "md", md: "xl" }}
-          component="form"
-          //   onSubmit={form.onSubmit((values) => handelSubmit(values))}
-        >
+      <Flex
+        direction={"column"}
+        style={{
+          border: "1px solid #EDEDED",
+          boxShadow: "0px 29px 20px -25px #0000000D",
+          backgroundColor: "#FFFFFF",
+          height: "fit-content",
+          position: "relative",
+        }}
+        p={{ base: "sm", sm: "md", md: "xl" }}
+      >
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <Image
             src={Shadow}
             alt={"profileShadow"}
@@ -153,7 +166,7 @@ const Settings = () => {
               >
                 <Avatar
                   size={150}
-                  src={"https://i.pravatar.cc/150?u=a04258a2462d826712d"}
+                  src={profileFile || baseURL + user?.userData?.profileImage}
                   alt="Selected Avatar"
                   loading="eager"
                   placeholder="blur"
@@ -162,9 +175,15 @@ const Settings = () => {
               </Box>
             </Flex>
             <Group justify="center">
-              <FileButton accept="image/png,image/jpeg">
+              <FileButton
+                onChange={(file) => {
+                  handleFileChange(file);
+                }}
+                accept="image/png,image/jpeg"
+              >
                 {(props) => (
                   <Button
+                    type="button"
                     variant="light"
                     radius={"sm"}
                     color={colors.primary[100]}
@@ -207,7 +226,7 @@ const Settings = () => {
                 label="First Name"
                 withAsterisk
                 placeholder="Enter first name"
-                {...form.getInputProps("first_name")}
+                {...form.getInputProps("firstName")}
               />
             </GridCol>
             <GridCol mt={"md"} span={{ base: 12, sm: 6, md: 6 }}>
@@ -216,7 +235,7 @@ const Settings = () => {
                 label="Last Name"
                 withAsterisk
                 placeholder="Enter last name"
-                {...form.getInputProps("last_name")}
+                {...form.getInputProps("lastName")}
               />
             </GridCol>
             <GridCol mt={"md"} span={{ base: 12, sm: 6, md: 6 }}>
@@ -225,7 +244,6 @@ const Settings = () => {
                 disabled
                 type="email"
                 label="Personal Email"
-                withAsterisk
                 placeholder="Email here"
                 {...form.getInputProps("email")}
               />
@@ -285,9 +303,9 @@ const Settings = () => {
           </Grid>
           <Flex mt={"md"} flex={1} align={"end"} justify={"end"}>
             <Button
+              type="submit"
               px={"20px"}
               loading={loading}
-              disabled={loading}
               color={colors.primary[100]}
               radius="md"
               size="md"
@@ -295,8 +313,8 @@ const Settings = () => {
               Update Profile
             </Button>
           </Flex>
-        </Flex>
-      )}
+        </form>
+      </Flex>
     </Transition>
   );
 };

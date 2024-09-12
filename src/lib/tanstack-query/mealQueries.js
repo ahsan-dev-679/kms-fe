@@ -8,34 +8,34 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { successMessage, errorMessage } from "@/utils/toast";
 import { useAuthStore } from "@/stores/auth.store";
 
-export const useCategory = () => {
+export const useMeals = () => {
   const { data, ...rest } = useQuery({
     queryFn: async () => {
       attachToken();
-      const data = await custAxios.get("/meals/category/get");
+      const data = await custAxios.get("/meals");
       return data?.data?.data;
     },
 
-    queryKey: ["categories"],
+    queryKey: ["meals"],
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     retry: true,
   });
-  return { categories: data, ...rest };
+  return { meals: data, ...rest };
 };
 
-export const useCreateCategory = () => {
+export const useCreateMeal = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (value) => {
-      attachToken();
-      const res = await custAxios.post(`/meals/category`, value);
+      attachTokenWithFormAxios();
+      const res = await formAxios.post(`/meals`, value);
       return res?.data;
     },
     onSuccess: (data) => {
       if (data?.success) {
         successMessage("Category created successfully");
-        queryClient.invalidateQueries("categories");
+        queryClient.invalidateQueries("meals");
       }
     },
     onError: (error) => {

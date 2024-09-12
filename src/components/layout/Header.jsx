@@ -5,14 +5,18 @@ import NotificationMenu from "../dashboard/NotificationMenu";
 import { IconCheckbox } from "@tabler/icons-react";
 import { colors } from "@/configs/theme.config";
 import { useGetRole } from "@/hooks/auth";
+import { useAuthStore } from "@/stores/auth.store";
+import { baseURL } from "./../../configs/axios.config";
 
 const Header = () => {
   const role = useGetRole();
-  const user = {
-    avatar: "https://github.com/shadcn.png",
-    username: "Young Alaska",
-    email: "youngalaska@gmail.com",
-  };
+  const { user } = useAuthStore();
+
+  // const user = {
+  //   avatar: "https://github.com/shadcn.png",
+  //   username: "Young Alaska",
+  //   email: "youngalaska@gmail.com",
+  // };
   const isMobile = useMediaQuery("(max-width:767px)");
   return (
     <Flex
@@ -29,7 +33,7 @@ const Header = () => {
         <Flex align={"center"} gap={"lg"}>
           <NotificationMenu />
 
-          <MobileProfileBox profile={user} />
+          <MobileProfileBox profile={user?.userData} />
           {role === "chef" && (
             <Button
               variant="light"
@@ -45,7 +49,7 @@ const Header = () => {
         <Flex align={"center"} gap={"lg"}>
           <NotificationMenu />
 
-          <DesktopProfileBox profile={user} />
+          <DesktopProfileBox profile={user?.userData} />
           {role === "chef" && (
             <Button
               variant="light"
@@ -65,16 +69,15 @@ const Header = () => {
 const DesktopProfileBox = ({ profile }) => {
   return (
     <Flex gap={"md"} align={"center"}>
-      <Image
+      <Avatar
         className="w-12 h-12 rounded-full object-cover object-center"
-        src={profile.avatar}
-        alt={profile.username}
+        src={baseURL + profile?.profileImage}
       />
       <Box>
         <Text className="text-[#141B43] !leading-none !font-semibold">
-          {profile.username}
+          {profile?.firstName + profile?.lastName}
         </Text>
-        <Text className="!text-[#A1A1A1] font-light">{profile.email}</Text>
+        <Text className="!text-[#A1A1A1] font-light">{profile?.email}</Text>
       </Box>
     </Flex>
   );
@@ -91,20 +94,19 @@ const MobileProfileBox = ({ profile }) => {
       opened={opened}
     >
       <Popover.Target>
-        <Image
+        <Avatar
           onMouseEnter={open}
           onMouseLeave={close}
           className="w-12 h-12 rounded-full object-cover object-center"
-          src={profile.avatar}
-          alt={profile.username}
+          src={baseURL + profile?.profileImage}
         />
       </Popover.Target>
       <Popover.Dropdown style={{ pointerEvents: "none" }}>
         <Box>
           <Text className="text-[#141B43] leading-none font-semibold">
-            {profile.username}
+            {profile?.firstName + profile?.lastName}
           </Text>
-          <Text className="text-[#A1A1A1] font-light">{profile.email}</Text>
+          <Text className="text-[#A1A1A1] font-light">{profile?.email}</Text>
         </Box>
       </Popover.Dropdown>
     </Popover>

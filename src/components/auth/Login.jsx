@@ -28,7 +28,7 @@ const Login = () => {
     },
   });
 
-  const handelSubmit = async (values) => {
+  const handleSubmit = async (values) => {
     if (form.isValid) {
       const res = await loginFunc({
         ...values,
@@ -48,7 +48,7 @@ const Login = () => {
     <>
       <Flex
         component="form"
-        onSubmit={form.onSubmit((values) => handelSubmit(values))}
+        onSubmit={form.onSubmit((values) => handleSubmit(values))}
         className="flex-col w-full gap-3"
       >
         <Title order={3}>Login</Title>

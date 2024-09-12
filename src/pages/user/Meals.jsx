@@ -18,9 +18,12 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import AuthModal from "@/components/modal/AuthModal";
 import { Link } from "react-router-dom";
 import MealCardSk from "@/components/skeleton/MealCardSk";
+import { useCategory } from "@/lib/tanstack-query/categoryQueries";
 
 const Meals = () => {
-  const [activeCategory, setActiveCategory] = useState(mealCategories[0].name);
+  const { isLoading: categoryLoader, categories } = useCategory();
+
+  const [activeCategory, setActiveCategory] = useState("All");
   const [opened, { open, close }] = useDisclosure(false);
   const midScreen = useMediaQuery("(max-width: 1024px)");
 
@@ -56,33 +59,35 @@ const Meals = () => {
                       Category
                     </Text>
                     <div className="grid grid-cols-3 gap-2">
-                      {mealCategories?.map((category, idx) => (
-                        <Link
-                          onClick={() => {
-                            setActiveCategory(category.name);
-                          }}
-                          key={idx}
-                          className={`pr-24 pl-4 text-left w-full py-2 rounded-lg font-semibold text-sm hover:bg-[#F3F4F6] text-[#4f4f4f]`}
-                        >
-                          {category.name}
-                        </Link>
-                      ))}
+                      {[{ name: "All" }, ...categories]?.map(
+                        (category, idx) => (
+                          <Link
+                            onClick={() => {
+                              setActiveCategory(category?.name);
+                            }}
+                            key={idx}
+                            className={`pr-24 pl-4 text-left w-full py-2 rounded-lg font-semibold text-sm hover:bg-[#F3F4F6] text-[#4f4f4f]`}
+                          >
+                            {category?.name}
+                          </Link>
+                        )
+                      )}
                     </div>
                   </Popover.Dropdown>
                 </Popover>
               </>
             ) : (
               <Flex direction={"column"} gap={2}>
-                {loading
+                {categoryLoader
                   ? Array.from({ length: 8 }).map((_, idx) => (
-                      <Skeleton height={30} mb={20} radius={"sm"} />
+                      <Skeleton key={idx} height={30} mb={20} radius={"sm"} />
                     ))
-                  : mealCategories?.map((category, idx) => (
+                  : [{ name: "All" }, ...categories]?.map((category, idx) => (
                       <CategorySidebar
                         key={idx}
-                        name={category.name}
+                        name={category?.name}
                         isActive={activeCategory === category.name}
-                        onClick={() => setActiveCategory(category.name)}
+                        onClick={() => setActiveCategory(category?.name)}
                       />
                     ))}
               </Flex>
