@@ -106,3 +106,20 @@ export const useUpdateProfile = () => {
     },
   });
 };
+export const useSubscribeNewsletter = () => {
+  return useMutation({
+    mutationFn: async (value) => {
+      attachToken();
+      const res = await custAxios.post(`/newsletter/subscribe`, value);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        successMessage("Subscribed to newsletter successfully");
+      }
+    },
+    onError: (error) => {
+      errorMessage(error?.response?.data?.message);
+    },
+  });
+};

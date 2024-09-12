@@ -94,7 +94,7 @@ const Meals = () => {
             )}
           </Grid.Col>
           <Grid.Col span={midScreen ? 12 : 9.5}>
-            <Box className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+            <Box className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
               {loading ? (
                 Array.from({ length: 8 }).map((_, idx) => (
                   <MealCardSk key={idx} />

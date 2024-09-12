@@ -1,6 +1,15 @@
-import React from "react";
+import { useSubscribeNewsletter } from "@/lib/tanstack-query/authQueries";
+import React, { useState } from "react";
 
 const Footer = () => {
+  const [email, setEmail] = useState(null);
+  const { isPending: loading, mutateAsync } = useSubscribeNewsletter();
+
+  const handleSubmit = async () => {
+    await mutateAsync({ email });
+    setEmail(null);
+  };
+
   return (
     <footer className="w-full mt-10 bg-[#ECF9EE]">
       <div className="mx-auto max-w-7xl px-4 sm:px-4 lg:px-8">
@@ -199,9 +208,12 @@ const Footer = () => {
                   name="email"
                   className="py-2 px-6 bg-gray-100 rounded-full text-gray-900 placeholder:text-gray-500 focus:outline-none w-full pr-16 lg:py-3.5 lg:px-7 lg:bg-[#fafafa] border-2"
                   placeholder="Your email here..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <button
-                  type="submit"
+                  onClick={handleSubmit}
+                  type="button"
                   className="absolute inset-y-0 right-0 py-2 px-7 bg-[#4FAE5A] shadow-md rounded-full text-white font-semibold hover:bg-[#3fa74b] focus:outline-none"
                 >
                   Subscribe
