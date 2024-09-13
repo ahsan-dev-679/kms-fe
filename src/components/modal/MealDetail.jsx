@@ -18,11 +18,15 @@ import { colors } from "@/configs/theme.config";
 import { ImPlus, ImMinus } from "react-icons/im";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useCartStore } from "@/stores/cart.store";
+import { baseURL } from "@/configs/axios.config";
+import { capitalizeFirstLetter } from "@/utils";
 
 const MealDetail = ({ opened, close, detail }) => {
   const mobile = useMediaQuery("(max-width: 1024px)");
   const { addToCart, decrementQty } = useCartStore();
   const [count, setCount] = useState(1);
+
+  console.log("detailss...", detail);
 
   return (
     <Modal
@@ -43,28 +47,14 @@ const MealDetail = ({ opened, close, detail }) => {
             height={400}
             // style={{ width: 400 }}
           >
-            <Carousel.Slide>
-              <Image
-                src={detail.img}
-                style={{ objectFit: "contain", height: 400 }}
-              />
-            </Carousel.Slide>
-            <Carousel.Slide>
-              <Image
-                src={
-                  "https://kababjeesfriedchicken.com/_next/image?url=https%3A%2F%2Fassets.indolj.io%2Fimages%2F1718003229-_JK_6587.jpg%3Fq%3D10&w=640&q=75"
-                }
-                style={{ objectFit: "contain", height: 400 }}
-              />
-            </Carousel.Slide>
-            <Carousel.Slide>
-              <Image
-                src={
-                  "https://kababjeesfriedchicken.com/_next/image?url=https%3A%2F%2Fassets.indolj.io%2Fimages%2F1718003229-_JK_6587.jpg%3Fq%3D10&w=640&q=75"
-                }
-                style={{ objectFit: "contain", height: 400 }}
-              />
-            </Carousel.Slide>
+            {detail?.images?.map((i, index) => (
+              <Carousel.Slide key={index}>
+                <Image
+                  src={baseURL + i}
+                  style={{ objectFit: "contain", height: 400 }}
+                />
+              </Carousel.Slide>
+            ))}
           </Carousel>
         </Grid.Col>
         <Grid.Col
@@ -74,12 +64,17 @@ const MealDetail = ({ opened, close, detail }) => {
           span={mobile ? 12 : 7}
           className="border-0 border-red-500"
         >
-          <Title order={2}>{detail.title}</Title>
+          <Title className="capitalize" order={2}>
+            {detail.title}
+          </Title>
+          {/* <Text py={2} c={"dimmed"} fw={600} size="lg">
+            {capitalizeFirstLetter(detail.description)}
+          </Text> */}
           <Text py={2} c={"dark"} fw={600} size="lg">
             {detail.price}€
           </Text>
           <Text py={4} c={"dimmed"}>
-            {detail.desc}
+            {detail.description}
           </Text>
 
           <Box

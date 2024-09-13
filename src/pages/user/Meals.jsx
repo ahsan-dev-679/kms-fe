@@ -19,9 +19,11 @@ import AuthModal from "@/components/modal/AuthModal";
 import { Link } from "react-router-dom";
 import MealCardSk from "@/components/skeleton/MealCardSk";
 import { useCategory } from "@/lib/tanstack-query/categoryQueries";
+import { useMeals } from "@/lib/tanstack-query/mealQueries";
 
 const Meals = () => {
   const { isLoading: categoryLoader, categories } = useCategory();
+  const { meals, isLoading } = useMeals();
 
   const [activeCategory, setActiveCategory] = useState("All");
   const [opened, { open, close }] = useDisclosure(false);
@@ -95,14 +97,12 @@ const Meals = () => {
           </Grid.Col>
           <Grid.Col span={midScreen ? 12 : 9.5}>
             <Box className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-              {loading ? (
+              {isLoading ? (
                 Array.from({ length: 8 }).map((_, idx) => (
                   <MealCardSk key={idx} />
                 ))
-              ) : menuList && menuList.length > 0 ? (
-                menuList?.map((value, idx) => (
-                  <MealsCard meal={value} key={idx} />
-                ))
+              ) : meals && meals?.length > 0 ? (
+                meals?.map((value, idx) => <MealsCard meal={value} key={idx} />)
               ) : (
                 <Title
                   order={2}

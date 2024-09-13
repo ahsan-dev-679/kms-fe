@@ -6,6 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { colors } from "@/configs/theme.config";
 import { useCartStore } from "@/stores/cart.store";
 import MealDetail from "@/components/modal/MealDetail";
+import { baseURL } from "./../../configs/axios.config";
 
 const MealsCard = ({ meal }) => {
   const [detail, setDetail] = useState({});
@@ -29,7 +30,7 @@ const MealsCard = ({ meal }) => {
         }}
       >
         <Card.Section style={{ width: "" }}>
-          <Image src={meal.img} style={{}} alt="Norway" />
+          <Image src={baseURL + meal?.images[0]} style={{}} alt="Norway" />
         </Card.Section>
 
         <Flex justify="space-between" direction={"column"} my={3} gap={2}>
@@ -37,7 +38,7 @@ const MealsCard = ({ meal }) => {
             {meal.title}
           </Text>
           <Text size="sm" c="dimmed" lineClamp={2}>
-            {meal.desc}
+            {meal.description}
           </Text>
         </Flex>
 

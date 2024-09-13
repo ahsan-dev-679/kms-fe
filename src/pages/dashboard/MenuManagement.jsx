@@ -111,11 +111,20 @@ const MenuManagement = () => {
     if (values.images.length <= 0) {
       return warningMessage("Image is required");
     }
-    const payload = {
-      ...values,
-      tags: JSON.stringify(values?.tags),
-    };
-    const res = await createMeal(payload);
+    const formdata = new FormData();
+    formdata.append("title", values.title);
+    formdata.append("description", values.description);
+    formdata.append("discount", values.discount);
+    formdata.append("price", values.price);
+    formdata.append("stock", values.stock);
+    formdata.append("category", values.category);
+    formdata.append("servings", values.servings);
+    formdata.append("tags", JSON.stringify(values?.tags));
+    values?.images?.forEach((image) => {
+      formdata.append(`images`, image);
+    });
+
+    const res = await createMeal(formdata);
     if (res?.success) {
       navigate(-1);
     }
