@@ -7,17 +7,14 @@ import { colors } from "@/configs/theme.config";
 import { useGetRole } from "@/hooks/auth";
 import { useAuthStore } from "@/stores/auth.store";
 import { baseURL } from "./../../configs/axios.config";
+import { useMarkAttendance } from "@/lib/tanstack-query/chefQueries";
 
 const Header = () => {
   const role = useGetRole();
   const { user } = useAuthStore();
-
-  // const user = {
-  //   avatar: "https://github.com/shadcn.png",
-  //   username: "Young Alaska",
-  //   email: "youngalaska@gmail.com",
-  // };
   const isMobile = useMediaQuery("(max-width:767px)");
+  const { isPending, mutateAsync } = useMarkAttendance();
+
   return (
     <Flex
       // px={{ base: "10px", md: "30px", lg: "40px", sm: "20px" }}
@@ -40,6 +37,8 @@ const Header = () => {
               radius={"sm"}
               color={colors.primary[100]}
               rightSection={<IconCheckbox stroke={2} />}
+              loading={isPending}
+              onClick={() => mutateAsync()}
             >
               Mark attendence
             </Button>
@@ -55,6 +54,8 @@ const Header = () => {
               variant="light"
               radius={"sm"}
               color={colors.primary[100]}
+              loading={isPending}
+              onClick={() => mutateAsync()}
               rightSection={<IconCheckbox stroke={2} />}
             >
               Mark Attendence

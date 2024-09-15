@@ -7,6 +7,7 @@ import { colors } from "@/configs/theme.config";
 import { useCartStore } from "@/stores/cart.store";
 import MealDetail from "@/components/modal/MealDetail";
 import { baseURL } from "./../../configs/axios.config";
+import { calculateDiscount, capitalizeFirstLetter } from "@/utils";
 
 const MealsCard = ({ meal }) => {
   const [detail, setDetail] = useState({});
@@ -14,8 +15,8 @@ const MealsCard = ({ meal }) => {
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
   const { addToCart } = useCartStore();
-
   const discount = 0;
+
   return (
     <>
       <Card
@@ -34,20 +35,20 @@ const MealsCard = ({ meal }) => {
         </Card.Section>
 
         <Flex justify="space-between" direction={"column"} my={3} gap={2}>
-          <Text lineClamp={1} fw={700}>
+          <Text lineClamp={1} fw={700} className="capitalize">
             {meal.title}
           </Text>
           <Text size="sm" c="dimmed" lineClamp={2}>
-            {meal.description}
+            {capitalizeFirstLetter(meal.description)}
           </Text>
         </Flex>
 
         <Flex align={"center"} justify={"space-between"} mt={2}>
           <Text size="md" c="black" fw={700}>
-            {discount > 0 && (
+            {meal?.discount > 0 && (
               <span className="pr-2 line-through font-thin">{meal.price}€</span>
             )}
-            {meal.price}€
+            {calculateDiscount(meal.price, meal?.discount)}€
           </Text>
           <Button
             onClick={(e) => {

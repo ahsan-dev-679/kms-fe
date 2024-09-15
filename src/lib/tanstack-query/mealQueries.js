@@ -12,7 +12,9 @@ export const useMeals = () => {
   const { data, ...rest } = useQuery({
     queryFn: async () => {
       attachToken();
-      const data = await custAxios.get("/meals");
+      const data = await custAxios.get("/meals", {
+        params: { limit: 999, page: 1 },
+      });
       return data?.data?.data;
     },
 
@@ -34,7 +36,26 @@ export const useCreateMeal = () => {
     },
     onSuccess: (data) => {
       if (data?.success) {
-        successMessage("Category created successfully");
+        successMessage("Meal created successfully");
+        queryClient.invalidateQueries("meals");
+      }
+    },
+    onError: (error) => {
+      errorMessage(error?.response?.data?.message);
+    },
+  });
+};
+export const deleteMeal = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id) => {
+      attachToken();
+      const res = await custAxios.delete(`/meals/${id}`);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        successMessage("Meal deleted successfully");
         queryClient.invalidateQueries("meals");
       }
     },

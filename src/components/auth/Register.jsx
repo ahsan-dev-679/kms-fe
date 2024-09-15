@@ -50,6 +50,10 @@ const Register = () => {
         role: value,
         lastName: " ",
       });
+      if (res?.success) {
+        form.reset();
+        closeAuthModal();
+      }
     }
   };
   return (

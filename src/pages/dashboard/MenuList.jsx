@@ -24,12 +24,13 @@ import RowActionPopup from "@/components/dashboard/RowActionPopup";
 import { IconTrash, IconAssembly } from "@tabler/icons-react";
 import GeneralModal from "@/components/modal/GeneralModal";
 import { useGetRole } from "@/hooks/auth";
-import { useCreateCategory } from "@/lib/tanstack-query/categoryQueries";
-import { useMeals } from "@/lib/tanstack-query/mealQueries";
+import { deleteMeal, useMeals } from "@/lib/tanstack-query/mealQueries";
 import { baseURL } from "@/configs/axios.config";
 
 const MenuList = () => {
   const { meals, isLoading } = useMeals();
+  const { isPending: deleteLoading, mutateAsync: deleteFunc } = deleteMeal();
+
   const role = useGetRole();
   const navigate = useNavigate();
   const [id, setId] = useState(null);
@@ -38,13 +39,10 @@ const MenuList = () => {
     useDisclosure(false);
   const [openedAlert, { open: openAlert, close: closeAlert }] =
     useDisclosure(false);
-  const [
-    openedRowSelection,
-    { open: openRowSelection, close: closeRowSelection },
-  ] = useDisclosure(false);
 
-  const deleteHandler = () => {
-    console.log("id.....", id);
+  const deleteHandler = async () => {
+    await deleteFunc(id);
+    closeAlert();
   };
 
   const columns = useMemo(
@@ -211,28 +209,11 @@ const MenuList = () => {
       <MealDetail detail={detail} opened={openedModal} close={closeModal} />
       <DeletePopup
         text={"Are you sure you want to delete?"}
-        loading={false}
+        loading={deleteLoading}
         clickHandler={deleteHandler}
         opened={openedAlert}
         close={closeAlert}
       />
-      {/* <GeneralModal
-        close={closeRowSelection}
-        opened={openRowSelection}
-        component={
-          <>
-            <Group justify="flex-end" my={4} py={16}>
-              <Button onClick={closeRowSelection} variant="default">
-                Cancel
-              </Button>
-              <Button variant="filled" color="red">
-                Publish
-
-              </Button>
-            </Group>
-          </>
-        }
-      /> */}
     </Transition>
   );
 };
