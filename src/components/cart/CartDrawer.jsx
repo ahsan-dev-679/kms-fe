@@ -1,20 +1,29 @@
 import React from "react";
 import { Drawer, Button, Box, Flex, Text, Divider, Image } from "@mantine/core";
-import { menuList } from "@/data/data";
 import CartItem from "./CartItem";
 import { colors } from "@/configs/theme.config";
-import {
-  IconCircleArrowRightFilled,
-  IconArrowRight,
-} from "@tabler/icons-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import { useCartStore } from "@/stores/cart.store";
 import { useNavigate } from "react-router-dom";
 import EmptyCart from "@/assets/common/empty-cart (1).png";
 import { formatPrice } from "@/utils";
+import { useCheckout } from "@/lib/tanstack-query/orderQueries";
 
 const CartDrawer = ({ opened, close }) => {
   const navigate = useNavigate();
   const { cart, clearCart, total, tax, grandTotal } = useCartStore();
+  const { isPending, mutateAsync } = useCheckout();
+
+  const handleCheckout = async () => {
+    console.log("cart...", cart);
+
+    const res = await mutateAsync({ arrayOfMeals: cart });
+    console.log("res...", res);
+    if (res?.success) {
+      close();
+      navigate("/checkout", { state: { data: res?.data } });
+    }
+  };
 
   return (
     <Drawer
@@ -55,10 +64,10 @@ const CartDrawer = ({ opened, close }) => {
                 <Text>Total</Text>
                 <Text> {formatPrice(total())}</Text>
               </Flex>
-              <Flex py={2} align={"center"} justify={"space-between"}>
+              {/* <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text>Tax 13%</Text>
                 <Text> {formatPrice(tax())}</Text>
-              </Flex>
+              </Flex> */}
               <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text>Delivery</Text>
                 <Text>Free</Text>
@@ -66,14 +75,12 @@ const CartDrawer = ({ opened, close }) => {
               <Divider />
               <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text fw={600}>Grand Total</Text>
-                <Text fw={600}> {formatPrice(grandTotal())}</Text>
+                <Text fw={600}> {formatPrice(total())}</Text>
               </Flex>
             </Box>
             <Button
-              onClick={() => {
-                navigate("/checkout");
-                close();
-              }}
+              onClick={handleCheckout}
+              loading={isPending}
               fullWidth
               color={colors.primary[100]}
               radius="md"

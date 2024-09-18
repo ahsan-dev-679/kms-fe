@@ -12,7 +12,7 @@ export const useCategory = () => {
   const { data, ...rest } = useQuery({
     queryFn: async () => {
       attachToken();
-      const data = await custAxios.get("/meals/category/get");
+      const data = await custAxios.get("/meals/category");
       return data?.data?.data;
     },
 

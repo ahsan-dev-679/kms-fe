@@ -8,22 +8,39 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { successMessage, errorMessage } from "@/utils/toast";
 import { useAuthStore } from "@/stores/auth.store";
 
-export const useAttendance = () => {
-  const { data, ...rest } = useQuery(["attendance", id], {
+export const useAttendance = (id) => {
+  const { data, ...rest } = useQuery({
     queryFn: async () => {
       attachToken();
-      const data = await custAxios.post("/chef/attendance", {
+      const data = await custAxios.post(`/chef/get-attendance/${id}`, {
         params: { limit: 999, page: 1 },
       });
       return data?.data?.data;
     },
 
-    // queryKey: ["attendance"],
+    queryKey: ["attendance", id],
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     retry: true,
   });
-  return { meals: data, ...rest };
+  return { attendanceList: data, ...rest };
+};
+export const useChefList = () => {
+  const { data, ...rest } = useQuery({
+    queryFn: async () => {
+      attachToken();
+      const data = await custAxios.get(`/chef`, {
+        params: { limit: 999, page: 1 },
+      });
+      return data?.data?.data;
+    },
+
+    queryKey: ["chef"],
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+    retry: true,
+  });
+  return { chefList: data, ...rest };
 };
 
 export const useMarkAttendance = () => {
@@ -31,7 +48,7 @@ export const useMarkAttendance = () => {
   return useMutation({
     mutationFn: async () => {
       attachToken();
-      const res = await custAxios.get(`/chef/mark-attendance`);
+      const res = await custAxios.get(`/chef/attendance/mark`);
       return res?.data;
     },
     onSuccess: (data) => {

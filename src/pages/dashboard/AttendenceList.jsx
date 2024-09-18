@@ -1,20 +1,31 @@
-import * as uuid from "uuid";
 import React, { useMemo, useState } from "react";
 import GeneralTable from "./../../components/table/GeneralTable";
-import { Box, Text, Button, Flex, Avatar, Switch, Menu } from "@mantine/core";
-import { capitalizeFirstLetter, formatDate, formatPrice } from "@/utils";
-import { Link, useNavigate } from "react-router-dom";
-import { chefAttendence } from "@/data/data";
+import { Box, Text, Button, Flex, Avatar, Menu } from "@mantine/core";
+import { formatDate } from "@/utils";
+import { useNavigate, useParams } from "react-router-dom";
 import Transition from "@/components/layout/Transition";
-import { IconX, IconArrowNarrowLeft } from "@tabler/icons-react";
+import { IconArrowNarrowLeft } from "@tabler/icons-react";
 import { DatePicker } from "@mantine/dates";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { useMediaQuery } from "@mantine/hooks";
+import { useAttendance } from "@/lib/tanstack-query/chefQueries";
+import { useAuthStore } from "@/stores/auth.store";
+import { baseURL } from "@/configs/axios.config";
+import { useGetRole } from "@/hooks/auth";
 
 const AttendenceList = () => {
+  const role = useGetRole();
+  const { user } = useAuthStore();
+  const { id } = useParams();
+  console.log("id", id);
   const navigate = useNavigate();
   const [value, setValue] = useState([]);
   const isMobile = useMediaQuery("(max-width:600px)");
+  console.log("user?.userData?._id", user?.userData?._id);
+
+  const payloadID = role === "chef" ? user?.userData?._id : id;
+  const { isLoading, attendanceList } = useAttendance(payloadID);
+  console.log("atttendaceList...", attendanceList);
 
   const columns = useMemo(
     () => [
@@ -24,10 +35,16 @@ const AttendenceList = () => {
         Cell: ({ cell }) => {
           return (
             <Flex gap={"md"} align={"center"}>
-              <Avatar size={45} src={cell.row.original.profile} />
+              <Avatar
+                size={45}
+                src={baseURL + cell?.row?.original?.user?.profileImage}
+              />
               <Flex direction={"column"}>
-                <Text size="sm">{cell.row.original.name}</Text>
-                <Text size="sm">{cell.row.original.email}</Text>
+                <Text size="sm">
+                  {cell.row.original?.user?.firstName +
+                    cell.row.original?.user?.lastName}
+                </Text>
+                <Text size="sm">{cell.row.original?.user?.email}</Text>
               </Flex>
             </Flex>
           );
@@ -37,7 +54,7 @@ const AttendenceList = () => {
         accessorKey: "kitchenNo",
         header: "Kitchen No",
         Cell: ({ cell }) => {
-          return <Text>{cell.getValue()}</Text>;
+          return <Text>{cell.row.original?.user?.kitchenNo}</Text>;
         },
       },
       {
@@ -48,7 +65,7 @@ const AttendenceList = () => {
         },
       },
       {
-        accessorKey: "status",
+        accessorKey: "isPresent",
         header: "Status",
         Cell: ({ cell }) => {
           return (
@@ -56,13 +73,13 @@ const AttendenceList = () => {
               <Text
                 style={{
                   backgroundColor:
-                    cell.getValue() === "present" ? "#BBF0D6" : "#ffc6c6",
+                    cell.getValue() === true ? "#BBF0D6" : "#ffc6c6",
                   padding: "5px 10px",
                 }}
-                c={cell.getValue() === "present" ? "#45a331" : "#e30202"}
+                c={cell.getValue() === true ? "#45a331" : "#e30202"}
                 className="w-fit rounded-md"
               >
-                {capitalizeFirstLetter(cell.getValue())}
+                {cell.getValue() === true ? "Present" : "Absent"}
               </Text>
             </Flex>
           );
@@ -81,9 +98,9 @@ const AttendenceList = () => {
       />
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable
-          isLoading={false}
+          isLoading={isLoading}
           columns={columns}
-          data={chefAttendence}
+          data={attendanceList || []}
           heading={"Chef Attendence"}
           otherComponent={
             <Menu

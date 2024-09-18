@@ -1,28 +1,19 @@
 import { useForm, isEmail } from "@mantine/form";
 import React, { useState } from "react";
 import {
-  BackgroundImage,
-  Box,
   Button,
   Group,
   Flex,
   PasswordInput,
   Radio,
-  Text,
   TextInput,
   Title,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
 import { colors } from "@/configs/theme.config";
-import AuthModal from "../modal/AuthModal";
-import { useDisclosure } from "@mantine/hooks";
 import { useRegister } from "@/lib/tanstack-query/authQueries";
 
-const Register = () => {
-  const [openedAuthModal, { open: openAuthModal, close: closeAuthModal }] =
-    useDisclosure(false);
+const Register = ({ onSwitch }) => {
   const [value, setValue] = useState("user");
-  const [formType, setFormType] = useState("register");
   const { isPending: loading, mutateAsync: registerFunc } = useRegister();
 
   const form = useForm({
@@ -52,7 +43,7 @@ const Register = () => {
       });
       if (res?.success) {
         form.reset();
-        closeAuthModal();
+        onSwitch();
       }
     }
   };
@@ -107,21 +98,12 @@ const Register = () => {
           Already have an account ?{" "}
           <span
             className="text-blue-700 font-medium hover:underline cursor-pointer"
-            onClick={() => {
-              closeAuthModal();
-              setFormType("login");
-              openAuthModal();
-            }}
+            onClick={onSwitch}
           >
             Sign in
           </span>
         </p>
       </Flex>
-      <AuthModal
-        opened={openedAuthModal}
-        close={closeAuthModal}
-        formType={formType}
-      />
     </>
   );
 };

@@ -12,6 +12,7 @@ import {
 import React from "react";
 import { ImPlus, ImMinus } from "react-icons/im";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { formatPrice } from "@/utils";
 
 const CartItem = ({ item }) => {
   const { addToCart, decrementQty } = useCartStore();
@@ -25,8 +26,7 @@ const CartItem = ({ item }) => {
         <Flex direction={"column"} className="w21-full">
           <Text lineClamp={1}>{item.title}</Text>
           <Text lineClamp={1} align={"start"} size="sm" c="dimmed">
-            Rs.
-            {item.price}
+            {formatPrice(item.price)}
           </Text>
         </Flex>
       </Flex>

@@ -62,7 +62,7 @@ const Router = () => {
           element={<DashboardRoute Component={ChefList} />}
         />
         <Route
-          path="/dashboard/chef/attendence"
+          path="/dashboard/chef/attendence/:id?"
           element={<DashboardRoute Component={AttendenceList} />}
         />
         <Route

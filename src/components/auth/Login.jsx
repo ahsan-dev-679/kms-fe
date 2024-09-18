@@ -1,17 +1,14 @@
 import { useForm, isEmail } from "@mantine/form";
-import React, { useState } from "react";
+import React from "react";
 import { Button, Flex, PasswordInput, TextInput, Title } from "@mantine/core";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { colors } from "@/configs/theme.config";
-import { useDisclosure } from "@mantine/hooks";
-import AuthModal from "../modal/AuthModal";
 import { useLogin } from "@/lib/tanstack-query/authQueries";
 
-const Login = () => {
+const Login = ({ onSwitch, onClose }) => {
   const navigate = useNavigate();
   const { isPending: loading, mutateAsync: loginFunc } = useLogin();
-  const [openedAuthModal, { open: openAuthModal, close: closeAuthModal }] =
-    useDisclosure(false);
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -35,11 +32,11 @@ const Login = () => {
       });
 
       if (res?.success) {
-        closeAuthModal();
+        form.reset();
+        onClose();
         if (res?.data?.user?.role !== "user") {
           navigate("/dashboard");
         }
-        form.reset();
       }
     }
   };
@@ -85,21 +82,12 @@ const Login = () => {
           Don't have an account ?{" "}
           <span
             className="text-blue-700 font-medium hover:underline cursor-pointer"
-            onClick={() => {
-              closeAuthModal();
-              openAuthModal();
-            }}
+            onClick={onSwitch}
           >
             Sign up
           </span>
         </p>
       </Flex>
-
-      <AuthModal
-        opened={openedAuthModal}
-        close={closeAuthModal}
-        formType={"login"}
-      />
     </>
   );
 };

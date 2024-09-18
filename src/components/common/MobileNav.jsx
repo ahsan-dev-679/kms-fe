@@ -27,7 +27,6 @@ const MobileNav = ({ opened, close }) => {
   const { logout } = useAuthStore();
   const [formType, setformType] = useState("login");
   const role = useGetRole();
-  console.log("role.......", role);
 
   return (
     <>

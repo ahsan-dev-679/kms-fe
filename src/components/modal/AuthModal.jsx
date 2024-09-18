@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Grid, Image } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-
 import MainImg from "@/assets/common/food-ordering.png";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 // import Logo from "/logos/logos192.png"
+
 const AuthModal = ({ opened, close, formType }) => {
   const mobile = useMediaQuery("(max-width: 1024px)");
-  console.log("AuthModal", formType);
+  const [authType, setAuthType] = useState(formType);
+
+  console.log("formType...", formType);
+  console.log("authType...", authType);
+
+  const handleClose = () => {
+    close();
+  };
+
+  useEffect(() => {
+    setAuthType(formType);
+  }, [formType]);
 
   return (
     <Modal
@@ -16,7 +27,7 @@ const AuthModal = ({ opened, close, formType }) => {
       //   size={"100%"}
       radius={"lg"}
       opened={opened}
-      onClose={close}
+      onClose={handleClose}
       title=""
     >
       <Grid gutter="lg">
@@ -32,8 +43,18 @@ const AuthModal = ({ opened, close, formType }) => {
             }
           />
 
-          {formType === "login" && <Login />}
-          {formType === "register" && <Register />}
+          {authType === "login" && (
+            <Login
+              onSwitch={() => setAuthType("register")}
+              onClose={handleClose}
+            />
+          )}
+          {authType === "register" && (
+            <Register
+              onSwitch={() => setAuthType("login")}
+              onClose={handleClose}
+            />
+          )}
         </Grid.Col>
         {!mobile && (
           <Grid.Col span={mobile ? 12 : 6} className="bg-[#fafafa]">

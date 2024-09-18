@@ -1,15 +1,16 @@
-import * as uuid from "uuid";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import GeneralTable from "./../../components/table/GeneralTable";
-import { Box, Text, Button, Flex, Avatar, Switch } from "@mantine/core";
-import { capitalizeFirstLetter, formatDate, formatPrice } from "@/utils";
+import { Box, Text, Button, Flex, Avatar } from "@mantine/core";
+import { capitalizeFirstLetter, formatDate } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
-import { IconEye } from "@tabler/icons-react";
-import { chefList } from "@/data/data";
 import Transition from "@/components/layout/Transition";
+import { useChefList } from "@/lib/tanstack-query/chefQueries";
+import { baseURL } from "@/configs/axios.config";
 
 const ChefList = () => {
   const navigate = useNavigate();
+
+  const { isLoading, chefList } = useChefList();
 
   const columns = useMemo(
     () => [
@@ -19,9 +20,16 @@ const ChefList = () => {
         Cell: ({ cell }) => {
           return (
             <Flex gap={"md"} align={"center"}>
-              <Avatar size={45} src={cell.row.original.profile} />
+              <Avatar
+                size={45}
+                src={baseURL + cell.row.original.profileImage}
+              />
               <Flex direction={"column"}>
-                <Text size="sm">{cell.row.original.name}</Text>
+                <Text size="sm">
+                  {cell.row.original.firstName +
+                    " " +
+                    cell.row.original.lastName}
+                </Text>
                 <Text size="sm">{cell.row.original.email}</Text>
               </Flex>
             </Flex>
@@ -36,7 +44,7 @@ const ChefList = () => {
         },
       },
       {
-        accessorKey: "joinedAt",
+        accessorKey: "createdAt",
         header: "Joined At",
         Cell: ({ cell }) => {
           return <Text>{formatDate(cell.getValue())}</Text>;
@@ -55,9 +63,9 @@ const ChefList = () => {
                   padding: "5px 10px",
                 }}
                 c={cell.getValue() === "active" ? "#45a331" : "#e30202"}
-                className="w-fit rounded-md"
+                className="w-fit rounded-md capitalize"
               >
-                {capitalizeFirstLetter(cell.getValue())}
+                {cell.getValue()}
               </Text>
             </Flex>
           );
@@ -71,7 +79,7 @@ const ChefList = () => {
           return (
             // <Switch className="cursor-pointer" defaultChecked color="green" />
             <Link
-              to={"/dashboard/chef/attendence"}
+              to={`/dashboard/chef/attendence/${cell.row.original._id}`}
               className="text-blue-700 font-medium hover:underline cursor-pointer"
             >
               View Detail
@@ -86,9 +94,9 @@ const ChefList = () => {
     <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable
-          isLoading={false}
+          isLoading={isLoading}
           columns={columns}
-          data={chefList}
+          data={chefList || []}
           heading={"Chef List"}
         />
       </Box>
