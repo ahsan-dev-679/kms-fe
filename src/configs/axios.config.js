@@ -1,6 +1,4 @@
 import axios from "axios";
-// import { errorMessage } from "../globalFunctions";
-
 export const baseURL = "https://kms-be-production.up.railway.app";
 
 // axios instance for json data

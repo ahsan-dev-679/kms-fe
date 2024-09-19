@@ -41,7 +41,7 @@ export const useCreateMeal = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };
@@ -60,7 +60,7 @@ export const deleteMeal = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };

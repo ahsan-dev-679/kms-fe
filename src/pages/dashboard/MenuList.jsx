@@ -12,7 +12,7 @@ import {
   Title,
   Group,
 } from "@mantine/core";
-import { formatPrice, getStockIcon } from "@/utils";
+import { calculateDiscount, formatPrice, getStockIcon } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDisclosure } from "@mantine/hooks";
@@ -77,7 +77,16 @@ const MenuList = () => {
         accessorKey: "price",
         header: "Price",
         Cell: ({ cell }) => {
-          return <Text>{formatPrice(cell?.getValue())}</Text>;
+          return (
+            <Text>
+              {formatPrice(
+                calculateDiscount(
+                  cell.row.original?.price,
+                  cell.row.original?.discount
+                )
+              )}
+            </Text>
+          );
         },
       },
       {
@@ -142,7 +151,17 @@ const MenuList = () => {
                   </Menu.Item>
                 )}
                 {role === "admin" && (
-                  <Menu.Item className="font-medium">Edit</Menu.Item>
+                  <Menu.Item
+                    onClick={() =>
+                      navigate(
+                        `/dashboard/menu/management/${cell.row.original?._id}`,
+                        { state: { menu: cell.row.original } }
+                      )
+                    }
+                    className="font-medium"
+                  >
+                    Edit
+                  </Menu.Item>
                 )}
                 {role === "admin" && (
                   <Menu.Item

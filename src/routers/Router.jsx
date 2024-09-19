@@ -66,7 +66,7 @@ const Router = () => {
           element={<DashboardRoute Component={AttendenceList} />}
         />
         <Route
-          path="/dashboard/menu/management"
+          path="/dashboard/menu/management/:id?"
           element={<DashboardRoute Component={MenuManagement} />}
         />
         <Route

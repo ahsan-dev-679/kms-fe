@@ -18,7 +18,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { Dropzone, IMAGE_MIME_TYPE, MIME_TYPES } from "@mantine/dropzone";
 import { IconX, IconArrowNarrowLeft } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { colors } from "@/configs/theme.config";
 import Uploader from "@/assets/svg/uploader.svg";
 import GeneralModal from "@/components/modal/GeneralModal";
@@ -39,9 +39,14 @@ const MenuManagement = () => {
   const { isPending, mutateAsync } = useCreateCategory();
   const { isPending: loading, mutateAsync: createMeal } = useCreateMeal();
   const { categories } = useCategory();
-
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
+  const { id } = useParams();
+  const location = useLocation();
+  const menu = location?.state?.menu;
+
+  console.log("location....", location);
+  console.log("menu....", menu);
 
   const categoryList =
     categories?.map((categ) => ({
@@ -148,14 +153,14 @@ const MenuManagement = () => {
         >
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <Title order={3} py={3}>
-              Add Menu
+              {`${menu ? "Update" : "Add"} Menu`}
             </Title>
 
             <TextInput
               className="mb-2"
               w={md ? "100%" : "70%"}
               label="Title"
-              placeholder="Input placeholder"
+              placeholder="Enter title"
               {...form.getInputProps("title")}
             />
             <Textarea
@@ -165,7 +170,7 @@ const MenuManagement = () => {
               maxRows={12}
               w={md ? "100%" : "70%"}
               label="Description"
-              placeholder="Input placeholder"
+              placeholder="Enter description"
               {...form.getInputProps("description")}
             />
             <Flex gap={"lg"} direction={lg ? "column" : "row"}>
@@ -321,9 +326,9 @@ const MenuManagement = () => {
                 color={colors.primary[100]}
                 radius="sm"
                 size="sm"
-                px={8}
+                w={"48%"}
               >
-                Publish
+                {`${menu ? "Update" : "Publish"} Menu`}
               </Button>
             </Flex>
           </form>

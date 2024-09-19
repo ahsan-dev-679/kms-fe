@@ -26,7 +26,7 @@ export const useLogin = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };
@@ -43,7 +43,7 @@ export const useRegister = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };
@@ -60,7 +60,7 @@ export const useForgotPassword = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };
@@ -102,7 +102,7 @@ export const useUpdateProfile = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };
@@ -119,7 +119,7 @@ export const useSubscribeNewsletter = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };

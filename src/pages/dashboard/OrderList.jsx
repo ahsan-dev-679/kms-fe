@@ -6,81 +6,15 @@ import { formatDate, formatPrice } from "@/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { IconEye } from "@tabler/icons-react";
 import Transition from "@/components/layout/Transition";
+import {
+  useOrdersList,
+  useUpdateOrderStatus,
+} from "@/lib/tanstack-query/orderQueries";
 
 const OrderList = () => {
   const navigate = useNavigate();
-  const data = [
-    {
-      name: "Young Alaska",
-      total: 10.0,
-      status: "completed",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD001",
-    },
-    {
-      name: "Young Alaska",
-      total: 6.0,
-      status: "pending",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD002",
-    },
-    {
-      name: "Young Alaska",
-      total: 16.0,
-      status: "shipped",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD003",
-    },
-    {
-      name: "Young Alaska",
-      total: 24.0,
-      status: "completed",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD004",
-    },
-    {
-      name: "Young Alaska",
-      total: 4.0,
-      status: "cancelled",
-      _id: "ORD005",
-      date: "2024-08-17T11:49:16.378+00:00",
-    },
-    {
-      name: "Young Alaska",
-      total: 14.0,
-      status: "completed",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD006",
-    },
-    {
-      name: "Young Alaska",
-      total: 8.0,
-      status: "pending",
-      _id: "ORD007",
-      date: "2024-08-17T11:49:16.378+00:00",
-    },
-    {
-      name: "Young Alaska",
-      total: 12.0,
-      status: "shipped",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD008",
-    },
-    {
-      name: "Young Alaska",
-      total: 20.0,
-      status: "completed",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD009",
-    },
-    {
-      name: "Young Alaska",
-      total: 18.0,
-      status: "returned",
-      date: "2024-08-17T11:49:16.378+00:00",
-      _id: "ORD010",
-    },
-  ];
+  const { isLoading, ordersList } = useOrdersList();
+  const { isPending, mutateAsync } = useUpdateOrderStatus();
 
   const columns = useMemo(
     () => [
@@ -95,11 +29,11 @@ const OrderList = () => {
         accessorKey: "name",
         header: "Customer Name",
         Cell: ({ cell }) => {
-          return <Text>{cell.getValue()}</Text>;
+          return <Text>{cell.row.original?.user?.firstName}</Text>;
         },
       },
       {
-        accessorKey: "date",
+        accessorKey: "createdAt",
         header: "Date",
         Cell: ({ cell }) => {
           return <Text>{formatDate(cell.getValue())}</Text>;
@@ -120,12 +54,16 @@ const OrderList = () => {
             <Select
               placeholder="Status"
               defaultValue={cell.getValue()}
+              value={cell.getValue()}
               data={[
                 { label: "Pending", value: "pending" },
                 { label: "Completed", value: "completed" },
                 { label: "Shipped", value: "shipped" },
                 { label: "Cancelled", value: "cancelled" },
               ]}
+              onChange={async (_value, option) => {
+                mutateAsync({ id: cell.row.original._id, status: _value });
+              }}
             />
           );
         },
@@ -138,7 +76,9 @@ const OrderList = () => {
           return (
             <Button
               onClick={() =>
-                navigate(`/dashboard/order/detail/${cell.row.original._id}`)
+                navigate(`/dashboard/order/detail/${cell.row.original._id}`, {
+                  state: { order: cell.row.original },
+                })
               }
               p={"0"}
               variant="transparent"
@@ -157,9 +97,9 @@ const OrderList = () => {
     <Transition>
       <Box className=" my-3 shadow-md !rounded-xl ">
         <GeneralTable
-          isLoading={false}
+          isLoading={isLoading}
           columns={columns}
-          data={data}
+          data={ordersList || []}
           heading={"Order List"}
         />
       </Box>

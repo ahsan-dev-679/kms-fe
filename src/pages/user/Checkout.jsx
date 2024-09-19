@@ -77,14 +77,11 @@ const Checkout = () => {
     },
   });
 
-  console.log("data...", data);
-
   const handleSubmit = async (values) => {
     const payload = {
       ...data,
       billingInfo: values,
     };
-    console.log("payload...", payload);
 
     const res = await mutateAsync(payload);
     if (res?.success) {
@@ -94,7 +91,6 @@ const Checkout = () => {
 
   useEffect(() => {
     if (!data) {
-      console.log("here........");
       navigate(-1);
     }
   }, [location, data]);

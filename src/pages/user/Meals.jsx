@@ -1,17 +1,7 @@
 import CategorySidebar from "@/components/common/CategorySidebar";
 import MealsCard from "@/components/common/MealsCard";
-import {
-  Box,
-  Grid,
-  Flex,
-  Button,
-  Popover,
-  Text,
-  Title,
-  Skeleton,
-} from "@mantine/core";
+import { Box, Grid, Flex, Popover, Text, Title, Skeleton } from "@mantine/core";
 import React, { useState } from "react";
-import { menuList, mealCategories } from "@/data/data";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { Link } from "react-router-dom";
@@ -58,9 +48,8 @@ const Meals = () => {
                       Category
                     </Text>
                     <div className="grid grid-cols-3 gap-2">
-                      {
-                        // [{ name: "All" }, ...categories]?.map(
-                        mealCategories?.map((category, idx) => (
+                      {[{ name: "All" }, ...categories]?.map(
+                        (category, idx) => (
                           <Link
                             onClick={() => {
                               setActiveCategory(category?.name);
@@ -70,8 +59,8 @@ const Meals = () => {
                           >
                             {category?.name}
                           </Link>
-                        ))
-                      }
+                        )
+                      )}
                     </div>
                   </Popover.Dropdown>
                 </Popover>
@@ -82,8 +71,7 @@ const Meals = () => {
                   ? Array.from({ length: 8 }).map((_, idx) => (
                       <Skeleton key={idx} height={30} mb={20} radius={"sm"} />
                     ))
-                  : // : [{ name: "All" }, ...categories]?.map((category, idx) => (
-                    mealCategories?.map((category, idx) => (
+                  : [{ name: "All" }, ...categories]?.map((category, idx) => (
                       <CategorySidebar
                         key={idx}
                         name={category?.name}

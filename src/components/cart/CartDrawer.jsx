@@ -11,15 +11,13 @@ import { useCheckout } from "@/lib/tanstack-query/orderQueries";
 
 const CartDrawer = ({ opened, close }) => {
   const navigate = useNavigate();
-  const { cart, clearCart, total, tax, grandTotal } = useCartStore();
+  const { cart, clearCart, total, grandTotal } = useCartStore();
   const { isPending, mutateAsync } = useCheckout();
 
   const handleCheckout = async () => {
-    console.log("cart...", cart);
-
     const res = await mutateAsync({ arrayOfMeals: cart });
-    console.log("res...", res);
     if (res?.success) {
+      clearCart();
       close();
       navigate("/checkout", { state: { data: res?.data } });
     }

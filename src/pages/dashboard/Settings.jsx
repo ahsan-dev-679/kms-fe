@@ -37,7 +37,7 @@ const Settings = () => {
       firstName: "",
       lastName: "",
       email: "",
-      phone: "",
+      // phone: "",
       password: "",
       confirm_password: "",
     },
@@ -60,11 +60,11 @@ const Settings = () => {
           return "Enter correct emails!";
         }
       },
-      phone: (value) => {
-        if (value.length == 0) {
-          return "Phone is required";
-        }
-      },
+      // phone: (value) => {
+      //   if (value.length == 0) {
+      //     return "Phone is required";
+      //   }
+      // },
       password: (value) => {
         if (value.length > 0) {
           return "Password is required";
@@ -98,7 +98,7 @@ const Settings = () => {
       email: user?.userData?.email,
       firstName: user?.userData?.firstName,
       lastName: user?.userData?.lastName,
-      phone: user?.userData?.phone || "",
+      // phone: user?.userData?.phone || "",
     });
   }, []);
 
@@ -249,7 +249,7 @@ const Settings = () => {
               />
             </GridCol>
             <GridCol mt={"md"} span={{ base: 12, sm: 6, md: 6 }}>
-              <Text
+              {/* <Text
                 c={"#141B43"}
                 fw={"500"}
                 fz={"var(--input-label-size, var(--mantine-font-size-sm))"}
@@ -277,7 +277,7 @@ const Settings = () => {
               />
               <span style={{ color: "red", fontSize: "13px", top: "-2px" }}>
                 {form.errors.phone}
-              </span>
+              </span> */}
             </GridCol>
             <GridCol mt={"md"} span={{ base: 12, sm: 12, md: 6 }}>
               <PasswordInput

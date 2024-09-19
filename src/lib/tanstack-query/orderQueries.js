@@ -15,7 +15,7 @@ export const useCheckout = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };
@@ -35,7 +35,32 @@ export const useCreateOrder = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+};
+
+export const useUpdateOrderStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (value) => {
+      console.log(value);
+
+      attachToken();
+      throw new Error("test");
+      const res = await custAxios.put(`/order/update-status/${value.id}`, {
+        status: value.status,
+      });
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        successMessage("Order Status updated successfully");
+        queryClient.invalidateQueries("orders");
+      }
+    },
+    onError: (error) => {
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };

@@ -10,9 +10,6 @@ const AuthModal = ({ opened, close, formType }) => {
   const mobile = useMediaQuery("(max-width: 1024px)");
   const [authType, setAuthType] = useState(formType);
 
-  console.log("formType...", formType);
-  console.log("authType...", authType);
-
   const handleClose = () => {
     close();
   };

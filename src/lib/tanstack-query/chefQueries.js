@@ -58,7 +58,7 @@ export const useMarkAttendance = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };

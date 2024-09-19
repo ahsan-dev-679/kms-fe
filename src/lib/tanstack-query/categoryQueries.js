@@ -12,7 +12,7 @@ export const useCategory = () => {
   const { data, ...rest } = useQuery({
     queryFn: async () => {
       attachToken();
-      const data = await custAxios.get("/meals/category");
+      const data = await custAxios.get("/meals/category/get");
       return data?.data?.data;
     },
 
@@ -39,7 +39,7 @@ export const useCreateCategory = () => {
       }
     },
     onError: (error) => {
-      errorMessage(error?.response?.data?.message);
+      errorMessage(error?.response?.data?.message || "Something went wrong");
     },
   });
 };
