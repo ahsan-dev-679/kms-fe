@@ -20,16 +20,15 @@ import MealDetail from "@/components/modal/MealDetail";
 import { DeletePopup } from "@/components/alert/DeletePopup";
 import Transition from "@/components/layout/Transition";
 import { colors } from "@/configs/theme.config";
-import RowActionPopup from "@/components/dashboard/RowActionPopup";
-import { IconTrash, IconAssembly } from "@tabler/icons-react";
-import GeneralModal from "@/components/modal/GeneralModal";
 import { useGetRole } from "@/hooks/auth";
 import { deleteMeal, useMeals } from "@/lib/tanstack-query/mealQueries";
 import { baseURL } from "@/configs/axios.config";
+import { useNotifyLowStock } from "@/lib/tanstack-query/chefQueries";
 
 const MenuList = () => {
   const { meals, isLoading } = useMeals();
   const { isPending: deleteLoading, mutateAsync: deleteFunc } = deleteMeal();
+  const { isPending: loading, mutateAsync: notifyFunc } = useNotifyLowStock();
 
   const role = useGetRole();
   const navigate = useNavigate();
@@ -146,7 +145,12 @@ const MenuList = () => {
                 </Menu.Item>
 
                 {role === "chef" && (
-                  <Menu.Item className="font-medium">
+                  <Menu.Item
+                    onClick={() => {
+                      notifyFunc(cell.row.original._id);
+                    }}
+                    className="font-medium"
+                  >
                     Low stock notification
                   </Menu.Item>
                 )}

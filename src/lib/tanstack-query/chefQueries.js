@@ -62,3 +62,21 @@ export const useMarkAttendance = () => {
     },
   });
 };
+
+export const useNotifyLowStock = () => {
+  return useMutation({
+    mutationFn: async (id) => {
+      attachToken();
+      const res = await custAxios.get(`/chef/low-stock/${id}`);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        successMessage("Notifed to admin successfully.");
+      }
+    },
+    onError: (error) => {
+      errorMessage(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+};

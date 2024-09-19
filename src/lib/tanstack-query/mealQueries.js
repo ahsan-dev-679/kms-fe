@@ -45,6 +45,29 @@ export const useCreateMeal = () => {
     },
   });
 };
+
+export const useUpdateMeal = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, values }) => {
+      console.log("id", id, "value", values);
+
+      attachTokenWithFormAxios();
+      const res = await formAxios.put(`/meals/${id}`, values);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        successMessage("Meal updated successfully");
+        queryClient.invalidateQueries("meals");
+      }
+    },
+    onError: (error) => {
+      errorMessage(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+};
+
 export const deleteMeal = () => {
   const queryClient = useQueryClient();
   return useMutation({

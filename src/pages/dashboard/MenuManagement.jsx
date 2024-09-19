@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -28,7 +28,8 @@ import {
   useCreateCategory,
 } from "@/lib/tanstack-query/categoryQueries";
 import { warningMessage } from "@/utils/toast";
-import { useCreateMeal } from "@/lib/tanstack-query/mealQueries";
+import { useCreateMeal, useUpdateMeal } from "@/lib/tanstack-query/mealQueries";
+import { baseURL } from "@/configs/axios.config";
 
 const MenuManagement = () => {
   const navigate = useNavigate();
@@ -38,15 +39,15 @@ const MenuManagement = () => {
   const md = useMediaQuery("(max-width: 768px)");
   const { isPending, mutateAsync } = useCreateCategory();
   const { isPending: loading, mutateAsync: createMeal } = useCreateMeal();
+  const { isPending: uLoading, mutateAsync: updateMeal } = useUpdateMeal();
+
   const { categories } = useCategory();
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
   const { id } = useParams();
   const location = useLocation();
   const menu = location?.state?.menu;
-
-  console.log("location....", location);
-  console.log("menu....", menu);
+  const [previousImages, setPreviousImages] = useState([]);
 
   const categoryList =
     categories?.map((categ) => ({
@@ -90,6 +91,12 @@ const MenuManagement = () => {
       form.values.images.filter((_, index) => index !== currentIndex)
     );
   };
+  const removePrevImagehandler = (index) => {
+    setPreviousImages((prevPreviousImages) =>
+      prevPreviousImages.filter((_, i) => i !== index)
+    );
+  };
+
   const handleCategoryChange = (value, option) => {
     if (value === "Add New Category") {
       openModal();
@@ -128,13 +135,32 @@ const MenuManagement = () => {
     values?.images?.forEach((image) => {
       formdata.append(`images`, image);
     });
-
-    const res = await createMeal(formdata);
+    let res;
+    if (menu) {
+      formdata.append("previousImages", previousImages);
+      res = await updateMeal({ id: menu?._id, values: formdata });
+    } else {
+      res = await createMeal(formdata);
+    }
     if (res?.success) {
       navigate(-1);
     }
-    console.log("values........", values);
   };
+
+  useEffect(() => {
+    if (menu) {
+      form.setFieldValue("title", menu?.title);
+      form.setFieldValue("description", menu?.description);
+      form.setFieldValue("discount", menu?.discount);
+      form.setFieldValue("price", menu?.price);
+      form.setFieldValue("stock", menu?.stock);
+      form.setFieldValue("servings", menu?.servings);
+      form.setFieldValue("category", menu?.category?._id);
+      form.setFieldValue("tags", JSON.parse(menu?.tags));
+      setPreviousImages(menu?.images);
+      setSelectedCateg(menu?.category?._id);
+    }
+  }, []);
 
   return (
     <>
@@ -289,8 +315,26 @@ const MenuManagement = () => {
                     </Flex>
                   </Group>
                 </Dropzone>
+                {console.log("previousImages......", previousImages)}
 
                 <div className="flex mt-4 flex-wrap gap-2">
+                  {previousImages.length > 0 &&
+                    previousImages?.map((i, index) => (
+                      <div
+                        key={index}
+                        className="relative bg-[#F0F1F1] rounded-md px-4 py-8"
+                      >
+                        <div className="absolute top-2 right-1 text-white text-lg cursor-pointer">
+                          <IoIosCloseCircle
+                            onClick={() => removePrevImagehandler(index)}
+                            fill="gray"
+                            size={22}
+                          />
+                        </div>
+                        <Image h={80} w={100} fit="contain" src={baseURL + i} />
+                      </div>
+                    ))}
+
                   {form?.values?.images?.length > 0 &&
                     form?.values?.images?.map((i, index) => (
                       <div
@@ -321,7 +365,7 @@ const MenuManagement = () => {
 
             <Flex justify={"end"} my={4}>
               <Button
-                loading={loading}
+                loading={loading || uLoading}
                 type="submit"
                 color={colors.primary[100]}
                 radius="sm"
