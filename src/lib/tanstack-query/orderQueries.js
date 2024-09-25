@@ -47,7 +47,6 @@ export const useUpdateOrderStatus = () => {
       console.log(value);
 
       attachToken();
-      throw new Error("test");
       const res = await custAxios.put(`/order/update-status/${value.id}`, {
         status: value.status,
       });

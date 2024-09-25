@@ -131,7 +131,7 @@ const MenuManagement = () => {
     formdata.append("stock", values.stock);
     formdata.append("category", values.category);
     formdata.append("servings", values.servings);
-    formdata.append("tags", JSON.stringify(values?.tags));
+    formdata.append("tags", JSON.stringify(values?.tags) || []);
     values?.images?.forEach((image) => {
       formdata.append(`images`, image);
     });
