@@ -137,7 +137,7 @@ const MenuManagement = () => {
     });
     let res;
     if (menu) {
-      formdata.append("previousImages", previousImages);
+      formdata.append("previousImages", JSON.stringify(previousImages) || []);
       res = await updateMeal({ id: menu?._id, values: formdata });
     } else {
       res = await createMeal(formdata);
