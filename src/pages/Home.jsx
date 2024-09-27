@@ -3,12 +3,17 @@ import { Box } from "@mantine/core";
 import HeroSection from "@/components/home/HeroSection";
 import FeatureSection from "@/components/home/FeatureSection";
 import SecondarySection from "@/components/home/SecondarySection";
+import BrowseCatalogs from "@/components/home/BrowseCatalogs";
+import FollowUs from "@/components/home/FollowUs";
+import OurPartners from "@/components/home/OurPartners";
 
 const Home = () => {
   return (
     <Box>
       <HeroSection />
-      <FeatureSection />
+      <OurPartners />
+      <BrowseCatalogs />
+      <FollowUs />
       <SecondarySection />
     </Box>
   );
