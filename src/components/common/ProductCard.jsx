@@ -29,7 +29,6 @@ const ProductCard = ({ img }) => {
         Classis Burger
       </Title>
       <Text>Lorem ipsum dolor sit amet dolor consectetur adipiscing elit</Text>
-      {/* <Text>₹ 199</Text> */}
     </Flex>
   );
 };
