@@ -6,6 +6,7 @@ import SecondarySection from "@/components/home/SecondarySection";
 import BrowseCatalogs from "@/components/home/BrowseCatalogs";
 import FollowUs from "@/components/home/FollowUs";
 import OurPartners from "@/components/home/OurPartners";
+import BrowseMenu from "@/components/home/BrowseMenu";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <HeroSection />
       <OurPartners />
       <BrowseCatalogs />
+      <BrowseMenu />
       <FollowUs />
       <SecondarySection />
     </Box>

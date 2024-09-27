@@ -1,14 +1,22 @@
 import { Box, Button, Flex, Image, Title } from "@mantine/core";
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const FollowUs = () => {
+  const navigate = useNavigate();
   return (
     <section className="py-6 px-6">
       <Flex justify={"space-between"} align={"center"} className="pb-8">
         <Title>Follow us on Instagram</Title>
-        <Button color="#4FAE5A" size="xl" className="rounded-full">
-          Follow us
-        </Button>
+        <Link target="_blank" to={"https://www.instagram.com/"}>
+          <Button
+            color="#4FAE5A"
+            size="xl"
+            className="rounded-full transition-all duration-300 hover:scale-105 hover:text-primary-100 hover:bg-white hover:border-primary-100"
+          >
+            Follow us
+          </Button>
+        </Link>
       </Flex>
 
       <Box className="gap-10 grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 lg:grid-cols-3">

@@ -31,7 +31,7 @@ const HeroSection = () => {
         </Text>
         <Button
           onClick={() => navigate("/meals")}
-          className="my-5"
+          className="my-5 transition-all duration-300 hover:scale-105 hover:text-primary-100 hover:bg-white hover:border-primary-100"
           size="xl"
           radius={"xl"}
           color="#4fae5a"

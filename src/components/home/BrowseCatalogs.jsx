@@ -9,10 +9,8 @@ import Desert from "@/assets/icons/Desert.jsx";
 const BrowseCatalogs = () => {
   return (
     <Box className="py-8">
-      <Title ta={"center"} order={1} className="text-3xl">
-        Browse our Catalogs
-      </Title>
-      <Box className="p-6 grid gap-10 grid-cols-1 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  ">
+      <Title ta={"center"}>Explore our Catalogs</Title>
+      <Box className="p-6 grid gap-10 grid-cols-1 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <CatalogsCard
           title={"Breakfast"}
           desc={`Kickstart your day with a delicious breakfast that fuels your morning! From fluffy pancakes to fresh fruit, there's something for everyone to enjoy and savor. It's the perfect way to energize your day!`}
