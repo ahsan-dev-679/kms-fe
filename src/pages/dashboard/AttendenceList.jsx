@@ -103,50 +103,51 @@ const AttendenceList = () => {
           data={attendanceList || []}
           heading={"Chef Attendence"}
           otherComponent={
-            <Menu
-              className="mr-4"
-              position="bottom-start"
-              openDelay={100}
-              closeDelay={400}
-              shadow="md"
-              width={"fit-content"}
-            >
-              <Menu.Target>
-                <Button
-                  h={isMobile ? "40px" : "45px"}
-                  leftSection={<FaRegCalendarAlt />}
-                  variant="gradient"
-                  gradient={{ from: "#F9F9F9", to: "#FFFFFF", deg: 270 }}
-                  size={isMobile ? "xs" : "md"}
-                  style={{
-                    boxShadow: "0px 19px 17.7px -16px #E9E9E9",
-                    border: "1px solid #EDEDED",
-                  }}
-                  c={"#483E3E"}
-                >
-                  Filter by Date
-                </Button>
-              </Menu.Target>
+            // <Menu
+            //   className="mr-4"
+            //   position="bottom-start"
+            //   openDelay={100}
+            //   closeDelay={400}
+            //   shadow="md"
+            //   width={"fit-content"}
+            // >
+            //   <Menu.Target>
+            //     <Button
+            //       h={isMobile ? "40px" : "45px"}
+            //       leftSection={<FaRegCalendarAlt />}
+            //       variant="gradient"
+            //       gradient={{ from: "#F9F9F9", to: "#FFFFFF", deg: 270 }}
+            //       size={isMobile ? "xs" : "md"}
+            //       style={{
+            //         boxShadow: "0px 19px 17.7px -16px #E9E9E9",
+            //         border: "1px solid #EDEDED",
+            //       }}
+            //       c={"#483E3E"}
+            //     >
+            //       Filter by Date
+            //     </Button>
+            //   </Menu.Target>
 
-              <Menu.Dropdown>
-                <Menu.Label>
-                  <DatePicker
-                    color="#208251"
-                    type="range"
-                    value={value}
-                    onChange={setValue}
-                  />
-                  <Button
-                    size="sm"
-                    w={"100%"}
-                    variant="gradient"
-                    gradient={{ from: "#208251", to: "#309161", deg: 270 }}
-                  >
-                    Search
-                  </Button>
-                </Menu.Label>
-              </Menu.Dropdown>
-            </Menu>
+            //   <Menu.Dropdown>
+            //     <Menu.Label>
+            //       <DatePicker
+            //         color="#208251"
+            //         type="range"
+            //         value={value}
+            //         onChange={setValue}
+            //       />
+            //       <Button
+            //         size="sm"
+            //         w={"100%"}
+            //         variant="gradient"
+            //         gradient={{ from: "#208251", to: "#309161", deg: 270 }}
+            //       >
+            //         Search
+            //       </Button>
+            //     </Menu.Label>
+            //   </Menu.Dropdown>
+            // </Menu>
+            <></>
           }
         />
       </Box>

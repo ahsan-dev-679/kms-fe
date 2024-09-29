@@ -10,11 +10,29 @@ import {
   useOrdersList,
   useUpdateOrderStatus,
 } from "@/lib/tanstack-query/orderQueries";
+import { useGetRole } from "@/hooks/auth";
 
 const OrderList = () => {
+  const role = useGetRole();
+  console.log(role);
+
   const navigate = useNavigate();
   const { isLoading, ordersList } = useOrdersList();
   const { isPending, mutateAsync } = useUpdateOrderStatus();
+
+  const data = [
+    { label: "Pending", value: "pending" },
+    { label: "Completed", value: "completed" },
+    { label: "Shipped", value: "shipped" },
+    { label: "Cancelled", value: "cancelled" },
+  ];
+
+  const data1 = [
+    { label: "Pending", value: "pending" },
+    { label: "Completed", value: "completed" },
+  ];
+
+  const arrayData = role === "admin" ? data : data1;
 
   const columns = useMemo(
     () => [
@@ -55,12 +73,7 @@ const OrderList = () => {
               placeholder="Status"
               defaultValue={cell.getValue()}
               value={cell.getValue()}
-              data={[
-                { label: "Pending", value: "pending" },
-                { label: "Completed", value: "completed" },
-                { label: "Shipped", value: "shipped" },
-                { label: "Cancelled", value: "cancelled" },
-              ]}
+              data={arrayData}
               onChange={async (_value, option) => {
                 mutateAsync({ id: cell.row.original._id, status: _value });
               }}
