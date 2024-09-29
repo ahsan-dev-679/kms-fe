@@ -129,7 +129,7 @@ export const dashboardAsideMenus = [
   {
     label: "Order Management",
     path: "/dashboard/order/list",
-    role: ["admin"],
+    role: ["admin", "chef"],
     icon: <IconChecklist />,
   },
   {
