@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Flex, Grid, Skeleton, Title } from "@mantine/core";
 import {
   IconGauge,
@@ -11,27 +11,44 @@ import SummaryCards from "@/components/dashboard/SummaryCards";
 import AnalyticsChart from "@/components/dashboard/AnalyticsChart";
 import RecentActivities from "@/components/dashboard/RecentActivities";
 import InComeChart from "@/components/dashboard/InComeChart";
+import {
+  useIncomeAnalytics,
+  useOrdersAnalytics,
+  useStats,
+} from "@/lib/tanstack-query/dashboardQueries";
+import moment from "moment";
 
 const AdminDashboard = () => {
+  const [year, setYear] = useState(new Date());
+  const [year1, setYear1] = useState(new Date());
+  const { isLoading, stats } = useStats();
+
+  const { isLoading: icomeLoader, incomeData } = useIncomeAnalytics({
+    year: moment(year).format(),
+  });
+  const { isLoading: orderLoader, ordersAnalyticsData } = useOrdersAnalytics({
+    year: moment(year1).format(),
+  });
+
   const dashboardOverviewCards = [
     {
       heading: "Total Earning",
-      amount: "1,500€",
+      amount: `${stats?.totalEarnings}€`,
       icon: <IconDatabaseDollar />,
     },
     {
-      heading: "Total Orders",
-      amount: "120",
+      heading: "Completed Orders",
+      amount: stats?.totalOrders,
       icon: <IconTruckDelivery />,
     },
     {
       heading: "Total Customers",
-      amount: "45",
+      amount: stats?.totalCustomers,
       icon: <IconUsers />,
     },
     {
       heading: "Total Chefs",
-      amount: "15",
+      amount: stats?.totalChefs,
       icon: <IconChefHat />,
     },
   ];
@@ -43,7 +60,7 @@ const AdminDashboard = () => {
       </Title>
 
       <Grid h={"full"}>
-        {loading
+        {isLoading
           ? Array.from({ length: 4 }).map((_, idx) => (
               <Grid.Col key={idx} span={{ base: 12, lg: 3, md: 3, sm: 6 }}>
                 <Flex
@@ -70,7 +87,7 @@ const AdminDashboard = () => {
 
         <Grid h={"full"} className="w-full">
           <Grid.Col span={{ base: 12, lg: 7, md: 12, sm: 12 }}>
-            {loading ? (
+            {icomeLoader ? (
               <Box
                 direction={"column"}
                 justify={"space-between"}
@@ -80,11 +97,15 @@ const AdminDashboard = () => {
                 <Skeleton height={"100%"} radius="md" />
               </Box>
             ) : (
-              <InComeChart />
+              <InComeChart
+                incomeDat={incomeData}
+                year={year}
+                setYear={setYear}
+              />
             )}
           </Grid.Col>
           <Grid.Col span={{ base: 12, lg: 5, md: 12, sm: 12 }}>
-            {loading ? (
+            {orderLoader ? (
               <Box
                 direction={"column"}
                 justify={"space-between"}
@@ -94,7 +115,11 @@ const AdminDashboard = () => {
                 <Skeleton height={"100%"} radius="md" />
               </Box>
             ) : (
-              <AnalyticsChart />
+              <AnalyticsChart
+                orderData={ordersAnalyticsData}
+                year1={year1}
+                setYear1={setYear1}
+              />
             )}
           </Grid.Col>
         </Grid>

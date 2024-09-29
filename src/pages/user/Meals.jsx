@@ -1,5 +1,4 @@
 import CategorySidebar from "@/components/common/CategorySidebar";
-import MealsCard from "@/components/common/MealsCard";
 import { Box, Grid, Flex, Popover, Text, Title, Skeleton } from "@mantine/core";
 import React, { useState } from "react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
@@ -93,8 +92,6 @@ const Meals = () => {
                 // meals?.map((value, idx) => <MealsCard meal={value} key={idx} />)
                 meals?.map((value, idx) => (
                   <>
-                    <MenuCard meal={value} key={idx} />
-                    <MenuCard meal={value} key={idx} />
                     <MenuCard meal={value} key={idx} />
                   </>
                 ))

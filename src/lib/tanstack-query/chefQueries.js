@@ -32,7 +32,7 @@ export const useChefList = () => {
       const data = await custAxios.get(`/chef`, {
         params: { limit: 999, page: 1 },
       });
-      return data?.data?.data;
+      return (data?.data?.data).reverse();
     },
 
     queryKey: ["chef"],

@@ -10,16 +10,13 @@ const Contact = () => {
           <div class="flex flex-wrap -mx-4 lg:justify-between">
             <div class="w-full px-4 lg:w-1/2 xl:w-6/12">
               <div class="mb-12 max-w-[570px] lg:mb-0">
-                {/* <span class="block text-2xl mb-4 font-semibold text-primary">
-                  Contact Us
-                </span> */}
                 <h2 class="text-dark text-black mb-6 pt-4 text-lg font-bold uppercase sm:text-[24px] lg:text-[20px] xl:text-[40px]">
                   GET IN TOUCH WITH US
                 </h2>
                 <p class="text-base leading-relaxed text-body-color dark:text-dark-6 mb-9">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eius tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim adiqua minim veniam quis nostrud exercitation ullamco
+                  For any inquiries or questions regarding our services, please
+                  feel free to contact us. Our team is ready to assist you and
+                  provide solutions tailored to your needs.
                 </p>
                 <div class="mb-8 flex w-full max-w-[370px]">
                   <div class="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]">
@@ -41,7 +38,7 @@ const Contact = () => {
                       Our Location
                     </h4>
                     <p class="text-base text-body-color dark:text-dark-6">
-                      99 S.t Jomblo Park Pekanbaru 28292. Indonesia
+                      99 Hauptstraße Berlin 10115 Germany
                     </p>
                   </div>
                 </div>

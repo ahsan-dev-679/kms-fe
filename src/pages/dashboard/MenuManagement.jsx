@@ -120,8 +120,8 @@ const MenuManagement = () => {
   };
 
   const handleSubmit = async (values) => {
-    if (!menu && values.images.length <= 0) {
-      return warningMessage("Image is required");
+    if (!menu && values.images.length <= 1) {
+      return warningMessage("2 Images are required");
     }
     const formdata = new FormData();
     formdata.append("title", values.title);

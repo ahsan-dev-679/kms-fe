@@ -1,8 +1,10 @@
 import { BarChart } from "@mantine/charts";
 import { Box, Flex, Select, Title } from "@mantine/core";
+import { YearPickerInput } from "@mantine/dates";
 import React, { useEffect, useRef, useState } from "react";
+import { FaCalendarAlt } from "react-icons/fa";
 
-const AnalyticsChart = () => {
+const AnalyticsChart = ({ year1, setYear1, orderData }) => {
   const barRef = useRef();
   const [chartHeight, setchartHeight] = useState(600);
   useEffect(() => {
@@ -11,6 +13,20 @@ const AnalyticsChart = () => {
     setchartHeight(height - 100);
   }, []);
 
+  const chartData = [
+    { month: "Jan", Orders: orderData?.[0]?.total || 0 },
+    { month: "Feb", Orders: orderData?.[1]?.total || 0 },
+    { month: "Mar", Orders: orderData?.[2]?.total || 0 },
+    { month: "Apr", Orders: orderData?.[3]?.total || 0 },
+    { month: "May", Orders: orderData?.[4]?.total || 0 },
+    { month: "June", Orders: orderData?.[5]?.total || 0 },
+    { month: "July", Orders: orderData?.[6]?.total || 0 },
+    { month: "Aug", Orders: orderData?.[7]?.total || 0 },
+    { month: "Sept", Orders: orderData?.[8]?.total || 0 },
+    { month: "Oct", Orders: orderData?.[9]?.total || 0 },
+    { month: "Nov", Orders: orderData?.[10]?.total || 0 },
+    { month: "Dec", Orders: orderData?.[10]?.total || 0 },
+  ];
   return (
     <Box
       direction={"column"}
@@ -32,20 +48,16 @@ const AnalyticsChart = () => {
           Orders Analytics
         </Title>
 
-        <Select
-          withCheckIcon={false}
-          w={"130px"}
-          styles={{
-            input: {
-              boxShadow: "0px 19px 17.7px -16px #BFD1C8",
-              border: "1px solid #F2F2F2",
-              background: "#fff",
-            },
+        <YearPickerInput
+          leftSection={<FaCalendarAlt />}
+          placeholder="Select year"
+          classNames={{
+            yearsListControl: "year-dropdown",
           }}
-          variant={"filled"}
-          color={"white"}
-          data={["This Year", "Last year"]}
-          defaultValue="This Year"
+          maxDate={new Date()}
+          w={150}
+          value={year1}
+          onChange={(value) => setYear1(value)}
         />
       </Flex>
       <Box className={"px-5 mt-5  h-full"} ref={barRef}>
@@ -66,17 +78,3 @@ const AnalyticsChart = () => {
 };
 
 export default AnalyticsChart;
-const chartData = [
-  { month: "Jan", Orders: 15 },
-  { month: "Feb", Orders: 33 },
-  { month: "Mar", Orders: 10 },
-  { month: "Apr", Orders: 45 },
-  { month: "May", Orders: 28 },
-  { month: "June", Orders: 50 },
-  { month: "July", Orders: 27 },
-  { month: "Aug", Orders: 47 },
-  { month: "Sept", Orders: 29 },
-  { month: "Oct", Orders: 11 },
-  { month: "Nov", Orders: 23 },
-  { month: "Dec", Orders: 32 },
-];

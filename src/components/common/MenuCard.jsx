@@ -8,11 +8,8 @@ import { baseURL } from "@/configs/axios.config";
 
 const MenuCard = ({ meal }) => {
   const [detail, setDetail] = useState({});
-  const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
-  const { addToCart } = useCartStore();
-  const discount = 0;
 
   return (
     <>
@@ -32,10 +29,7 @@ const MenuCard = ({ meal }) => {
               objectFit: "cover",
             }}
             className="rounded-3xl transition-transform duration-300 group-hover:scale-105 relative"
-            // src={baseURL + meal?.images[0]}
-            src={
-              "https://cdn.prod.website-files.com/61d3a7155d89b7ac682b9e4c/61d3a7155d89b7774b2b9f1f_classic-burger-restaurante-x-template-p-800.jpeg"
-            }
+            src={baseURL + meal?.images[0]}
           />
           <button className="bg-white text-black group-hover:text-white group-hover:bg-black transition-colors duration-300 px-8 py-2 rounded-3xl font-semibold absolute top-3 right-1 z-10 text-lg">
             {calculateDiscount(meal?.price, meal?.discount)}€

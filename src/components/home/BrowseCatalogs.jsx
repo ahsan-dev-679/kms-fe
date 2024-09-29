@@ -5,6 +5,7 @@ import Burger from "@/assets/icons/Burger.jsx";
 import Breakfast from "@/assets/icons/Breakfast.jsx";
 import Drink from "@/assets/icons/Drink.jsx";
 import Desert from "@/assets/icons/Desert.jsx";
+import { Link } from "react-router-dom";
 
 const BrowseCatalogs = () => {
   return (
@@ -48,12 +49,14 @@ const CatalogsCard = ({ title, desc, icon }) => {
 
       <Title order={4}>{title}</Title>
       <Text c={"dimmed"}>{desc}</Text>
-      <button className="font-bold text-lg text-primary-100 flex items-center">
-        Explore menu
-        <span>
-          <MdChevronRight size={26} />
-        </span>
-      </button>
+      <Link to={"/meals"}>
+        <button className="font-bold text-lg text-primary-100 flex items-center">
+          Explore menu
+          <span>
+            <MdChevronRight size={26} />
+          </span>
+        </button>
+      </Link>
     </Flex>
   );
 };

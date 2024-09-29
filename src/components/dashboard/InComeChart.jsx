@@ -1,15 +1,33 @@
 import { AreaChart } from "@mantine/charts";
 import { Box, Flex, Select, Title } from "@mantine/core";
+import { YearPickerInput } from "@mantine/dates";
 import React, { useEffect, useRef, useState } from "react";
+import { FaCalendarAlt } from "react-icons/fa";
 
-const InComeChart = () => {
+const InComeChart = ({ year, setYear, incomeData }) => {
   const barRef = useRef();
+
   const [chartHeight, setchartHeight] = useState(600);
   useEffect(() => {
     const { height } = barRef.current.getBoundingClientRect();
     console.log("height", height);
     setchartHeight(height - 100);
   }, []);
+
+  const chartData = [
+    { month: "Jan", Income: incomeData?.[0]?.total || 0 },
+    { month: "Feb", Income: incomeData?.[1]?.total || 0 },
+    { month: "Mar", Income: incomeData?.[2]?.total || 0 },
+    { month: "Apr", Income: incomeData?.[3]?.total || 0 },
+    { month: "May", Income: incomeData?.[4]?.total || 0 },
+    { month: "June", Income: incomeData?.[5]?.total || 0 },
+    { month: "July", Income: incomeData?.[6]?.total || 0 },
+    { month: "Aug", Income: incomeData?.[7]?.total || 0 },
+    { month: "Sept", Income: incomeData?.[8]?.total || 0 },
+    { month: "Oct", Income: incomeData?.[9]?.total || 0 },
+    { month: "Nov", Income: incomeData?.[10]?.total || 0 },
+    { month: "Dec", Income: incomeData?.[11]?.total || 0 },
+  ];
   return (
     <Box
       direction={"column"}
@@ -31,20 +49,16 @@ const InComeChart = () => {
           Income Analytics
         </Title>
 
-        <Select
-          withCheckIcon={false}
-          w={"130px"}
-          styles={{
-            input: {
-              boxShadow: "0px 19px 17.7px -16px #BFD1C8",
-              border: "1px solid #F2F2F2",
-              background: "#fff",
-            },
+        <YearPickerInput
+          leftSection={<FaCalendarAlt />}
+          placeholder="Select year"
+          classNames={{
+            yearsListControl: "year-dropdown",
           }}
-          variant={"filled"}
-          color={"white"}
-          data={["This Year", "Last year"]}
-          defaultValue="This Year"
+          maxDate={new Date()}
+          w={150}
+          value={year}
+          onChange={(value) => setYear(value)}
         />
       </Flex>
       <Box className={"px-5 mt-5  h-full"} ref={barRef}>
@@ -67,17 +81,3 @@ const InComeChart = () => {
 };
 
 export default InComeChart;
-const chartData = [
-  { month: "Jan", Income: 90 },
-  { month: "Feb", Income: 30 },
-  { month: "Mar", Income: 100 },
-  { month: "Apr", Income: 45 },
-  { month: "May", Income: 28 },
-  { month: "June", Income: 50 },
-  { month: "July", Income: 27 },
-  { month: "Aug", Income: 47 },
-  { month: "Sept", Income: 29 },
-  { month: "Oct", Income: 10 },
-  { month: "Nov", Income: 35 },
-  { month: "Dec", Income: 58 },
-];

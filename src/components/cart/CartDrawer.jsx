@@ -62,10 +62,7 @@ const CartDrawer = ({ opened, close }) => {
                 <Text>Total</Text>
                 <Text> {formatPrice(total())}</Text>
               </Flex>
-              {/* <Flex py={2} align={"center"} justify={"space-between"}>
-                <Text>Tax 13%</Text>
-                <Text> {formatPrice(tax())}</Text>
-              </Flex> */}
+
               <Flex py={2} align={"center"} justify={"space-between"}>
                 <Text>Delivery</Text>
                 <Text>Free</Text>

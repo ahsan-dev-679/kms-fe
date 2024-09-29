@@ -13,6 +13,7 @@ import React from "react";
 import { ImPlus, ImMinus } from "react-icons/im";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { formatPrice } from "@/utils";
+import { baseURL } from "@/configs/axios.config";
 
 const CartItem = ({ item }) => {
   const { addToCart, decrementQty } = useCartStore();
@@ -21,7 +22,7 @@ const CartItem = ({ item }) => {
     <Box className="my-4">
       <Flex justify={"flex-start"} gap={10} align={"center"}>
         <Box style={{ width: 75, height: 75 }}>
-          <Image src={item.img} />
+          <Image src={baseURL + item?.images[0]} />
         </Box>
         <Flex direction={"column"} className="w21-full">
           <Text lineClamp={1}>{item.title}</Text>

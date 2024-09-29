@@ -30,6 +30,7 @@ export const useCreateOrder = () => {
     },
     onSuccess: (data) => {
       if (data?.success) {
+        console.log("orderRes.....", data);
         successMessage("Order Created successfully");
         queryClient.invalidateQueries("orders");
       }
@@ -69,12 +70,10 @@ export const useOrdersList = () => {
     queryFn: async () => {
       attachToken();
       const data = await custAxios.get("/order");
-      return data?.data?.data;
+      return (data?.data?.data).reverse();
     },
-
     queryKey: ["orders"],
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     retry: true,
   });
   return { ordersList: data, ...rest };

@@ -1,17 +1,26 @@
 import React, { useEffect } from "react";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { Menu, Divider, Indicator, Button, Group } from "@mantine/core";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "@mantine/hooks";
-import { notifications } from "@/data/data";
-import { IconBell } from "@tabler/icons-react";
+import { useAuthStore } from "@/stores/auth.store";
+import { useShallow } from "zustand/react/shallow";
 
 const NotificationMenu = () => {
-  const unreadCount = 8;
+  const {
+    readAllNotifications,
+    count,
+    fetchNotifications,
+    notifications,
+    nLoader,
+  } = useAuthStore();
+
+  useEffect(() => {
+    readAllNotifications();
+  }, []);
+
   return (
     <div>
       <Menu
+        onOpen={() => fetchNotifications()}
         classNames={{
           dropdown: "max-h-[400px] overflow-y-auto",
           item: "padding-0",
@@ -22,11 +31,11 @@ const NotificationMenu = () => {
       >
         <Menu.Target>
           <div className="cursor-pointer flex items-center">
-            {unreadCount > 1 ? (
+            {count > 1 ? (
               <Indicator
                 inline
-                processing={unreadCount > 0 ? true : false}
-                label={unreadCount}
+                processing={count > 0 ? true : false}
+                label={count}
                 color="red"
                 position="top-end"
                 size={18}
@@ -39,13 +48,8 @@ const NotificationMenu = () => {
                     <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
                   </svg>
                 </button>
-                {/* <IoIosNotificationsOutline
-                  className="cursor-pointer"
-                  size={30}
-                /> */}
               </Indicator>
             ) : (
-              // <IoIosNotificationsOutline className="cursor-pointer" size={30} />
               <button className="md:w-[50px] w-[35px] h-[35px] notify md:h-[50px] rounded-lg md:rounded-2xl cursor-pointer relative flex items-center justify-center">
                 <svg
                   viewBox="0 0 448 512"
@@ -89,7 +93,7 @@ const NotificationMenu = () => {
                         <p className="text-[#6a6a6a]">{date}</p>
                       </Indicator>
 
-                      <Group justify="flex-end">
+                      {/* <Group justify="flex-end">
                         {value?.type === "account" ? (
                           <>
                             <Button
@@ -119,7 +123,7 @@ const NotificationMenu = () => {
                             </Button>
                           </>
                         )}
-                      </Group>
+                      </Group> */}
                     </div>
                   </Menu.Item>
                 );

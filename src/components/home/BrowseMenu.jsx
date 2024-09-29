@@ -1,8 +1,13 @@
 import { Box, Text, Title } from "@mantine/core";
 import React from "react";
 import ProductCard from "../common/ProductCard";
+import { useMeals } from "@/lib/tanstack-query/mealQueries";
+import MealCardSk from "../skeleton/MealCardSk";
+import MenuCard from "../common/MenuCard";
 
 const BrowseMenu = () => {
+  const { meals, isLoading } = useMeals();
+
   return (
     <section>
       <Title ta={"center"} className="pb-2">
@@ -14,26 +19,13 @@ const BrowseMenu = () => {
       </Text>
 
       <Box className="gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <ProductCard
-          img={
-            "https://kms-be-production.up.railway.app/uploads/000129906_chicken-tikka.jpg"
-          }
-        />
-        <ProductCard
-          img={
-            "https://cdn.prod.website-files.com/61d3a7155d89b7ac682b9e4c/61d3a7155d89b7774b2b9f1f_classic-burger-restaurante-x-template-p-800.jpeg"
-          }
-        />
-        <ProductCard
-          img={
-            "https://kms-be-production.up.railway.app/uploads/000129906_chicken-tikka.jpg"
-          }
-        />
-        <ProductCard
-          img={
-            "https://cdn.prod.website-files.com/61d3a7155d89b7ac682b9e4c/61d3a7155d89b7774b2b9f1f_classic-burger-restaurante-x-template-p-800.jpeg"
-          }
-        />
+        {isLoading
+          ? Array.from({ length: 4 }).map((_, idx) => <MealCardSk key={idx} />)
+          : meals &&
+            meals?.length > 0 &&
+            meals
+              ?.slice(0, 4)
+              ?.map((value, idx) => <MenuCard meal={value} key={idx} />)}
       </Box>
     </section>
   );
