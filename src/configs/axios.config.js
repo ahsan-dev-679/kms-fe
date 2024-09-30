@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseURL = "https://kms-be-production.up.railway.app";
+export const baseURL = "https://kms-be-fproduction.up.railway.app";
 
 // axios instance for json data
 export const custAxios = axios.create({
