@@ -98,7 +98,7 @@ const AdminDashboard = () => {
               </Box>
             ) : (
               <InComeChart
-                incomeDat={incomeData}
+                incomeData={incomeData}
                 year={year}
                 setYear={setYear}
               />
