@@ -13,7 +13,7 @@ export const useMeals = (filters) => {
     queryFn: async () => {
       attachToken();
       const data = await custAxios.get("/meals", {
-        params: { limit: 999, page: 1 , category:filters.category},
+        params: { limit: 999, page: 1 , category:},
       });
       return data?.data?.data;
     },
