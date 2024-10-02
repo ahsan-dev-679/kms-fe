@@ -8,12 +8,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { successMessage, errorMessage } from "@/utils/toast";
 import { useAuthStore } from "@/stores/auth.store";
 
-export const useMeals = () => {
+export const useMeals = (filters) => {
   const { data, ...rest } = useQuery({
     queryFn: async () => {
       attachToken();
       const data = await custAxios.get("/meals", {
-        params: { limit: 999, page: 1 },
+        params: { limit: 999, page: 1 , category:filters.category},
       });
       return data?.data?.data;
     },
