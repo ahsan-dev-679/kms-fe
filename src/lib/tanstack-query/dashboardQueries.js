@@ -40,14 +40,14 @@ export const useIncomeAnalytics = (filters) => {
       attachToken();
       const data = await custAxios.get("/dashboard/income", {
         params: filters,
-      });
+      });console.log("1f",data)
       return data?.data?.data;
     },
     queryKey: ["icome", filters],
     refetchOnWindowFocus: false,
     staleTime: Infinity,
     retry: 3,
-  });
+  });console.log("1",data)
   return { incomeData: data, ...rest };
 };
 export const useOrdersAnalytics = (filters) => {
