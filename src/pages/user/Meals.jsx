@@ -10,13 +10,13 @@ import { useMeals } from "@/lib/tanstack-query/mealQueries";
 import MenuCard from "@/components/common/MenuCard";
 
 const Meals = () => {
-  const { isLoading: categoryLoader, categories } = useCategory();
+  
   const { meals, isLoading } = useMeals();
 
   const [activeCategory, setActiveCategory] = useState("All");
   const [opened, { open, close }] = useDisclosure(false);
   const midScreen = useMediaQuery("(max-width: 1024px)");
-
+  const { isLoading: categoryLoader, categories } = useCategory({category:activeCategory||"all"});
   return (
     <>
       <Box className="border-0 border-red-500">

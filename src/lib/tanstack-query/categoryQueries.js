@@ -2,16 +2,18 @@ import { custAxios, attachToken } from "@/configs/axios.config";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { successMessage, errorMessage } from "@/utils/toast";
 
-export const useCategory = () => {
+export const useCategory = (filters) => {
   const { data, ...rest } = useQuery({
     queryFn: async () => {
       attachToken();
-      const data = await custAxios.get("/meals/category/get");
+      const data = await custAxios.get("/meals/category/get",{
+        params: filters,
+      });
       return data?.data?.data;
     },
 
     queryKey: ["categories"],
-    staleTime: Infinity,
+    // staleTime: Infinity,
     refetchOnWindowFocus: false,
     retry: true,
   });
