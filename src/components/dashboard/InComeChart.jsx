@@ -13,7 +13,7 @@ const InComeChart = ({ year, setYear, incomeData }) => {
     console.log("height", height);
     setchartHeight(height - 100);
   }, []);
-  console.log(incomeData)
+  console.log("aaaaaaaa", incomeData)
   const chartData = [
     { month: "Jan", Income: incomeData?.[0]?.total || 0 },
     { month: "Feb", Income: incomeData?.[1]?.total || 0 },
