@@ -25,7 +25,7 @@ const AdminDashboard = () => {
 
   const { isLoading: icomeLoader, incomeData } = useIncomeAnalytics({
     year: moment(year).format(),
-  });
+  });console.log("fffffffffffffffffffffffff",incomeData)
   const { isLoading: orderLoader, ordersAnalyticsData } = useOrdersAnalytics({
     year: moment(year1).format(),
   });
