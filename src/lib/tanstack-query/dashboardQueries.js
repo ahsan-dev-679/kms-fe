@@ -45,7 +45,7 @@ export const useIncomeAnalytics = (filters) => {
     },
     queryKey: ["icome", filters],
     refetchOnWindowFocus: false,
-    staleTime: Infinity,
+    // staleTime: Infinity,
     retry: 3,
   });console.log("1",rest)
   return { incomeData: data, ...rest };
