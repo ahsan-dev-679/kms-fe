@@ -48,7 +48,7 @@ const Meals = () => {
                       Category
                     </Text>
                     <div className="grid grid-cols-3 gap-2">
-                      {[{ name: "All" }, ...categories]?.map(
+                      {[{ name: "all" }, ...categories]?.map(
                         (category, idx) => (
                           <Link
                             onClick={() => {
