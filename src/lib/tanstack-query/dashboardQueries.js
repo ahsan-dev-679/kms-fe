@@ -47,7 +47,7 @@ export const useIncomeAnalytics = (filters) => {
     refetchOnWindowFocus: false,
     // staleTime: Infinity,
     retry: 3,
-  });console.log("1",rest)
+  });console.log("1",data)
   return { incomeData: data, ...rest };
 };
 export const useOrdersAnalytics = (filters) => {
