@@ -16,7 +16,7 @@ const Meals = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [opened, { open, close }] = useDisclosure(false);
   const midScreen = useMediaQuery("(max-width: 1024px)");
-  const { isLoading: categoryLoader, categories } = useCategory();  const { meals, isLoading } = useMeals({category:activeCategory);
+  const { isLoading: categoryLoader, categories } = useCategory();  const { meals, isLoading } = useMeals({category:activeCategory});
   return (
     <>
       <Box className="border-0 border-red-500">
